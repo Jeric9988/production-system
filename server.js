@@ -3362,6 +3362,227 @@ app.patch("/api/production/records/:id", async (request, response) => {
   }
 });
 
+
+function mapMaterialRow(row) {
+  if (!row) return null;
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    stock: row.stock,
+    criticalLevel: row.critical_level,
+    unit: row.unit,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+
+app.get("/api/materials", async (request, response) => {
+  try {
+    const search = normalizeText(request.query.search);
+    const category = normalizeText(request.query.category);
+    const params = [];
+    const where = [];
+
+    if (category && category !== "all") {
+      where.push("category = ?");
+      params.push(category);
+    }
+    if (search) {
+      where.push("name LIKE ?");
+      params.push(`%${search}%`);
+    }
+
+    const sql = `SELECT * FROM materials ${where.length ? `WHERE ${where.join(" AND ")}` : ""} ORDER BY lower(name) ASC`;
+    const rows = await all(sql, params);
+    response.json({ materials: rows.map(mapMaterialRow) });
+  } catch (error) {
+    handleSqliteError(error, response);
+  }
+});
+
+app.post("/api/materials", async (request, response) => {
+  try {
+    const requestUser = await getRequestUser(request);
+    if (!requestUser || !["admin", "manager", "logistics"].includes(requestUser.role)) {
+      response.status(403).json({ error: "Access denied." });
+      return;
+    }
+
+    const name = normalizeText(request.body?.name);
+    const category = normalizeText(request.body?.category);
+    const stock = Number(request.body?.stock || 0);
+    const criticalLevel = Number(request.body?.criticalLevel || 0);
+    const unit = normalizeText(request.body?.unit || "kgs");
+
+    if (!name) return response.status(400).json({ error: "Material name is required." });
+    if (!["printing", "lamination", "general"].includes(category)) return response.status(400).json({ error: "Invalid category." });
+    if (!Number.isFinite(stock) || stock < 0) return response.status(400).json({ error: "Stock must be 0 or greater." });
+    if (!Number.isFinite(criticalLevel) || criticalLevel < 0) return response.status(400).json({ error: "Critical level must be 0 or greater." });
+    if (!["kgs", "rolls", "pcs"].includes(unit)) return response.status(400).json({ error: "Invalid unit." });
+
+    const duplicate = await get("SELECT id FROM materials WHERE name = ? COLLATE NOCASE", [name]);
+    if (duplicate) return response.status(409).json({ error: "Material name already exists." });
+
+    const now = getPhilippineTimestamp();
+    const result = await run(
+      "INSERT INTO materials (name, category, stock, critical_level, unit, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [name, category, stock, criticalLevel, unit, now, now]
+    );
+
+    const created = await get("SELECT * FROM materials WHERE id = ?", [result.lastID || result.id]);
+    const mapped = mapMaterialRow(created);
+
+    await createActivityLog({
+      request,
+      moduleName: "Materials",
+      action: "Add Material",
+      referenceType: "material",
+      referenceId: mapped.id,
+      referenceLabel: mapped.name,
+      details: `Added material "${mapped.name}" under ${mapped.category} category.`
+    });
+
+    response.status(201).json({ material: mapped });
+  } catch (error) {
+    handleSqliteError(error, response);
+  }
+});
+
+app.put("/api/materials/:id", async (request, response) => {
+  try {
+    const requestUser = await getRequestUser(request);
+    if (!requestUser || !["admin", "manager", "logistics"].includes(requestUser.role)) {
+      response.status(403).json({ error: "Access denied." });
+      return;
+    }
+
+    const id = Number(request.params.id);
+    const name = normalizeText(request.body?.name);
+    const category = normalizeText(request.body?.category);
+    const stock = Number(request.body?.stock || 0);
+    const criticalLevel = Number(request.body?.criticalLevel || 0);
+    const unit = normalizeText(request.body?.unit || "kgs");
+
+    if (!name) return response.status(400).json({ error: "Material name is required." });
+    if (!["printing", "lamination", "general"].includes(category)) return response.status(400).json({ error: "Invalid category." });
+    if (!Number.isFinite(stock) || stock < 0) return response.status(400).json({ error: "Stock must be 0 or greater." });
+    if (!Number.isFinite(criticalLevel) || criticalLevel < 0) return response.status(400).json({ error: "Critical level must be 0 or greater." });
+    if (!["kgs", "rolls", "pcs"].includes(unit)) return response.status(400).json({ error: "Invalid unit." });
+
+    const existing = await get("SELECT * FROM materials WHERE id = ?", [id]);
+    if (!existing) return response.status(404).json({ error: "Material not found." });
+
+    const duplicate = await get("SELECT id FROM materials WHERE name = ? COLLATE NOCASE AND id != ?", [name, id]);
+    if (duplicate) return response.status(409).json({ error: "Material name already exists." });
+
+    const now = getPhilippineTimestamp();
+    await run(
+      "UPDATE materials SET name = ?, category = ?, stock = ?, critical_level = ?, unit = ?, updated_at = ? WHERE id = ?",
+      [name, category, stock, criticalLevel, unit, now, id]
+    );
+
+    const updated = await get("SELECT * FROM materials WHERE id = ?", [id]);
+    const mapped = mapMaterialRow(updated);
+
+    await createActivityLog({
+      request,
+      moduleName: "Materials",
+      action: "Update Material",
+      referenceType: "material",
+      referenceId: mapped.id,
+      referenceLabel: mapped.name,
+      details: `Updated material "${mapped.name}".`
+    });
+
+    response.json({ material: mapped });
+  } catch (error) {
+    handleSqliteError(error, response);
+  }
+});
+
+
+app.post("/api/materials/:id/issue", async (request, response) => {
+  try {
+    const requestUser = await getRequestUser(request);
+    if (!requestUser || !["admin", "manager", "logistics"].includes(requestUser.role)) {
+      response.status(403).json({ error: "Access denied." });
+      return;
+    }
+
+    const id = Number(request.params.id);
+    const quantity = Number(request.body?.quantity || 0);
+    const joNumber = normalizeText(request.body?.joNumber);
+    const issuedTo = normalizeText(request.body?.issuedTo);
+    const issueDate = normalizeText(request.body?.date);
+
+    if (quantity <= 0) return response.status(400).json({ error: "Quantity must be greater than zero." });
+    if (!joNumber) return response.status(400).json({ error: "J.O. Number is required." });
+    if (!issuedTo) return response.status(400).json({ error: "Issued To is required." });
+    if (!issueDate) return response.status(400).json({ error: "Date is required." });
+
+    const material = await get("SELECT * FROM materials WHERE id = ?", [id]);
+    if (!material) return response.status(404).json({ error: "Material not found." });
+
+    if (material.stock < quantity) {
+      return response.status(400).json({ error: `Insufficient stock. Only ${material.stock} ${material.unit} available.` });
+    }
+
+    const now = getPhilippineTimestamp();
+    await run(
+      "UPDATE materials SET stock = stock - ?, updated_at = ? WHERE id = ?",
+      [quantity, now, id]
+    );
+
+    const updated = await get("SELECT * FROM materials WHERE id = ?", [id]);
+    const mapped = mapMaterialRow(updated);
+
+    await createActivityLog({
+      request,
+      moduleName: "Materials",
+      action: "Issue Material",
+      referenceType: "material",
+      referenceId: mapped.id,
+      referenceLabel: mapped.name,
+      details: `Issued ${quantity} ${mapped.unit} of ${mapped.name} for J.O. ${joNumber} to ${issuedTo}.`
+    });
+
+    response.json({ material: mapped });
+  } catch (error) {
+    handleSqliteError(error, response);
+  }
+});
+
+app.delete("/api/materials/:id", async (request, response) => {
+  try {
+    const requestUser = await getRequestUser(request);
+    if (!requestUser || !["admin", "manager", "logistics"].includes(requestUser.role)) {
+      response.status(403).json({ error: "Access denied." });
+      return;
+    }
+
+    const id = Number(request.params.id);
+    const existing = await get("SELECT * FROM materials WHERE id = ?", [id]);
+    if (!existing) return response.status(404).json({ error: "Material not found." });
+
+    await run("DELETE FROM materials WHERE id = ?", [id]);
+
+    await createActivityLog({
+      request,
+      moduleName: "Materials",
+      action: "Delete Material",
+      referenceType: "material",
+      referenceId: id,
+      referenceLabel: existing.name,
+      details: `Deleted material "${existing.name}".`
+    });
+
+    response.json({ ok: true });
+  } catch (error) {
+    handleSqliteError(error, response);
+  }
+});
+
 app.use((request, response) => {
   if (request.path.startsWith("/api/")) {
     response.status(404).json({ error: "API route not found." });
@@ -3379,6 +3600,22 @@ initDatabase()
   .then(ensureDefaultUsers)
   .then(ensureOrdersAssignmentRoleColumn)
   .then(ensureOrdersDeliveryColumns)
+  .then(async () => {
+    await run(`
+      CREATE TABLE IF NOT EXISTS materials (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE COLLATE NOCASE,
+        category TEXT NOT NULL CHECK (category IN ('printing', 'lamination', 'general')),
+        stock REAL NOT NULL DEFAULT 0,
+        critical_level REAL NOT NULL DEFAULT 0,
+        unit TEXT NOT NULL DEFAULT 'kgs' CHECK (unit IN ('kgs', 'rolls', 'pcs')),
+        created_at TEXT NOT NULL DEFAULT (datetime('now', '+8 hours')),
+        updated_at TEXT NOT NULL DEFAULT (datetime('now', '+8 hours'))
+      )
+    `);
+    await run("CREATE INDEX IF NOT EXISTS idx_materials_category ON materials(category)").catch(() => {});
+    await run("CREATE INDEX IF NOT EXISTS idx_materials_name ON materials(name)").catch(() => {});
+  })
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);

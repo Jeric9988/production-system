@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="orders.css?v=20260506-scalingo-tint-v1">
   <link rel="stylesheet" href="overview.css?v=20260514-delivery-ui-v3">
   <link rel="stylesheet" href="production-receiving.css?v=20260515-delivery-layout-v9">
+  <link rel="stylesheet" href="materials.css">
   <link rel="stylesheet" href="notifications.css?v=20260506-scalingo-tint-v1">
   <link rel="stylesheet" href="reports.css?v=20260506-scalingo-tint-v1">
   <link rel="stylesheet" href="settings.css?v=20260506-scalingo-tint-v1">
@@ -62,6 +63,7 @@
           </div>
         </div>
         <a class="nav-item" href="#" data-view-target="deliveries"><span class="nav-icon" data-icon="truck"></span><span>Deliveries</span></a>
+        <a class="nav-item" href="#" data-view-target="materials"><span class="nav-icon" data-icon="box"></span><span>Materials</span></a>
         <a class="nav-item" href="#" data-view-target="reports"><span class="nav-icon" data-icon="chart"></span><span>Reports</span></a>
         <a class="nav-item" href="#" data-view-target="settings"><span class="nav-icon" data-icon="settings"></span><span>Settings</span></a>
       </nav>
@@ -458,7 +460,7 @@
             <div class="mini-calendar" aria-label="Select delivery date">
               <div class="mini-calendar-head">
                 <button type="button">‹</button>
-                <strong>Select date</strong>
+                return <strong>Select date</strong>
                 <button type="button">›</button>
               </div>
               <div class="mini-weekdays">
@@ -633,7 +635,157 @@
         </section>
       </div>
 
+      <section class="view-section materials-view" data-view="materials">
+        <div class="materials-shell">
+          <header class="materials-page-head" style="justify-content: flex-end;">
+            <button class="materials-primary-btn" id="materialsNewBtn" type="button">Add Material</button>
+          </header>
+
+          <section class="materials-summary-grid" id="materialsSummaryGrid">
+            <article class="materials-summary-card">
+              <span>Total Materials</span>
+              <strong id="materialsTotalCount">0</strong>
+            </article>
+            <article class="materials-summary-card">
+              <span>Low Stock Alert</span>
+              <strong id="materialsLowStockCount" style="color: #ef4444;">0</strong>
+            </article>
+          </section>
+
+          <section class="materials-panel">
+            <div class="materials-toolbar">
+              <label class="materials-search-field">
+                <span>Search</span>
+                <input id="materialsSearchInput" type="search" placeholder="Search material name...">
+              </label>
+              <label class="materials-filter-field">
+                <span>Category</span>
+                <select id="materialsCategoryFilter">
+                  <option value="all">All Categories</option>
+                  <option value="printing">Printing Material</option>
+                  <option value="lamination">Lamination Material</option>
+                  <option value="general">General</option>
+                </select>
+              </label>
+              <button class="materials-clear-btn" id="materialsClearBtn" type="button">Clear</button>
+            </div>
+
+            <div class="materials-list-wrap">
+              <div class="materials-list-head">
+                <span>Material Name</span>
+                <span>Category</span>
+                <span>Current Stock</span>
+                <span>Critical Level</span>
+                <span>Actions</span>
+              </div>
+              <div class="materials-list" id="materialsListContainer">
+                <div class="materials-empty-state">
+                  <strong>Loading materials...</strong>
+                  <span>Fetching from inventory database.</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="materials-modal-backdrop" id="materialsFormModal" aria-hidden="true">
+          <section class="materials-modal" role="dialog" aria-modal="true" aria-labelledby="materialsModalTitle">
+            <header class="materials-modal-head">
+              <div>
+                <h3 id="materialsModalTitle">Add Material</h3>
+              </div>
+              <button class="materials-modal-close" type="button" id="materialsModalCloseBtn" aria-label="Close modal">
+                <span>×</span>
+              </button>
+            </header>
+            <form id="materialsForm" novalidate>
+              <div class="materials-modal-body">
+                <input type="hidden" id="materialId" value="">
+                <div class="materials-form-grid">
+                  <label class="materials-field">
+                    <span>Material Name *</span>
+                    <input id="materialName" type="text" placeholder="e.g. vmcpp100" required>
+                  </label>
+                  <label class="materials-field">
+                    <span>Category *</span>
+                    <select id="materialCategory" required>
+                      <option value="printing">Printing Material</option>
+                      <option value="lamination">Lamination Material</option>
+                      <option value="general">General</option>
+                    </select>
+                  </label>
+                  <label class="materials-field">
+                    <span>Current Stock *</span>
+                    <input id="materialStock" type="number" min="0" step="0.01" value="0" required>
+                  </label>
+                  <label class="materials-field">
+                    <span>Unit *</span>
+                    <select id="materialUnit" required>
+                      <option value="kgs">kgs</option>
+                      <option value="rolls">rolls</option>
+                      <option value="pcs">pcs</option>
+                    </select>
+                  </label>
+                  <label class="materials-field">
+                    <span>Critical Level *</span>
+                    <input id="materialCriticalLevel" type="number" min="0" step="0.01" value="0" required>
+                  </label>
+                </div>
+                <div class="materials-modal-feedback" id="materialsFormFeedback" hidden></div>
+              </div>
+              <footer class="materials-modal-footer">
+                <button class="materials-modal-secondary" type="button" id="materialsModalCancelBtn">Cancel</button>
+                <button class="materials-modal-primary" type="submit" id="materialsModalSubmitBtn">Save Material</button>
+              </footer>
+            </form>
+          </section>
+        </div>
+      
+        <div class="materials-modal-backdrop" id="materialsIssueModal" aria-hidden="true">
+          <section class="materials-modal" role="dialog" aria-modal="true" aria-labelledby="materialsIssueModalTitle">
+            <header class="materials-modal-head">
+              <div>
+                <h3 id="materialsIssueModalTitle">Issue Material</h3>
+                <p id="materialsIssueModalSubTitle">Stock out for production.</p>
+              </div>
+              <button class="materials-modal-close" type="button" id="materialsIssueModalCloseBtn" aria-label="Close modal">
+                <span>×</span>
+              </button>
+            </header>
+            <form id="materialsIssueForm" novalidate>
+              <div class="materials-modal-body">
+                <input type="hidden" id="issueMaterialId" value="">
+                <div class="materials-form-grid">
+                  <label class="materials-field">
+                    <span>Quantity to Issue *</span>
+                    <input id="issueQuantity" type="number" min="0.01" step="0.01" placeholder="0.00" required>
+                  </label>
+                  <label class="materials-field">
+                    <span>J.O. Number *</span>
+                    <input id="issueJoNumber" type="text" placeholder="e.g. JO-001" required>
+                  </label>
+                  <label class="materials-field">
+                    <span>Issued To (Operator) *</span>
+                    <input id="issueIssuedTo" type="text" placeholder="e.g. Juan Dela Cruz" required>
+                  </label>
+                  <label class="materials-field">
+                    <span>Date *</span>
+                    <input id="issueDate" type="date" required>
+                  </label>
+                </div>
+                <div class="materials-modal-feedback" id="materialsIssueFeedback" hidden></div>
+              </div>
+              <footer class="materials-modal-footer">
+                <button class="materials-modal-secondary" type="button" id="materialsIssueCancelBtn">Cancel</button>
+                <button class="materials-modal-primary" style="background:#f97316;border:none;" type="submit" id="materialsIssueSubmitBtn">Issue Material</button>
+              </footer>
+            </form>
+          </section>
+        </div>
+      </section>
+
       <section class="view-section reports-view" data-view="reports">
+
         <div class="reports-shell">
           <header class="reports-page-head">
             <div>
@@ -1076,6 +1228,7 @@
   <script src="orders.js?v=20260506-scalingo-tint-v1"></script>
   <script src="production-receiving.js?v=20260514-delivery-flow-v3"></script>
   <script src="overview.js?v=20260506-scalingo-tint-v1"></script>
+  <script src="materials.js"></script>
   <script src="reports.js?v=20260506-scalingo-tint-v1"></script>
   <script src="settings.js?v=20260506-scalingo-tint-v1"></script>
   <script src="notifications.js?v=20260506-scalingo-tint-v1"></script>

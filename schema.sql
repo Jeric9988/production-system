@@ -163,3 +163,18 @@ CREATE INDEX IF NOT EXISTS idx_activity_logs_created_at ON activity_logs(created
 CREATE INDEX IF NOT EXISTS idx_activity_logs_username ON activity_logs(username);
 CREATE INDEX IF NOT EXISTS idx_activity_logs_module ON activity_logs(module_name);
 CREATE INDEX IF NOT EXISTS idx_activity_logs_action ON activity_logs(action);
+
+
+CREATE TABLE IF NOT EXISTS materials (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE COLLATE NOCASE,
+  category TEXT NOT NULL CHECK (category IN ('printing', 'lamination', 'general')),
+  stock REAL NOT NULL DEFAULT 0,
+  critical_level REAL NOT NULL DEFAULT 0,
+  unit TEXT NOT NULL DEFAULT 'kgs' CHECK (unit IN ('kgs', 'rolls', 'pcs')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now', '+8 hours')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now', '+8 hours'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_materials_category ON materials(category);
+CREATE INDEX IF NOT EXISTS idx_materials_name ON materials(name);

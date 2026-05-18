@@ -1180,13 +1180,13 @@ syncTabletSidebarState();
     admin: {
       label: "Admin",
       defaultSelector: '[data-view-target="overview"]',
-      views: ["overview", "orders", "production-status", "production", "deliveries", "reports", "settings"],
+      views: ["overview", "orders", "production-status", "production", "deliveries", "materials", "reports", "settings"],
       canAddOrder: true
     },
     manager: {
       label: "Manager",
       defaultSelector: '[data-view-target="overview"]',
-      views: ["overview", "orders", "production-status", "production", "deliveries", "reports"],
+      views: ["overview", "orders", "production-status", "production", "deliveries", "materials", "reports"],
       canAddOrder: false
     },
     supervisor: {
@@ -1198,7 +1198,7 @@ syncTabletSidebarState();
     logistics: {
       label: "Logistic",
       defaultSelector: '[data-view-target="orders"]',
-      views: ["overview", "orders", "deliveries"],
+      views: ["overview", "orders", "deliveries", "materials"],
       canAddOrder: true
     },
     production_staff: {
