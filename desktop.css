@@ -1,0 +1,1128 @@
+/* ===== DESKTOP.CSS - OPTIMIZED CLEAN VERSION ===== */
+
+@media (min-width: 1301px) {
+  .app-shell {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: visible;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .main {
+    margin-left: var(--sidebar-w);
+    width: calc(100% - var(--sidebar-w));
+    max-width: none;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .topbar {
+    flex-wrap: nowrap;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .topbar h1 {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .topbar-actions {
+    width: auto;
+    max-width: none;
+    margin-left: auto;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
+  .topbar-actions span,
+  .logout-btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .dashboard-grid,
+  .stats-grid,
+  .panel,
+  .stat-card,
+  .monthly-content,
+  .calendar,
+  .line-chart,
+  .orders-panel,
+  .activity-panel {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .panel {
+    width: 100%;
+  }
+
+  .table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Compact desktop / small laptop */
+@media (min-width: 1301px) and (max-width: 1359px) {
+  .main {
+    padding: 28px 24px;
+  }
+
+  .topbar {
+    gap: 10px;
+  }
+
+  .topbar h1 {
+    font-size: 1.55rem;
+  }
+
+  .topbar-actions {
+    gap: 10px;
+    font-size: .78rem;
+  }
+
+  .topbar-actions span,
+  .logout-btn {
+    gap: 6px;
+  }
+
+  .topbar-actions i,
+  .logout-btn i {
+    width: 15px;
+    height: 15px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "stats"
+      "monthly"
+      "calendar"
+      "notice"
+      "yearly"
+      "orders"
+      "activity";
+    gap: 18px;
+  }
+
+  .stats-grid {
+    grid-area: stats;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .stat-card {
+    min-height: 185px;
+    padding: 22px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 26px;
+    text-align: left;
+  }
+
+  .stat-card > div:not(.stat-icon) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 5px;
+  }
+
+  .stat-card .stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+    align-self: flex-start;
+  }
+
+  .stat-card .stat-icon span {
+    width: 25px;
+    height: 25px;
+  }
+
+  .stat-card p,
+  .stat-card strong,
+  .stat-card a {
+    text-align: left;
+    align-self: flex-start;
+    margin-left: 0;
+  }
+
+  .stat-card p {
+    margin-bottom: 2px;
+    font-size: .96rem;
+    white-space: normal;
+  }
+
+  .stat-card strong {
+    margin-bottom: 4px;
+    font-size: 2rem;
+  }
+
+  .stat-card a {
+    font-size: .88rem;
+    white-space: nowrap;
+  }
+
+  .monthly-panel { grid-area: monthly; }
+  .calendar-panel { grid-area: calendar; }
+  .notice-panel { grid-area: notice; }
+  .yearly-panel { grid-area: yearly; }
+  .orders-panel { grid-area: orders; }
+  .activity-panel { grid-area: activity; }
+
+  .monthly-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .monthly-content {
+    flex: 1 1 auto;
+    min-height: 245px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+  }
+
+  .radial-chart {
+    justify-self: center;
+    align-self: center;
+    margin: 0;
+  }
+
+  .chart-legend {
+    max-width: 340px;
+    width: 100%;
+    align-self: center;
+  }
+
+  .calendar-panel .calendar {
+    max-width: 680px;
+    margin-inline: auto;
+  }
+}
+
+/* Tight desktop before tablet */
+@media (min-width: 1301px) and (max-width: 1120px) {
+  .main {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .topbar {
+    gap: 8px;
+  }
+
+  .topbar h1 {
+    font-size: 1.38rem;
+  }
+
+  .topbar-actions {
+    gap: 6px;
+    font-size: .64rem;
+  }
+
+  .topbar-actions span,
+  .logout-btn {
+    gap: 4px;
+  }
+
+  .topbar-actions i,
+  .logout-btn i {
+    width: 12px;
+    height: 12px;
+  }
+
+  .monthly-content {
+    gap: 10px;
+  }
+
+  .radial-chart {
+    transform: scale(.82);
+    transform-origin: center;
+    margin: -18px 0;
+  }
+
+  .chart-legend {
+    max-width: 230px;
+    font-size: .8rem;
+  }
+}
+
+/* Normal laptop / medium desktop */
+@media (min-width: 1360px) and (max-width: 1599px) {
+  .main {
+    padding: 32px 34px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(380px, .85fr);
+    grid-template-areas:
+      "stats monthly"
+      "calendar calendar"
+      "notice yearly"
+      "orders orders"
+      "activity activity";
+    gap: 20px;
+  }
+
+  .stats-grid {
+    grid-area: stats;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .monthly-panel { grid-area: monthly; }
+  .calendar-panel { grid-area: calendar; }
+  .notice-panel { grid-area: notice; }
+  .yearly-panel { grid-area: yearly; }
+  .orders-panel { grid-area: orders; }
+  .activity-panel { grid-area: activity; }
+
+  .monthly-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .monthly-content {
+    flex: 1 1 auto;
+    min-height: 245px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .radial-chart {
+    width: 225px;
+    height: 225px;
+    justify-self: center;
+  }
+
+  .slice {
+    width: 52px;
+    height: 104px;
+  }
+
+  .slice-orange {
+    width: 112px;
+    height: 118px;
+  }
+
+  .chart-center {
+    inset: 74px;
+  }
+
+  .chart-legend {
+    gap: 12px;
+    font-size: .86rem;
+  }
+
+  .calendar-panel .calendar {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+}
+
+/* Wide desktop */
+@media (min-width: 1600px) {
+  .dashboard-grid {
+    grid-template-columns:
+      minmax(460px, 1.05fr)
+      minmax(400px, .98fr)
+      minmax(400px, 1fr);
+    grid-template-areas:
+      "stats monthly calendar"
+      "notice yearly yearly"
+      "orders orders activity";
+    gap: 22px;
+  }
+
+  .stats-grid {
+    grid-area: stats;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .monthly-panel { grid-area: monthly; }
+  .calendar-panel { grid-area: calendar; }
+  .notice-panel { grid-area: notice; }
+  .yearly-panel { grid-area: yearly; }
+  .orders-panel { grid-area: orders; }
+  .activity-panel { grid-area: activity; }
+
+  .stat-card {
+    min-height: 160px;
+    padding: 26px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    border-radius: 24px;
+    text-align: left;
+  }
+
+  .stat-card > div:not(.stat-icon) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 8px;
+    padding-left: 2px;
+  }
+
+  .stat-card .stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    align-self: flex-start;
+    margin-bottom: 2px;
+  }
+
+  .stat-card .stat-icon span {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stat-card p,
+  .stat-card strong,
+  .stat-card a {
+    align-self: flex-start;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .stat-card p {
+    font-size: .94rem;
+    line-height: 1.25;
+    white-space: normal;
+    margin-bottom: 2px;
+  }
+
+  .stat-card strong {
+    font-size: 1.9rem;
+    margin: 2px 0 6px;
+  }
+
+  .stat-card a {
+    font-size: .86rem;
+    margin-top: 2px;
+  }
+
+  .monthly-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .monthly-content {
+    flex: 1 1 auto;
+    min-height: 245px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .monthly-panel .radial-chart {
+    align-self: center;
+    margin: 0 auto;
+  }
+
+  .monthly-panel .chart-legend {
+    width: 100%;
+    max-width: 280px;
+    align-self: center;
+    margin: 0 auto;
+  }
+
+  .activity-panel,
+  .orders-panel {
+    min-height: 285px;
+  }
+}
+
+@media (min-width: 1360px) and (max-width: 1599px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(380px, .85fr) !important;
+    grid-template-areas:
+      "stats monthly"
+      "calendar calendar"
+      "notice notice"
+      "yearly yearly"
+      "orders orders"
+      "activity activity" !important;
+  }
+
+  .notice-panel {
+    grid-area: notice !important;
+  }
+
+  .yearly-panel {
+    grid-area: yearly !important;
+  }
+}
+
+/* Compact desktop below 1360px is already stacked, but this makes the yearly row explicit. */
+@media (min-width: 1301px) and (max-width: 1359px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "stats"
+      "monthly"
+      "calendar"
+      "notice"
+      "yearly"
+      "orders"
+      "activity" !important;
+  }
+
+  .yearly-panel {
+    grid-area: yearly !important;
+  }
+}
+
+/* The problem starts at 1599px below, so the layout must stop treating the
+   Yearly Graph like a squeezed shared-width panel.
+   Below 1600px, Yearly Graph is always a full-width row.
+*/
+
+@media (min-width: 1301px) and (max-width: 1599px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "stats"
+      "monthly"
+      "calendar"
+      "notice"
+      "yearly"
+      "orders"
+      "activity" !important;
+    gap: 20px !important;
+  }
+
+  .stats-grid { grid-area: stats !important; }
+  .monthly-panel { grid-area: monthly !important; }
+  .calendar-panel { grid-area: calendar !important; }
+  .notice-panel { grid-area: notice !important; }
+  .yearly-panel { grid-area: yearly !important; }
+  .orders-panel { grid-area: orders !important; }
+  .activity-panel { grid-area: activity !important; }
+
+  .yearly-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+/* Keep the cleaner 2x2 cards in compact desktop even after forcing single-column dashboard rows */
+@media (min-width: 1301px) and (max-width: 1599px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+
+/* ===== FIX: DESKTOP 1600PX RANGE OVERFLOW / BREAKPOINT ISSUE ===== */
+/* Certain desktop widths around 1600px were still using the wide 3-column layout
+   with columns that were too wide for the remaining space after the fixed sidebar.
+   This keeps the same dashboard order but compresses the 3-column layout safely.
+*/
+
+@media (min-width: 1600px) and (max-width: 1759px) {
+  .main {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+    max-width: calc(100vw - var(--sidebar-w)) !important;
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    grid-template-columns:
+      minmax(0, .96fr)
+      minmax(0, .88fr)
+      minmax(0, .92fr) !important;
+    grid-template-areas:
+      "stats monthly calendar"
+      "notice yearly yearly"
+      "orders orders activity" !important;
+    gap: 18px !important;
+  }
+
+  .stats-grid,
+  .monthly-panel,
+  .calendar-panel,
+  .notice-panel,
+  .yearly-panel,
+  .orders-panel,
+  .activity-panel,
+  .panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+
+  .stat-card {
+    min-height: 150px !important;
+    padding: 22px !important;
+    gap: 13px !important;
+  }
+
+  .monthly-panel .monthly-content {
+    min-height: 245px !important;
+  }
+
+  .monthly-panel.donut-chart-mode .radial-chart,
+  .monthly-panel .radial-chart {
+    width: min(240px, 100%) !important;
+  }
+
+  .monthly-panel .chart-legend {
+    max-width: 250px !important;
+    font-size: .86rem !important;
+  }
+
+  .calendar-panel .calendar {
+    max-width: 100% !important;
+  }
+
+  .weekdays,
+  .dates {
+    gap: 8px 5px !important;
+  }
+
+  .topbar {
+    min-width: 0 !important;
+  }
+
+  .topbar-actions {
+    min-width: 0 !important;
+    gap: 18px !important;
+  }
+}
+
+/* True wide desktop gets more room again. */
+@media (min-width: 1760px) {
+  .main {
+    overflow-x: visible !important;
+  }
+}
+
+
+/* ===== LATEST UPDATE: 1599PX DESKTOP LAYOUT ===== */
+/* Requested desktop layout at 1599px:
+   Row 1: 4 cards + Monthly Chart
+   Row 2: Calendar
+   Row 3: Notice Board + Yearly Graph
+   Row 4: Total Orders + Recent Activity
+*/
+
+@media (min-width: 1360px) and (max-width: 1599px) {
+  .main {
+    padding: 32px 34px !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+    max-width: calc(100vw - var(--sidebar-w)) !important;
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, .75fr) !important;
+    grid-template-areas:
+      "stats monthly"
+      "calendar calendar"
+      "notice yearly"
+      "orders activity" !important;
+    gap: 20px !important;
+  }
+
+  .stats-grid {
+    grid-area: stats !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .monthly-panel {
+    grid-area: monthly !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .calendar-panel {
+    grid-area: calendar !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .notice-panel {
+    grid-area: notice !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .yearly-panel {
+    grid-area: yearly !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .orders-panel {
+    grid-area: orders !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .activity-panel {
+    grid-area: activity !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .stat-card {
+    min-height: 150px !important;
+  }
+
+  .calendar-panel .calendar {
+    max-width: 760px !important;
+    margin-inline: auto !important;
+  }
+}
+
+/* Tight version near 1360px: keep same requested order but avoid overflow. */
+@media (min-width: 1360px) and (max-width: 1450px) {
+  .main {
+    padding-left: 26px !important;
+    padding-right: 26px !important;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr) !important;
+    gap: 18px !important;
+  }
+
+  .stats-grid {
+    gap: 16px !important;
+  }
+
+  .stat-card {
+    min-height: 142px !important;
+    padding: 20px !important;
+  }
+
+  .monthly-panel.donut-chart-mode .radial-chart,
+  .monthly-panel .radial-chart {
+    width: min(230px, 100%) !important;
+  }
+
+  .monthly-panel .chart-legend {
+    font-size: .84rem !important;
+  }
+}
+
+
+/* ===== FIX: 1360PX–1599PX YEARLY GRAPH COLUMN WIDTH ===== */
+/* Keep the requested layout:
+   Row 1: Cards + Monthly
+   Row 2: Calendar
+   Row 3: Notice + Yearly
+   Row 4: Total Orders + Recent Activity
+
+   But give the Yearly column enough stable space so the graph and month labels do not break.
+*/
+
+@media (min-width: 1360px) and (max-width: 1599px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(580px, .95fr) !important;
+    grid-template-areas:
+      "stats monthly"
+      "calendar calendar"
+      "notice yearly"
+      "orders activity" !important;
+    gap: 20px !important;
+  }
+
+  .yearly-panel {
+    grid-area: yearly !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Tight range near 1360px: keep same row order but reduce gaps/padding slightly */
+@media (min-width: 1360px) and (max-width: 1450px) {
+  .main {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(560px, .92fr) !important;
+    gap: 18px !important;
+  }
+}
+
+
+/* ===== LATEST FIX: 1360PX–1599PX FLUID YEARLY GRAPH COLUMN ===== */
+/* Keep the requested layout, but remove fixed/min column sizing that can force overflow.
+   The Yearly Graph will now shrink/grow with the available panel width.
+*/
+
+@media (min-width: 1360px) and (max-width: 1599px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr) !important;
+    grid-template-areas:
+      "stats monthly"
+      "calendar calendar"
+      "notice yearly"
+      "orders activity" !important;
+    gap: 20px !important;
+    overflow-x: hidden !important;
+  }
+
+  .notice-panel,
+  .yearly-panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+}
+
+@media (min-width: 1360px) and (max-width: 1450px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+    gap: 18px !important;
+  }
+}
+
+
+/* ===== LATEST FIX: 1301PX–1359PX YEARLY GRAPH FULL ROW ===== */
+/* In this compact desktop range, Yearly Graph must stay as a full-width row
+   and must not inherit any squeezed/fixed desktop behavior.
+*/
+
+@media (min-width: 1301px) and (max-width: 1359px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "stats"
+      "monthly"
+      "calendar"
+      "notice"
+      "yearly"
+      "orders"
+      "activity" !important;
+    gap: 18px !important;
+    overflow-x: hidden !important;
+  }
+
+  .yearly-panel {
+    grid-area: yearly !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .notice-panel,
+  .orders-panel,
+  .activity-panel,
+  .calendar-panel,
+  .monthly-panel,
+  .stats-grid {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+}
+
+
+/* ===== LATEST UPDATE: APPLY 1360 DESKTOP LAYOUT DOWN TO 1301PX ===== */
+/* Requested:
+   Use the 1360px desktop layout from 1301px up to 1599px.
+
+   Layout:
+   Row 1: 4 cards + Monthly Chart
+   Row 2: Calendar
+   Row 3: Notice Board + Yearly Graph
+   Row 4: Total Orders + Recent Activity
+
+   This overrides/removes the old 1301px–1359px stacked desktop layout.
+*/
+
+@media (min-width: 1301px) and (max-width: 1599px) {
+  .main {
+    padding: 28px 24px !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+    max-width: calc(100vw - var(--sidebar-w)) !important;
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr) !important;
+    grid-template-areas:
+      "stats monthly"
+      "calendar calendar"
+      "notice yearly"
+      "orders activity" !important;
+    gap: 18px !important;
+    overflow-x: hidden !important;
+  }
+
+  .stats-grid {
+    grid-area: stats !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .monthly-panel {
+    grid-area: monthly !important;
+  }
+
+  .calendar-panel {
+    grid-area: calendar !important;
+  }
+
+  .notice-panel {
+    grid-area: notice !important;
+  }
+
+  .yearly-panel {
+    grid-area: yearly !important;
+  }
+
+  .orders-panel {
+    grid-area: orders !important;
+  }
+
+  .activity-panel {
+    grid-area: activity !important;
+  }
+
+  .monthly-panel,
+  .calendar-panel,
+  .notice-panel,
+  .yearly-panel,
+  .orders-panel,
+  .activity-panel,
+  .panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .stat-card {
+    min-height: 142px !important;
+    padding: 20px !important;
+  }
+
+  .calendar-panel .calendar {
+    max-width: 760px !important;
+    margin-inline: auto !important;
+  }
+}
+
+/* Very tight desktop before tablet:
+   Keep same requested layout, but reduce spacing and card/chart sizes slightly. */
+@media (min-width: 1301px) and (max-width: 1180px) {
+  .main {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+    gap: 16px !important;
+  }
+
+  .stats-grid {
+    gap: 12px !important;
+  }
+
+  .stat-card {
+    min-height: 132px !important;
+    padding: 17px !important;
+    gap: 10px !important;
+  }
+
+  .stat-card .stat-icon {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .stat-card p {
+    font-size: .84rem !important;
+  }
+
+  .stat-card strong {
+    font-size: 1.65rem !important;
+  }
+
+  .stat-card a {
+    font-size: .78rem !important;
+  }
+
+  .monthly-panel.donut-chart-mode .radial-chart,
+  .monthly-panel .radial-chart {
+    width: min(220px, 100%) !important;
+  }
+
+  .monthly-panel .chart-legend {
+    font-size: .8rem !important;
+    gap: 10px !important;
+  }
+
+  .panel {
+    padding: 18px !important;
+  }
+}
+
+
+/* ===== LATEST UPDATE: TABLET VIEW EXTENDED TO 1300PX ===== */
+/* Desktop-specific layout now starts at 1301px.
+   769px–1300px is treated as tablet view.
+*/
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .app-shell {
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .main {
+    margin-left: var(--sidebar-w) !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+    max-width: calc(100vw - var(--sidebar-w)) !important;
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-grid,
+  .panel,
+  .stats-grid,
+  .monthly-panel,
+  .calendar-panel,
+  .notice-panel,
+  .yearly-panel,
+  .orders-panel,
+  .activity-panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+}
+
+
+/* ===== LATEST UPDATE: KEEP DESKTOP RULES AWAY FROM 881PX–1300PX TABLET LAYOUT ===== */
+/* Desktop starts at 1301px. This prevents older desktop overrides from changing
+   the tablet layout copied from 881px.
+*/
+
+@media (min-width: 881px) and (max-width: 1300px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-areas:
+      "stats stats"
+      "monthly monthly"
+      "calendar notice"
+      "yearly yearly"
+      "orders orders"
+      "activity activity" !important;
+  }
+}
+
+
+/* ===== FINAL BREAKPOINT CLEANUP: REMOVE 1301PX BREAKPOINT ===== */
+/* Breakpoints now:
+   Mobile: 0px–768px
+   Tablet: 769px–1300px
+   Desktop: 1301px and up
+
+   Old desktop behavior below 1301px is disabled/overridden.
+*/
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-areas:
+      "stats stats"
+      "monthly monthly"
+      "calendar notice"
+      "yearly yearly"
+      "orders orders"
+      "activity activity" !important;
+  }
+
+  .stats-grid {
+    grid-area: stats !important;
+  }
+
+  .monthly-panel { grid-area: monthly !important; }
+  .calendar-panel { grid-area: calendar !important; }
+  .notice-panel { grid-area: notice !important; }
+  .yearly-panel { grid-area: yearly !important; }
+  .orders-panel { grid-area: orders !important; }
+  .activity-panel { grid-area: activity !important; }
+}
+
+@media (min-width: 1301px) {
+  .main {
+    margin-left: var(--sidebar-w) !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+  }
+}
+
+
+
+
+/* ===== FINAL GUARD: DESKTOP STARTS AT 1301PX - CLEAN ===== */
+@media (min-width: 1301px) {
+  .main {
+    margin-left: var(--sidebar-w) !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+  }
+}

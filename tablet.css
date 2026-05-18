@@ -1,0 +1,1081 @@
+@media (min-width: 769px) and (max-width: 1300px) {
+  :root {
+    --sidebar-w: 88px;
+    --radius: 20px;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w);
+    padding: 20px 12px;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .brand span,
+  .nav-item span:last-child,
+  .theme-label {
+    display: none;
+  }
+
+  .brand-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+  }
+
+  .nav-item {
+    width: 52px;
+    min-height: 52px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .nav-item:hover {
+    transform: translateY(-3px);
+  }
+
+  .theme-card {
+    width: 58px;
+    padding: 12px 7px;
+    margin-top: auto;
+  }
+
+  .theme-control {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 1.15rem;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 24px;
+  }
+
+  .theme-toggle span {
+    width: 18px;
+    height: 18px;
+  }
+
+  html[data-theme="dark"] .theme-toggle span {
+    transform: translateX(16px);
+  }
+
+  .main {
+    margin-left: var(--sidebar-w);
+    width: calc(100% - var(--sidebar-w));
+    padding: 22px 18px;
+    overflow-x: hidden;
+  }
+
+  .topbar {
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .topbar h1 {
+    flex: 0 0 auto;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    margin-right: 10px;
+  }
+
+  .topbar-actions {
+    width: auto;
+    max-width: none;
+    margin-left: auto;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: clamp(6px, 1vw, 12px);
+    font-size: clamp(.62rem, 1.05vw, .76rem);
+    line-height: 1;
+    overflow: visible;
+  }
+
+  .topbar-actions span,
+  .logout-btn {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    gap: 5px;
+  }
+
+  .topbar-actions i,
+  .logout-btn i {
+    width: clamp(13px, 1.4vw, 17px);
+    height: clamp(13px, 1.4vw, 17px);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "stats stats"
+      "monthly monthly"
+      "calendar notice"
+      "yearly yearly"
+      "orders orders"
+      "activity activity";
+    gap: 16px;
+  }
+
+  .stats-grid {
+    grid-area: stats;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .stat-card {
+    min-height: 132px;
+    padding: 16px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stat-card p {
+    font-size: .8rem;
+    margin-bottom: 5px;
+  }
+
+  .stat-card strong {
+    font-size: 1.65rem;
+    margin-bottom: 8px;
+  }
+
+  .stat-card a {
+    font-size: .78rem;
+  }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+  }
+
+  .stat-icon span {
+    width: 22px;
+    height: 22px;
+  }
+
+  .monthly-panel { grid-area: monthly; }
+  .calendar-panel { grid-area: calendar; }
+  .notice-panel { grid-area: notice; }
+  .yearly-panel { grid-area: yearly; }
+  .orders-panel { grid-area: orders; }
+  .activity-panel { grid-area: activity; }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .monthly-panel .monthly-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    gap: 22px;
+  }
+
+  .monthly-panel .radial-chart {
+    align-self: center;
+    justify-self: center;
+    margin: 0;
+  }
+
+  .monthly-panel .chart-legend {
+    width: auto;
+    min-width: 220px;
+    max-width: 280px;
+    margin: 0;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .monthly-panel .chart-legend li {
+    text-align: left;
+  }
+
+  .calendar-panel,
+  .notice-panel {
+    min-height: 360px;
+  }
+
+  .weekdays,
+  .dates {
+    gap: 7px 5px;
+  }
+
+  .dates span {
+    padding: 7px 0;
+  }
+
+  .notice-list div {
+    grid-template-columns: 10px minmax(0, 1fr);
+    gap: 10px 12px;
+    padding: 7px 0;
+  }
+
+  .notice-list time {
+    grid-column: 2;
+    justify-self: start;
+    font-size: .78rem;
+    margin-top: -5px;
+  }
+
+  .line-chart {
+    min-height: 250px;
+  }
+
+  .line-chart svg {
+    height: 225px;
+  }
+
+  .orders-panel,
+  .activity-panel {
+    width: 100%;
+  }
+
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 680px;
+  }
+
+  .activity-list div {
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 880px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "stats"
+      "monthly"
+      "calendar"
+      "notice"
+      "yearly"
+      "orders"
+      "activity";
+  }
+
+  .calendar-panel,
+  .notice-panel {
+    min-height: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 860px) {
+  .topbar h1 {
+    font-size: 1.2rem;
+  }
+
+  .topbar-actions {
+    gap: 5px;
+    font-size: .58rem;
+  }
+
+  .topbar-actions span,
+  .logout-btn {
+    gap: 4px;
+  }
+
+  .topbar-actions i,
+  .logout-btn i {
+    width: 12px;
+    height: 12px;
+  }
+
+  .monthly-panel .monthly-content {
+    gap: 14px;
+  }
+
+  .monthly-panel .radial-chart {
+    transform: scale(.82);
+    transform-origin: center;
+    margin: -18px 0;
+  }
+
+  .monthly-panel .chart-legend {
+    min-width: 200px;
+    max-width: 240px;
+    font-size: .82rem;
+  }
+}
+
+
+/* ===== LATEST TABLET FIX: ISOLATE YEARLY GRAPH RESPONSIVENESS ===== */
+/* Prevent generic tablet .line-chart rules from affecting the Yearly Graph. */
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .yearly-panel {
+    overflow: hidden !important;
+  }
+
+  .yearly-panel .yearly-graph-wrap {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
+
+  .yearly-panel .line-chart.enhanced-line-chart {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .yearly-panel .line-chart.enhanced-line-chart svg {
+    min-width: 0 !important;
+    max-width: calc(100% - 36px) !important;
+  }
+
+  .yearly-panel .line-chart.enhanced-line-chart .x-labels {
+    display: none !important;
+  }
+}
+
+
+/* ===== LATEST UPDATE: APPLY 881PX TABLET LAYOUT UP TO 1300PX ===== */
+/* Requested:
+   Use the same layout seen at 881px for the whole tablet range up to 1300px.
+   Range affected: 881px–1300px only.
+   Mobile and smaller tablet 769px–880px stay untouched.
+*/
+
+@media (min-width: 881px) and (max-width: 1300px) {
+  .dashboard-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-areas:
+      "stats stats"
+      "monthly monthly"
+      "calendar notice"
+      "yearly yearly"
+      "orders orders"
+      "activity activity" !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .stats-grid {
+    grid-area: stats !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .monthly-panel { grid-area: monthly !important; }
+  .calendar-panel { grid-area: calendar !important; }
+  .notice-panel { grid-area: notice !important; }
+  .yearly-panel { grid-area: yearly !important; }
+  .orders-panel { grid-area: orders !important; }
+  .activity-panel { grid-area: activity !important; }
+
+  .calendar-panel,
+  .notice-panel {
+    min-height: 360px !important;
+  }
+
+  .yearly-panel,
+  .orders-panel,
+  .activity-panel {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .monthly-panel .monthly-content {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 18px !important;
+  }
+
+  .monthly-panel .chart-legend {
+    width: auto !important;
+    min-width: 220px !important;
+    max-width: 280px !important;
+    margin: 0 !important;
+  }
+}
+
+/* At 881px–980px, keep the same 881 layout but slightly compact internals. */
+@media (min-width: 881px) and (max-width: 980px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .stat-card {
+    min-height: 126px !important;
+    padding: 14px !important;
+  }
+
+  .stat-card p {
+    font-size: .74rem !important;
+  }
+
+  .stat-card strong {
+    font-size: 1.45rem !important;
+  }
+
+  .stat-card a {
+    font-size: .72rem !important;
+  }
+
+  .monthly-panel .monthly-content {
+    gap: 12px !important;
+  }
+}
+
+
+/* ===== FINAL GUARD: TABLET IS 769PX–1300PX ===== */
+@media (min-width: 769px) and (max-width: 1300px) {
+  .dashboard-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-areas:
+      "stats stats"
+      "monthly monthly"
+      "calendar notice"
+      "yearly yearly"
+      "orders orders"
+      "activity activity" !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+
+/* ===== SIDEBAR ONLY: FULL SIDEBAR FROM 1025PX TO 1300PX ===== */
+/* Layout stays tablet up to 1300px, but sidebar becomes full desktop-style at 1025px. */
+
+@media (min-width: 1025px) and (max-width: 1300px) {
+  :root {
+    --sidebar-w: 280px !important;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w) !important;
+    padding: 34px 26px !important;
+    align-items: stretch !important;
+    gap: 32px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .brand {
+    justify-content: flex-start !important;
+    gap: 15px !important;
+  }
+
+  .brand span,
+  .nav-item span:last-child,
+  .theme-label {
+    display: inline !important;
+  }
+
+  .brand-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 16px !important;
+  }
+
+  .nav {
+    gap: 8px !important;
+  }
+
+  .nav-item {
+    width: 100% !important;
+    min-height: 48px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+    gap: 12px !important;
+  }
+
+  .nav-item:hover {
+    transform: none !important;
+  }
+
+  .theme-card {
+    width: 100% !important;
+    padding: 16px !important;
+    margin-top: auto !important;
+  }
+
+  .theme-control {
+    flex-direction: row !important;
+    gap: 10px !important;
+    font-size: 1rem !important;
+  }
+
+  .theme-toggle {
+    width: 48px !important;
+    height: 28px !important;
+  }
+
+  .theme-toggle span {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  html[data-theme="dark"] .theme-toggle span {
+    transform: translateX(20px) !important;
+  }
+
+  .main {
+    margin-left: var(--sidebar-w) !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+    max-width: calc(100vw - var(--sidebar-w)) !important;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+    overflow-x: hidden !important;
+  }
+
+  .topbar {
+    gap: 12px !important;
+  }
+
+  .topbar-actions {
+    gap: 8px !important;
+    font-size: clamp(.62rem, .85vw, .72rem) !important;
+  }
+}
+
+/* Keep compact/icon sidebar below 1025px. */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --sidebar-w: 88px !important;
+  }
+}
+
+
+/* ===== LATEST UPDATE: TABLET COMPACT SIDEBAR + CLICK TO EXPAND ===== */
+/* Tablet range stays 769px–1300px.
+   Default tablet sidebar is compact again.
+   Click the tablet sidebar toggle/brand to expand/collapse.
+*/
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  :root {
+    --sidebar-w: 88px !important;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w) !important;
+    padding: 20px 12px !important;
+    align-items: center !important;
+    gap: 22px !important;
+    overflow-y: auto !important;
+    overflow-x: visible !important;
+  }
+
+  .brand {
+    width: 100% !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+  }
+
+  .brand span,
+  .nav-item span:last-child,
+  .theme-label,
+  .sidebar-logout-btn span:last-child {
+    display: none !important;
+  }
+
+  .brand-icon {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 14px !important;
+  }
+
+  .side-nav,
+  .nav {
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  .nav-item {
+    width: 52px !important;
+    min-height: 52px !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .nav-item:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  .theme-card {
+    width: 58px !important;
+    padding: 12px 7px !important;
+    margin-top: auto !important;
+  }
+
+  .theme-control {
+    flex-direction: column !important;
+    gap: 8px !important;
+    font-size: 1.15rem !important;
+  }
+
+  .theme-toggle {
+    width: 40px !important;
+    height: 24px !important;
+  }
+
+  .theme-toggle span {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  html[data-theme="dark"] .theme-toggle span {
+    transform: translateX(16px) !important;
+  }
+
+  .sidebar-logout-btn {
+    width: 52px !important;
+    min-height: 52px !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .main {
+    margin-left: var(--sidebar-w) !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+    max-width: calc(100vw - var(--sidebar-w)) !important;
+    overflow-x: hidden !important;
+  }
+
+  .tablet-sidebar-toggle {
+    position: absolute !important;
+    top: 84px !important;
+    right: -14px !important;
+    z-index: 70 !important;
+    width: 28px !important;
+    height: 42px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--text) !important;
+    background: var(--panel-solid) !important;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .12) !important;
+    cursor: pointer !important;
+    transition:
+      transform .24s var(--ease),
+      background .24s var(--ease),
+      color .24s var(--ease),
+      border-color .24s var(--ease) !important;
+  }
+
+  html[data-theme="dark"] .tablet-sidebar-toggle {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .24) !important;
+  }
+
+  .tablet-sidebar-toggle:hover {
+    color: #fff !important;
+    background: var(--blue) !important;
+    border-color: rgba(36, 107, 254, .40) !important;
+  }
+
+  .tablet-sidebar-toggle span {
+    display: block !important;
+    font-size: 1.2rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    transform: translateX(1px) !important;
+    transition: transform .24s var(--ease) !important;
+  }
+}
+
+/* Expanded tablet sidebar state */
+@media (min-width: 769px) and (max-width: 1300px) {
+  html.tablet-sidebar-expanded {
+    --sidebar-w: 280px !important;
+  }
+
+  html.tablet-sidebar-expanded .sidebar {
+    width: var(--sidebar-w) !important;
+    padding: 34px 26px !important;
+    align-items: stretch !important;
+    gap: 32px !important;
+    overflow-y: auto !important;
+    overflow-x: visible !important;
+  }
+
+  html.tablet-sidebar-expanded .brand {
+    justify-content: flex-start !important;
+    gap: 15px !important;
+  }
+
+  html.tablet-sidebar-expanded .brand span,
+  html.tablet-sidebar-expanded .nav-item span:last-child,
+  html.tablet-sidebar-expanded .theme-label,
+  html.tablet-sidebar-expanded .sidebar-logout-btn span:last-child {
+    display: inline !important;
+  }
+
+  html.tablet-sidebar-expanded .brand-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 16px !important;
+  }
+
+  html.tablet-sidebar-expanded .side-nav,
+  html.tablet-sidebar-expanded .nav {
+    align-items: stretch !important;
+  }
+
+  html.tablet-sidebar-expanded .nav-item {
+    width: 100% !important;
+    min-height: 48px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+    gap: 12px !important;
+  }
+
+  html.tablet-sidebar-expanded .nav-item:hover {
+    transform: none !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-card {
+    width: 100% !important;
+    padding: 16px !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-control {
+    flex-direction: row !important;
+    gap: 10px !important;
+    font-size: 1rem !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-toggle {
+    width: 48px !important;
+    height: 28px !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-toggle span {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  html[data-theme="dark"].tablet-sidebar-expanded .theme-toggle span {
+    transform: translateX(20px) !important;
+  }
+
+  html.tablet-sidebar-expanded .sidebar-logout-btn {
+    width: 100% !important;
+    min-height: 48px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+    gap: 12px !important;
+  }
+
+  html.tablet-sidebar-expanded .tablet-sidebar-toggle span {
+    transform: rotate(180deg) translateX(-1px) !important;
+  }
+}
+
+/* Hide tablet sidebar toggle outside tablet range */
+@media (max-width: 768px), (min-width: 1301px) {
+  .tablet-sidebar-toggle {
+    display: none !important;
+  }
+}
+
+
+/* ===== LATEST FIX: TABLET SIDEBAR MOBILE-LIKE EXPAND WITHOUT BUTTON ===== */
+/* Tablet range: 769px–1300px
+   Default: compact sidebar rail.
+   Click the compact sidebar/brand area to expand.
+   No extra toggle button.
+*/
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .tablet-sidebar-toggle {
+    display: none !important;
+  }
+
+  :root {
+    --sidebar-w: 88px !important;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w) !important;
+    padding: 20px 12px !important;
+    align-items: center !important;
+    gap: 22px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    cursor: pointer !important;
+    transition:
+      width .28s var(--ease),
+      padding .28s var(--ease),
+      box-shadow .28s var(--ease),
+      background .28s var(--ease) !important;
+  }
+
+  .brand {
+    width: 100% !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+  }
+
+  .brand span,
+  .nav-item span:last-child,
+  .theme-label,
+  .sidebar-logout-btn span:last-child {
+    display: none !important;
+  }
+
+  .brand-icon {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 14px !important;
+  }
+
+  .side-nav,
+  .nav {
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  .nav-item {
+    width: 52px !important;
+    min-height: 52px !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .theme-card {
+    width: 58px !important;
+    padding: 12px 7px !important;
+    margin-top: auto !important;
+  }
+
+  .theme-control {
+    flex-direction: column !important;
+    gap: 8px !important;
+    font-size: 1.15rem !important;
+  }
+
+  .theme-toggle {
+    width: 40px !important;
+    height: 24px !important;
+  }
+
+  .theme-toggle span {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  html[data-theme="dark"] .theme-toggle span {
+    transform: translateX(16px) !important;
+  }
+
+  .sidebar-logout-btn {
+    width: 52px !important;
+    min-height: 52px !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .main {
+    margin-left: var(--sidebar-w) !important;
+    width: calc(100% - var(--sidebar-w)) !important;
+    max-width: calc(100vw - var(--sidebar-w)) !important;
+    overflow-x: hidden !important;
+    transition:
+      margin-left .28s var(--ease),
+      width .28s var(--ease),
+      max-width .28s var(--ease) !important;
+  }
+
+  /* Backdrop appears only when the tablet sidebar is expanded */
+  html.tablet-sidebar-expanded .sidebar-backdrop {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  html.tablet-sidebar-expanded body,
+  body.tablet-sidebar-expanded {
+    overflow: hidden !important;
+  }
+}
+
+/* Expanded tablet sidebar: mobile-like overlay over the page, not a layout squeeze */
+@media (min-width: 769px) and (max-width: 1300px) {
+  html.tablet-sidebar-expanded {
+    --sidebar-w: 88px !important;
+  }
+
+  html.tablet-sidebar-expanded .sidebar {
+    width: 280px !important;
+    padding: 34px 26px !important;
+    align-items: stretch !important;
+    gap: 32px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    cursor: default !important;
+    z-index: 90 !important;
+    box-shadow: 24px 0 55px rgba(15, 23, 42, .18) !important;
+  }
+
+  html[data-theme="dark"].tablet-sidebar-expanded .sidebar {
+    box-shadow: 24px 0 55px rgba(0, 0, 0, .40) !important;
+  }
+
+  html.tablet-sidebar-expanded .brand {
+    justify-content: flex-start !important;
+    gap: 15px !important;
+  }
+
+  html.tablet-sidebar-expanded .brand span,
+  html.tablet-sidebar-expanded .nav-item span:last-child,
+  html.tablet-sidebar-expanded .theme-label,
+  html.tablet-sidebar-expanded .sidebar-logout-btn span:last-child {
+    display: inline !important;
+  }
+
+  html.tablet-sidebar-expanded .brand-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 16px !important;
+  }
+
+  html.tablet-sidebar-expanded .side-nav,
+  html.tablet-sidebar-expanded .nav {
+    align-items: stretch !important;
+  }
+
+  html.tablet-sidebar-expanded .nav-item {
+    width: 100% !important;
+    min-height: 48px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+    gap: 12px !important;
+  }
+
+  html.tablet-sidebar-expanded .nav-item:hover {
+    transform: none !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-card {
+    width: 100% !important;
+    padding: 16px !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-control {
+    flex-direction: row !important;
+    gap: 10px !important;
+    font-size: 1rem !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-toggle {
+    width: 48px !important;
+    height: 28px !important;
+  }
+
+  html.tablet-sidebar-expanded .theme-toggle span {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  html[data-theme="dark"].tablet-sidebar-expanded .theme-toggle span {
+    transform: translateX(20px) !important;
+  }
+
+  html.tablet-sidebar-expanded .sidebar-logout-btn {
+    width: 100% !important;
+    min-height: 48px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+    gap: 12px !important;
+  }
+
+  /* Main content remains in compact-sidebar position while sidebar overlays like mobile */
+  html.tablet-sidebar-expanded .main {
+    margin-left: 88px !important;
+    width: calc(100% - 88px) !important;
+    max-width: calc(100vw - 88px) !important;
+  }
+}
+
+/* Outside tablet range, never keep expanded tablet state visuals */
+@media (max-width: 768px), (min-width: 1301px) {
+  .tablet-sidebar-toggle {
+    display: none !important;
+  }
+}
+
+
+/* ===== LATEST UPDATE: TABLET SIDEBAR SWIPE ONLY ===== */
+/* Tablet sidebar:
+   - compact by default
+   - swipe right on the compact sidebar to expand
+   - swipe left on the expanded sidebar to collapse
+   - no click-to-expand behavior
+*/
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .sidebar {
+    cursor: default !important;
+    touch-action: pan-y !important;
+    user-select: none !important;
+  }
+
+  .sidebar.swiping {
+    transition: none !important;
+  }
+
+  .brand {
+    cursor: default !important;
+  }
+
+  .nav-item,
+  .theme-card,
+  .sidebar-logout-btn {
+    cursor: pointer !important;
+  }
+
+  html.tablet-sidebar-expanded .sidebar {
+    cursor: default !important;
+  }
+
+  html.tablet-sidebar-expanded .sidebar-backdrop {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  html.tablet-sidebar-expanded body,
+  body.tablet-sidebar-expanded {
+    overflow: hidden !important;
+  }
+}

@@ -1,0 +1,162 @@
+/* ===== NOTIFICATIONS MODULE - ISOLATED ===== */
+
+.nav-item {
+  position: relative;
+}
+
+.notification-nav-badge,
+.notification-tab-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #ef4444;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(239, 68, 68, .22);
+}
+
+.notification-nav-badge {
+  margin-left: auto;
+}
+
+.notification-tab-badge {
+  margin-left: 8px;
+}
+
+.notification-nav-badge[hidden],
+.notification-tab-badge[hidden] {
+  display: none !important;
+}
+
+.orders-data-card {
+  position: relative;
+}
+
+.orders-data-card.orders-has-unread {
+  border-color: rgba(36, 107, 254, .42);
+}
+
+.orders-data-card.orders-has-unread h3,
+.orders-data-card.orders-has-unread .orders-data-field strong {
+  font-weight: 750;
+}
+
+.notification-card-badge {
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 7px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  background: var(--blue);
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(36, 107, 254, .18);
+}
+
+.notification-card-badge.updated {
+  background: #f97316;
+  box-shadow: 0 8px 18px rgba(249, 115, 22, .20);
+}
+
+html[data-theme="dark"] .orders-data-card.orders-has-unread {
+  border-color: rgba(96, 165, 250, .42);
+}
+
+html[data-theme="dark"] .notification-card-badge {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .22);
+}
+
+@media (max-width: 768px) {
+  .notification-nav-badge,
+  .notification-tab-badge {
+    min-width: 18px;
+    height: 18px;
+    font-size: .62rem;
+  }
+}
+
+
+/* Better visible NEW/UPDATED badge above the P.O. number */
+.orders-data-card .orders-data-card-head > div {
+  min-width: 0;
+}
+
+.notification-card-badge {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  font-size: .66rem;
+  font-weight: 850;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  line-height: 1;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, .22);
+}
+
+.notification-card-badge.new {
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, .22);
+}
+
+.notification-card-badge.updated {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, .22);
+}
+
+html[data-theme="dark"] .notification-card-badge.new {
+  background: linear-gradient(135deg, #3b82f6, #22d3ee);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+}
+
+html[data-theme="dark"] .notification-card-badge.updated {
+  background: linear-gradient(135deg, #8b5cf6, #c084fc);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+}
+
+/* Keep the NEW badge readable even on yellow/red delivery alert cards. */
+.orders-data-card.delivery-warning .notification-card-badge.new,
+.orders-data-card.delivery-danger .notification-card-badge.new {
+  background: linear-gradient(135deg, #1d4ed8, #0891b2);
+}
+
+.orders-data-card.delivery-warning .notification-card-badge.updated,
+.orders-data-card.delivery-danger .notification-card-badge.updated {
+  background: linear-gradient(135deg, #6d28d9, #9333ea);
+}
+
+/* ===== LATEST PATCH: DELIVERY CARD NOTIFICATION VISIBILITY ===== */
+.delivery-record-card.delivery-has-unread {
+  border-color: rgba(36, 107, 254, .42) !important;
+}
+
+.delivery-record-card.delivery-has-unread .pr-record-title strong,
+.delivery-record-card.delivery-has-unread .pr-field strong {
+  font-weight: 750;
+}
+
+html[data-theme="dark"] .delivery-record-card.delivery-has-unread {
+  border-color: rgba(96, 165, 250, .42) !important;
+}
+
+.delivery-record-card .notification-card-badge {
+  margin-bottom: 8px;
+}

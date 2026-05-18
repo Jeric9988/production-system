@@ -1,0 +1,1950 @@
+/* ===== ORDERS TAB ONLY - OPTIMIZED CLEAN VERSION ===== */
+
+.view-section {
+  display: none;
+}
+
+.view-section.active-view {
+  display: block;
+}
+
+.orders-view {
+  animation: ordersFadeIn .25s var(--ease);
+}
+
+@keyframes ordersFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.orders-page-head {
+  display: none;
+}
+
+.add-order-form {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "title title"
+    "main main"
+    "materials date"
+    "actions actions";
+  column-gap: 22px;
+  row-gap: 24px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1120px;
+  min-width: 0;
+  min-height: 670px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 34px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .045), transparent 42%),
+    var(--panel);
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+}
+
+.add-order-form,
+.add-order-form:hover,
+.add-order-form:focus,
+.add-order-form:focus-within {
+  border-color: var(--line);
+  outline: none;
+  box-shadow: var(--shadow);
+  transform: none;
+  filter: none;
+}
+
+.orders-form-title {
+  grid-area: title;
+  margin: 0 0 -4px;
+}
+
+.orders-form-title h2 {
+  margin: 0;
+  font-size: clamp(1.55rem, 2.3vw, 2rem);
+  letter-spacing: -.05em;
+}
+
+.order-main-card {
+  grid-area: main;
+}
+
+.materials-card {
+  grid-area: materials;
+  align-self: stretch;
+}
+
+.delivery-date-card {
+  grid-area: date;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.order-form-card,
+.order-main-card,
+.materials-card,
+.delivery-date-card,
+.order-form-grid,
+.materials-grid,
+.form-field,
+.mini-calendar {
+  transform: none;
+  box-shadow: none;
+  filter: none;
+  outline: none;
+}
+
+.order-form-card {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  backdrop-filter: none;
+  padding: 0;
+  min-width: 0;
+}
+
+.orders-card-title {
+  display: none;
+}
+
+.order-form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 22px 34px;
+  background: transparent;
+  border: 0;
+}
+
+.materials-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 355px;
+  height: 355px;
+  width: 100%;
+  max-width: none;
+  gap: 22px;
+  background: transparent;
+  border: 0;
+}
+
+.materials-grid .form-field:last-child {
+  margin-top: auto;
+}
+
+.full-field {
+  grid-column: 1 / -1;
+}
+
+.form-field {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+}
+
+.form-field span,
+.delivery-date-card::before {
+  color: var(--text);
+  font-weight: 800;
+  font-size: .92rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .72);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 0 15px;
+  outline: none;
+  font-weight: 400;
+  box-shadow: none;
+  filter: none;
+  transform: none;
+}
+
+html[data-theme="dark"] .form-field input,
+html[data-theme="dark"] .form-field select,
+html[data-theme="dark"] .form-field textarea {
+  background: rgba(15, 23, 42, .52);
+}
+
+.form-field input::placeholder {
+  color: color-mix(in srgb, var(--muted) 75%, transparent);
+  font-weight: 400;
+}
+
+.orders-view .form-field input:hover,
+.orders-view .form-field input:focus,
+.orders-view .form-field input:focus-visible,
+.orders-view .form-field select:hover,
+.orders-view .form-field select:focus,
+.orders-view .form-field select:focus-visible,
+.orders-view .form-field textarea:hover,
+.orders-view .form-field textarea:focus,
+.orders-view .form-field textarea:focus-visible {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, .72);
+  box-shadow: none;
+  outline: none;
+  filter: none;
+  transform: none;
+}
+
+html[data-theme="dark"] .orders-view .form-field input:hover,
+html[data-theme="dark"] .orders-view .form-field input:focus,
+html[data-theme="dark"] .orders-view .form-field input:focus-visible,
+html[data-theme="dark"] .orders-view .form-field select:hover,
+html[data-theme="dark"] .orders-view .form-field select:focus,
+html[data-theme="dark"] .orders-view .form-field select:focus-visible,
+html[data-theme="dark"] .orders-view .form-field textarea:hover,
+html[data-theme="dark"] .orders-view .form-field textarea:focus,
+html[data-theme="dark"] .orders-view .form-field textarea:focus-visible {
+  background: rgba(15, 23, 42, .52);
+}
+
+.date-field {
+  display: none;
+}
+
+.delivery-date-card::before {
+  content: "DELIVERY DATE";
+  display: block;
+  margin-bottom: 9px;
+}
+
+.mini-calendar {
+  width: 100%;
+  min-height: 355px;
+  height: 355px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .055), transparent),
+    rgba(255,255,255,.42);
+}
+
+html[data-theme="dark"] .mini-calendar {
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .10), transparent),
+    rgba(15, 23, 42, .36);
+}
+
+.mini-calendar,
+.mini-calendar:hover,
+.mini-calendar:focus,
+.mini-calendar:focus-visible,
+.mini-calendar:focus-within {
+  border-color: var(--line);
+  outline: none;
+  box-shadow: none;
+  transform: none;
+  filter: none;
+}
+
+.mini-calendar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.mini-calendar-head button {
+  border: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: none;
+  transform: none;
+  outline: none;
+}
+
+.mini-weekdays,
+.mini-dates {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  text-align: center;
+  gap: 10px 6px;
+}
+
+.mini-weekdays {
+  color: var(--muted);
+  font-weight: 800;
+  font-size: .74rem;
+  margin-bottom: 10px;
+}
+
+.mini-dates span {
+  display: grid;
+  place-items: center;
+  min-height: 38px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: .84rem;
+  cursor: pointer;
+  box-shadow: none;
+  transform: none;
+  filter: none;
+  outline: none;
+}
+
+.mini-dates .muted {
+  color: #a8b2c2;
+}
+
+.mini-dates .selected,
+.mini-dates .selected:hover,
+.mini-dates .selected:focus,
+.mini-dates .selected:focus-visible {
+  color: #fff;
+  background: var(--blue);
+  box-shadow: 0 10px 18px rgba(36,107,254,.25);
+}
+
+.orders-view *:hover,
+.orders-view *:focus,
+.orders-view *:focus-visible,
+.orders-view *:focus-within {
+  transform: none;
+  filter: none;
+  outline: none;
+}
+
+.orders-view *:hover,
+.orders-view *:focus,
+.orders-view *:focus-visible {
+  box-shadow: none;
+}
+
+.orders-view .add-order-form,
+.orders-view .mini-dates .selected {
+  box-shadow: var(--shadow);
+}
+
+.orders-view .mini-dates .selected {
+  box-shadow: 0 10px 18px rgba(36,107,254,.25);
+}
+
+.orders-mobile-actions {
+  grid-area: actions;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.orders-primary-btn {
+  border: 0;
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue), #6fa0ff);
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: none;
+  transform: none;
+  filter: none;
+  outline: none;
+}
+
+.orders-mobile-actions .ghost-btn,
+.orders-mobile-actions .orders-primary-btn {
+  min-width: 132px;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .add-order-form {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "main"
+      "materials"
+      "date"
+      "actions";
+    min-height: auto;
+    padding: 30px 24px 24px;
+    gap: 20px;
+  }
+
+  .materials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: auto;
+    height: auto;
+    max-width: none;
+    gap: 14px;
+  }
+
+  .materials-grid .form-field:last-child {
+    margin-top: 0;
+  }
+
+  .mini-calendar {
+    min-height: auto;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .add-order-form {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "main"
+      "materials"
+      "date"
+      "actions";
+    min-height: auto;
+    gap: 16px;
+    padding: 16px 14px 14px;
+    border-radius: 22px;
+  }
+
+  .orders-form-title h2 {
+    font-size: 1.35rem;
+  }
+
+  .order-form-grid,
+  .materials-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    max-width: none;
+    min-height: auto;
+    height: auto;
+  }
+
+  .materials-grid .form-field:last-child {
+    margin-top: 0;
+  }
+
+  .form-field span,
+  .delivery-date-card::before {
+    font-size: .8rem;
+  }
+
+  .form-field input,
+  .form-field select {
+    min-height: 48px;
+    border-radius: 13px;
+  }
+
+  .mini-calendar {
+    padding: 12px;
+    border-radius: 16px;
+    min-height: auto;
+    height: auto;
+  }
+
+  .mini-calendar-head {
+    margin-bottom: 12px;
+  }
+
+  .mini-weekdays,
+  .mini-dates {
+    gap: 6px 3px;
+  }
+
+  .mini-dates span {
+    min-height: 30px;
+    font-size: .76rem;
+  }
+
+  .orders-mobile-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
+    gap: 10px;
+  }
+
+  .orders-mobile-actions .ghost-btn,
+  .orders-mobile-actions .orders-primary-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .orders-mobile-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .add-order-form {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* Fixes months with 6 calendar rows where the last row overflows below the calendar box. */
+
+.orders-view .mini-calendar {
+  overflow: hidden !important;
+}
+
+.orders-view .mini-calendar-head {
+  margin-bottom: 14px !important;
+}
+
+.orders-view .mini-weekdays,
+.orders-view .mini-dates {
+  gap: 7px 6px !important;
+}
+
+.orders-view .mini-weekdays {
+  margin-bottom: 8px !important;
+}
+
+.orders-view .mini-dates span {
+  min-height: 32px !important;
+  height: 32px !important;
+  font-size: .82rem !important;
+}
+
+/* Desktop calendar keeps fixed visual height, but dates now fit inside it */
+@media (min-width: 1025px) {
+  .orders-view .mini-calendar {
+    min-height: 355px !important;
+    height: 355px !important;
+  }
+}
+
+/* Tablet/mobile should allow natural height while still preventing overflow */
+@media (max-width: 1024px) {
+  .orders-view .mini-calendar {
+    height: auto !important;
+    min-height: auto !important;
+  }
+}
+
+/* ===== ORDERS REAL DATA LIST - SQLITE START ===== */
+
+.orders-list-panel {
+  width: 100%;
+  max-width: 1120px;
+  margin: 24px auto 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.orders-list-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.orders-list-head h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  letter-spacing: -.035em;
+}
+
+.orders-list-head p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: .86rem;
+  font-weight: 600;
+}
+
+.orders-list-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: min(420px, 100%);
+}
+
+.orders-search-input {
+  width: min(320px, 100%);
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0 14px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .72);
+  outline: none;
+  font-weight: 400;
+}
+
+html[data-theme="dark"] .orders-search-input {
+  background: rgba(15, 23, 42, .52);
+}
+
+.orders-search-input:focus {
+  border-color: rgba(36, 107, 254, .35);
+  box-shadow: 0 0 0 4px rgba(36, 107, 254, .10);
+}
+
+.orders-refresh-btn {
+  min-height: 44px;
+  border: 1px solid rgba(36, 107, 254, .20);
+  border-radius: 14px;
+  padding: 0 16px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+}
+
+.orders-refresh-btn:hover {
+  transform: translateY(-1px);
+  color: #fff;
+  background: var(--blue);
+}
+
+.orders-feedback {
+  min-height: 20px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 750;
+}
+
+.orders-feedback.success {
+  color: var(--green);
+}
+
+.orders-feedback.error {
+  color: #ef4444;
+}
+
+.orders-list {
+  display: grid;
+  gap: 13px;
+}
+
+.orders-data-card {
+  display: grid;
+  gap: 16px;
+  padding: 17px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .50);
+  transition: border-color .2s var(--ease), background .2s var(--ease), transform .2s var(--ease);
+}
+
+html[data-theme="dark"] .orders-data-card {
+  background: rgba(15, 23, 42, .34);
+}
+
+.orders-data-card:hover {
+  border-color: rgba(36, 107, 254, .24);
+  transform: translateY(-1px);
+}
+
+.orders-data-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.orders-data-card-head h3 {
+  margin: 5px 0 0;
+  color: var(--text);
+  font-size: clamp(.98rem, 1.45vw, 1.16rem);
+  line-height: 1.35;
+  letter-spacing: -.025em;
+  overflow-wrap: anywhere;
+}
+
+.orders-data-eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.orders-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  color: var(--orange);
+  background: rgba(249, 115, 22, .14);
+  font-size: .76rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.orders-status-pill.status-production {
+  color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.orders-status-pill.status-delivered {
+  color: var(--green);
+  background: rgba(22, 184, 106, .12);
+}
+
+.orders-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(185px, 100%), 1fr));
+  gap: 12px;
+}
+
+.orders-data-field {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.orders-data-field span {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.orders-data-field strong {
+  color: var(--text);
+  font-size: .86rem;
+  font-weight: 550;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.orders-empty-state,
+.orders-loading-state {
+  display: grid;
+  gap: 6px;
+  padding: 22px;
+  border: 1px dashed var(--line);
+  border-radius: 20px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, .35);
+  text-align: center;
+}
+
+html[data-theme="dark"] .orders-empty-state,
+html[data-theme="dark"] .orders-loading-state {
+  background: rgba(15, 23, 42, .28);
+}
+
+.orders-empty-state strong,
+.orders-loading-state {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.orders-empty-state span {
+  font-size: .84rem;
+  font-weight: 400;
+}
+
+.orders-primary-btn:disabled,
+.orders-refresh-btn:disabled {
+  cursor: not-allowed;
+  opacity: .65;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .orders-list-panel {
+    margin-top: 18px;
+    padding: 16px 14px;
+    border-radius: 22px;
+  }
+
+  .orders-list-head {
+    display: grid;
+    gap: 13px;
+  }
+
+  .orders-list-actions {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .orders-search-input {
+    width: 100%;
+  }
+
+  .orders-data-card {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .orders-data-card-head {
+    display: grid;
+  }
+
+  .orders-status-pill {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 380px) {
+  .orders-list-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .orders-refresh-btn {
+    width: 100%;
+  }
+}
+
+
+/* ===== Orders P.O. duplicate validation only ===== */
+.orders-view .form-field {
+  position: relative;
+}
+
+.orders-view .form-field.has-po-error input {
+  border-color: rgba(239, 68, 68, .62) !important;
+  background: rgba(239, 68, 68, .055) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, .10) !important;
+}
+
+.orders-view .form-field.has-po-error > span {
+  color: #ef4444;
+}
+
+.orders-po-error {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 45;
+  width: fit-content;
+  max-width: min(100%, 360px);
+  padding: 9px 11px 9px 10px;
+  border: 1px solid rgba(239, 68, 68, .22);
+  border-radius: 13px;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #dc2626;
+  background: var(--panel-solid);
+  box-shadow: 0 12px 26px rgba(239, 68, 68, .12);
+  font-size: .78rem;
+  font-weight: 400;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.orders-po-error::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid rgba(239, 68, 68, .22);
+  border-left: 1px solid rgba(239, 68, 68, .22);
+  background: var(--panel-solid);
+  transform: rotate(45deg);
+}
+
+.orders-po-error-icon {
+  width: 18px;
+  height: 18px;
+  margin-top: -1px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: #ef4444;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+html[data-theme="dark"] .orders-po-error {
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, .26);
+  background: var(--panel-solid);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, .22);
+}
+
+html[data-theme="dark"] .orders-po-error::before {
+  border-color: rgba(248, 113, 113, .26);
+  background: var(--panel-solid);
+}
+
+@media (max-width: 768px) {
+  .orders-po-error {
+    width: min(100%, 360px);
+    font-size: .76rem;
+  }
+}
+
+
+/* Required field validation alerts. */
+.orders-view .form-field.has-field-error input,
+.orders-view .form-field.has-field-error select,
+.orders-view .form-field.has-field-error textarea {
+  border-color: rgba(239, 68, 68, .62) !important;
+  background: rgba(239, 68, 68, .055) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, .10) !important;
+}
+
+.orders-view .form-field.has-field-error > span {
+  color: #ef4444;
+}
+
+.orders-field-error {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 45;
+  width: fit-content;
+  max-width: min(100%, 360px);
+  padding: 9px 11px 9px 10px;
+  border: 1px solid rgba(239, 68, 68, .22);
+  border-radius: 13px;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #dc2626;
+  background: var(--panel-solid);
+  box-shadow: 0 12px 26px rgba(239, 68, 68, .12);
+  font-size: .78rem;
+  font-weight: 400;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.orders-field-error::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid rgba(239, 68, 68, .22);
+  border-left: 1px solid rgba(239, 68, 68, .22);
+  background: var(--panel-solid);
+  transform: rotate(45deg);
+}
+
+.orders-field-error-icon {
+  width: 18px;
+  height: 18px;
+  margin-top: -1px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: #ef4444;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.orders-po-error span:last-child,
+.orders-field-error span:last-child {
+  font-weight: 400;
+}
+
+html[data-theme="dark"] .orders-field-error {
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, .26);
+  background: var(--panel-solid);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, .22);
+}
+
+html[data-theme="dark"] .orders-field-error::before {
+  border-color: rgba(248, 113, 113, .26);
+  background: var(--panel-solid);
+}
+
+@media (max-width: 768px) {
+  .orders-field-error {
+    width: min(100%, 360px);
+    font-size: .76rem;
+  }
+}
+
+
+/* Keep validation alert messages regular, not bold. */
+.orders-po-error,
+.orders-field-error,
+.orders-po-error span:last-child,
+.orders-field-error span:last-child {
+  font-weight: 400 !important;
+}
+
+
+/* Keep filled Orders inputs white instead of turning blue/tinted. */
+html[data-theme="light"] .orders-view .form-field input,
+html[data-theme="light"] .orders-view .form-field select,
+html[data-theme="light"] .orders-view .form-field textarea,
+html[data-theme="light"] .orders-view .form-field input:hover,
+html[data-theme="light"] .orders-view .form-field select:hover,
+html[data-theme="light"] .orders-view .form-field textarea:hover,
+html[data-theme="light"] .orders-view .form-field input:focus,
+html[data-theme="light"] .orders-view .form-field select:focus,
+html[data-theme="light"] .orders-view .form-field textarea:focus,
+html[data-theme="light"] .orders-view .form-field input:valid,
+html[data-theme="light"] .orders-view .form-field select:valid,
+html[data-theme="light"] .orders-view .form-field textarea:valid {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] .orders-view .form-field input:-webkit-autofill,
+html[data-theme="light"] .orders-view .form-field select:-webkit-autofill,
+html[data-theme="light"] .orders-view .form-field textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+}
+
+/* Error fields use red border only; background stays white. */
+html[data-theme="light"] .orders-view .form-field.has-po-error input,
+html[data-theme="light"] .orders-view .form-field.has-field-error input,
+html[data-theme="light"] .orders-view .form-field.has-field-error select,
+html[data-theme="light"] .orders-view .form-field.has-field-error textarea {
+  background: #ffffff !important;
+}
+
+/* Calendar visibility safety. */
+.orders-view .delivery-date-card,
+.orders-view .mini-calendar {
+  display: flex;
+  flex-direction: column;
+}
+
+.orders-view .mini-dates {
+  display: grid !important;
+}
+
+/* Keep validation alert messages regular, not bold. */
+.orders-po-error,
+.orders-field-error,
+.orders-po-error span:last-child,
+.orders-field-error span:last-child {
+  font-weight: 400 !important;
+}
+
+
+/* Orders List helper/feedback text is hidden by request.
+   Field-level alerts beside textboxes/selects still show. */
+.orders-view .orders-feedback {
+  display: none !important;
+}
+
+
+/* Delivery date alert colors for Orders List cards */
+.orders-data-card.delivery-warning {
+  border-color: rgba(245, 158, 11, .46);
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, .16), rgba(245, 158, 11, .055)),
+    rgba(255, 255, 255, .72);
+}
+
+.orders-data-card.delivery-danger {
+  border-color: rgba(239, 68, 68, .50);
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, .15), rgba(239, 68, 68, .055)),
+    rgba(255, 255, 255, .72);
+}
+
+html[data-theme="dark"] .orders-data-card.delivery-warning {
+  border-color: rgba(245, 158, 11, .42);
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, .18), rgba(245, 158, 11, .075)),
+    rgba(15, 23, 42, .46);
+}
+
+html[data-theme="dark"] .orders-data-card.delivery-danger {
+  border-color: rgba(248, 113, 113, .44);
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, .18), rgba(239, 68, 68, .075)),
+    rgba(15, 23, 42, .46);
+}
+
+.orders-delivery-alert-label {
+  display: inline-flex;
+  width: fit-content;
+  margin-left: 7px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-style: normal;
+  font-size: .68rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.delivery-warning .orders-delivery-alert-label {
+  color: #b45309;
+  background: rgba(245, 158, 11, .16);
+}
+
+.delivery-danger .orders-delivery-alert-label {
+  color: #dc2626;
+  background: rgba(239, 68, 68, .14);
+}
+
+html[data-theme="dark"] .delivery-warning .orders-delivery-alert-label {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, .14);
+}
+
+html[data-theme="dark"] .delivery-danger .orders-delivery-alert-label {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, .16);
+}
+
+
+/* Orders Details Modal */
+body.orders-details-modal-open {
+  overflow: hidden;
+}
+
+.orders-data-card {
+  cursor: pointer;
+}
+
+.orders-details-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 160;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, .42);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s var(--ease);
+}
+
+.orders-details-modal-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.orders-details-modal {
+  width: min(980px, 100%);
+  max-height: min(86vh, 820px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--panel-solid);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, .24);
+  overflow: hidden;
+  transform: translateY(16px) scale(.985);
+  transition: transform .22s var(--ease);
+}
+
+.orders-details-modal-backdrop.show .orders-details-modal {
+  transform: translateY(0) scale(1);
+}
+
+html[data-theme="dark"] .orders-details-modal {
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .48);
+}
+
+.orders-details-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 24px 17px;
+  border-bottom: 1px solid var(--line);
+}
+
+.orders-details-eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.orders-details-modal-head h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  letter-spacing: -.04em;
+}
+
+.orders-details-close {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  background: var(--panel);
+  cursor: pointer;
+}
+
+.orders-details-close span {
+  font-size: 1.45rem;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+.orders-details-modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.orders-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+  gap: 13px;
+}
+
+.orders-details-field {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .52);
+}
+
+html[data-theme="dark"] .orders-details-field {
+  background: rgba(15, 23, 42, .34);
+}
+
+.orders-details-field.wide {
+  grid-column: span 2;
+}
+
+.orders-details-field span,
+.orders-edit-field span {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.orders-details-field strong {
+  color: var(--text);
+  font-size: .9rem;
+  font-weight: 400;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.orders-edit-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 18px;
+}
+
+.orders-edit-field {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.orders-edit-field.wide {
+  grid-column: 1 / -1;
+}
+
+.orders-edit-field input,
+.orders-edit-field select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0 14px;
+  outline: none;
+  color: var(--text);
+  background: #fff;
+  font-weight: 400;
+}
+
+html[data-theme="dark"] .orders-edit-field input,
+html[data-theme="dark"] .orders-edit-field select {
+  background: rgba(15, 23, 42, .52);
+}
+
+.orders-edit-field.has-edit-error input,
+.orders-edit-field.has-edit-error select {
+  border-color: rgba(239, 68, 68, .62) !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, .10) !important;
+}
+
+html[data-theme="dark"] .orders-edit-field.has-edit-error input,
+html[data-theme="dark"] .orders-edit-field.has-edit-error select {
+  background: rgba(15, 23, 42, .52) !important;
+}
+
+.orders-edit-field.has-edit-error > span {
+  color: #ef4444;
+}
+
+.orders-edit-error {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 45;
+  width: fit-content;
+  max-width: min(100%, 360px);
+  padding: 9px 11px 9px 10px;
+  border: 1px solid rgba(239, 68, 68, .22);
+  border-radius: 13px;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #dc2626;
+  background: var(--panel-solid);
+  box-shadow: 0 12px 26px rgba(239, 68, 68, .12);
+  font-size: .78rem;
+  font-weight: 400;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.orders-edit-error::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid rgba(239, 68, 68, .22);
+  border-left: 1px solid rgba(239, 68, 68, .22);
+  background: var(--panel-solid);
+  transform: rotate(45deg);
+}
+
+.orders-edit-error-icon {
+  width: 18px;
+  height: 18px;
+  margin-top: -1px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: #ef4444;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.orders-edit-form-alert {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid rgba(239, 68, 68, .22);
+  border-radius: 14px;
+  color: #dc2626;
+  background: rgba(239, 68, 68, .08);
+  font-size: .82rem;
+  font-weight: 400;
+}
+
+.orders-details-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px 22px;
+  border-top: 1px solid var(--line);
+}
+
+.orders-modal-secondary,
+.orders-modal-primary {
+  min-height: 42px;
+  border-radius: 13px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.orders-modal-secondary {
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: var(--panel);
+}
+
+.orders-modal-primary {
+  border: 1px solid rgba(36, 107, 254, .24);
+  color: #fff;
+  background: var(--blue);
+}
+
+.orders-modal-primary:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .orders-details-modal-backdrop {
+    padding: 0;
+    align-items: stretch;
+    justify-items: stretch;
+  }
+
+  .orders-details-modal {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  .orders-details-modal-head {
+    padding: 17px 15px 14px;
+  }
+
+  .orders-details-modal-body {
+    padding: 14px;
+  }
+
+  .orders-details-field.wide {
+    grid-column: auto;
+  }
+
+  .orders-edit-form {
+    grid-template-columns: 1fr;
+  }
+
+  .orders-details-modal-footer {
+    padding: 12px 14px;
+  }
+
+  .orders-modal-secondary,
+  .orders-modal-primary {
+    flex: 1 1 0;
+  }
+}
+
+
+/* Refined Orders modal layout */
+.orders-details-modal {
+  width: min(920px, calc(100vw - 36px));
+  max-height: min(88vh, 820px);
+  border-radius: 24px;
+}
+
+.orders-details-modal-head {
+  align-items: center;
+  padding: 20px 22px 16px;
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .05), transparent 42%),
+    var(--panel-solid);
+}
+
+.orders-details-modal-body {
+  padding: 18px 22px;
+  display: grid;
+  gap: 16px;
+}
+
+.orders-details-summary-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .60);
+}
+
+html[data-theme="dark"] .orders-details-summary-card {
+  background: rgba(15, 23, 42, .38);
+}
+
+.orders-details-summary-card.delivery-warning {
+  border-color: rgba(245, 158, 11, .40);
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, .12), transparent 62%),
+    rgba(255, 255, 255, .66);
+}
+
+.orders-details-summary-card.delivery-danger {
+  border-color: rgba(239, 68, 68, .42);
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, .12), transparent 62%),
+    rgba(255, 255, 255, .66);
+}
+
+html[data-theme="dark"] .orders-details-summary-card.delivery-warning {
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, .14), transparent 62%),
+    rgba(15, 23, 42, .46);
+}
+
+html[data-theme="dark"] .orders-details-summary-card.delivery-danger {
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, .14), transparent 62%),
+    rgba(15, 23, 42, .46);
+}
+
+.orders-details-summary-main {
+  min-width: 0;
+}
+
+.orders-details-summary-label {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.orders-details-summary-main strong {
+  display: block;
+  margin-top: 5px;
+  color: var(--text);
+  font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+  font-weight: 750;
+  letter-spacing: -.04em;
+  line-height: 1.1;
+}
+
+.orders-details-summary-main p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: .92rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.orders-details-summary-side {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.orders-details-section,
+.orders-edit-section {
+  display: grid;
+  gap: 10px;
+}
+
+.orders-details-section h3,
+.orders-edit-section h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: .88rem;
+  font-weight: 800;
+  letter-spacing: -.015em;
+}
+
+.orders-details-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.orders-details-field {
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .52);
+}
+
+.orders-details-field.wide {
+  grid-column: span 2;
+}
+
+.orders-details-field strong {
+  font-size: .86rem;
+}
+
+.orders-edit-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.orders-edit-section {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .42);
+}
+
+html[data-theme="dark"] .orders-edit-section {
+  background: rgba(15, 23, 42, .28);
+}
+
+.orders-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.orders-edit-field.wide {
+  grid-column: 1 / -1;
+}
+
+.orders-details-modal-footer {
+  padding: 14px 22px 18px;
+  background: var(--panel-solid);
+}
+
+.orders-modal-secondary,
+.orders-modal-primary {
+  min-width: 112px;
+}
+
+@media (max-width: 1024px) {
+  .orders-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .orders-details-modal {
+    width: 100%;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  .orders-details-modal-body {
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .orders-details-summary-card {
+    display: grid;
+    gap: 12px;
+    padding: 15px;
+  }
+
+  .orders-details-summary-side {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .orders-details-grid,
+  .orders-edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .orders-details-field.wide {
+    grid-column: auto;
+  }
+
+  .orders-edit-section {
+    padding: 12px;
+    border-radius: 18px;
+  }
+}
+
+
+/* Orders folder-style tabs */
+.orders-folder-shell {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.orders-folder-tabs {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.orders-folder-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.orders-folder-tab {
+  position: relative;
+  min-height: 54px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  background: transparent;
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+}
+
+.orders-folder-tab:hover {
+  color: var(--blue);
+}
+
+.orders-folder-tab.active {
+  color: var(--text);
+  border-color: var(--line);
+  background: var(--panel);
+}
+
+.orders-folder-body {
+  position: relative;
+  z-index: 1;
+  margin-top: -1px;
+  border: 1px solid var(--line);
+  border-radius: 0 26px 26px 26px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.orders-folder-shell.active-tab-last .orders-folder-body {
+  border-top-left-radius: 26px;
+}
+
+.orders-folder-body .add-order-form {
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.orders-tab-panel {
+  display: none;
+}
+
+.orders-tab-panel.active {
+  display: grid;
+}
+
+.orders-list-panel.orders-tab-panel.active {
+  display: block;
+}
+
+.orders-folder-body .orders-list-panel {
+  margin: 0;
+  padding: 28px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .orders-folder-shell {
+    max-width: none;
+  }
+
+  .orders-folder-tab {
+    min-height: 48px;
+    padding: 0 16px;
+    font-size: .76rem;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .orders-folder-body {
+    border-radius: 0 20px 20px 20px;
+  }
+
+  .orders-folder-shell.active-tab-last .orders-folder-body {
+    border-top-left-radius: 20px;
+  }
+
+  .orders-folder-body .orders-list-panel {
+    padding: 16px;
+  }
+}
+
+
+/* Clean white Orders folder tabs/body, no gradient */
+html[data-theme="light"] .orders-folder-tab.active,
+html[data-theme="light"] .orders-folder-body {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] .orders-folder-body .add-order-form {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] .orders-folder-body .orders-list-panel {
+  background: #ffffff !important;
+}
+
+html[data-theme="dark"] .orders-folder-tab.active,
+html[data-theme="dark"] .orders-folder-body {
+  background: var(--panel-solid) !important;
+}
+
+html[data-theme="dark"] .orders-folder-body .add-order-form,
+html[data-theme="dark"] .orders-folder-body .orders-list-panel {
+  background: var(--panel-solid) !important;
+}
+
+
+/* Remove folder tab animation so active tab switches instantly */
+.orders-folder-tab,
+.orders-folder-tab.active,
+.orders-folder-tab:hover,
+.orders-folder-body,
+.orders-tab-panel {
+  transition: none !important;
+  animation: none !important;
+}
+
+.orders-folder-tab {
+  transform: none !important;
+}
+
+.orders-folder-tab.active {
+  transform: none !important;
+}
+
+
+/* ===== PHASE 6 - ORDERS CONSISTENCY POLISH ===== */
+.orders-status-pill.status-pending {
+  color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.orders-status-pill.status-delivery {
+  color: var(--cyan);
+  background: rgba(24, 165, 189, .12);
+}
+
+.orders-status-pill.status-cancelled {
+  color: #dc2626;
+  background: rgba(239, 68, 68, .12);
+}
+
+.orders-details-section h3 {
+  font-size: .9rem;
+  letter-spacing: -.01em;
+}
+
+.orders-empty-state strong,
+.orders-loading-state {
+  letter-spacing: -.01em;
+}
+
+.orders-modal-primary,
+.orders-modal-secondary {
+  white-space: nowrap;
+}
+
+
+/* ===== System hover polish: Orders tabs and list cards use outer shadow only ===== */
+.orders-folder-tab,
+.orders-data-card,
+.orders-refresh-btn {
+  transition: box-shadow .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease), color .22s var(--ease) !important;
+}
+
+.orders-folder-tab:hover,
+.orders-data-card:hover,
+.orders-refresh-btn:hover {
+  transform: none !important;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, .10) !important;
+}
+
+html[data-theme="dark"] .orders-folder-tab:hover,
+html[data-theme="dark"] .orders-data-card:hover,
+html[data-theme="dark"] .orders-refresh-btn:hover {
+  box-shadow: 0 18px 38px rgba(0, 0, 0, .28) !important;
+}
+
+/* Preserve alert colors while removing lift animation. */
+.orders-data-card.delivery-danger:hover {
+  transform: none !important;
+  box-shadow: 0 22px 48px rgba(239, 68, 68, .18) !important;
+}
+
+.orders-data-card.delivery-warning:hover {
+  transform: none !important;
+  box-shadow: 0 22px 48px rgba(245, 158, 11, .18) !important;
+}
+
+
+/* ===== Order List tab count: normal counter, not notification badge ===== */
+.orders-folder-tab.orders-folder-tab-has-count,
+.orders-folder-tab[data-orders-tab="list"] {
+  gap: 6px;
+}
+
+.orders-folder-tab .orders-tab-count {
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  background: transparent;
+  box-shadow: none;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+
+.orders-folder-tab .orders-tab-count::before {
+  content: "(";
+}
+
+.orders-folder-tab .orders-tab-count::after {
+  content: ")";
+}
+
+.orders-folder-tab[data-orders-tab="list"] .notification-tab-badge,
+.orders-folder-tab[data-orders-tab="list"] [data-notification-tab-badge="orders"] {
+  display: none !important;
+}

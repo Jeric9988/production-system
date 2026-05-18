@@ -1,0 +1,6058 @@
+/* ===== DELIVERY UPDATE V9: deliveries tabs left + search/date/clear far right; paste this whole content to production-receiving.css ===== */
+/* ===== PRODUCTION RECEIVING TAB ONLY ===== */
+/* Separate file para isolated ang bagong Production Receiving design. */
+
+.production-receiving-view {
+  animation: prFadeIn .25s var(--ease);
+}
+
+@keyframes prFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.production-receiving-view,
+.production-receiving-view * {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.pr-shell {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(10px, 1.4vw, 16px);
+}
+
+.pr-page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 2px;
+}
+
+.pr-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pr-title-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, #246bfe, #69a7ff);
+  box-shadow: 0 14px 28px rgba(36, 107, 254, .24);
+  flex: 0 0 auto;
+}
+
+.pr-title-icon span {
+  width: 27px;
+  height: 27px;
+}
+
+.pr-page-head h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.55rem, 2.4vw, 2.15rem);
+  letter-spacing: -.055em;
+  line-height: 1.05;
+}
+
+.pr-page-head p {
+  max-width: 680px;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: .94rem;
+  font-weight: 550;
+  line-height: 1.5;
+}
+
+
+.pr-board {
+  display: grid;
+  gap: 0;
+}
+
+.pr-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: clamp(14px, 1.8vw, 18px);
+}
+
+.pr-search,
+.pr-date-filter input {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: var(--text);
+  background: var(--panel);
+  outline: none;
+  font-weight: 700;
+  box-shadow: none;
+  transition: border-color .22s var(--ease), background .22s var(--ease), box-shadow .22s var(--ease);
+}
+
+.pr-search {
+  padding: 0 16px;
+}
+
+.pr-date-filter {
+  display: grid;
+  gap: 6px;
+}
+
+.pr-date-filter span {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-date-filter input {
+  padding: 0 13px;
+}
+
+html[data-theme="dark"] .pr-search,
+html[data-theme="dark"] .pr-date-filter input {
+  background: rgba(15, 23, 42, .58);
+}
+
+.pr-search::placeholder {
+  color: color-mix(in srgb, var(--muted) 78%, transparent);
+}
+
+.pr-search:focus,
+.pr-date-filter input:focus {
+  border-color: rgba(36, 107, 254, .34);
+  box-shadow: 0 0 0 4px rgba(36, 107, 254, .09);
+}
+
+.pr-clear-btn,
+.pr-filter-btn,
+.pr-action-btn,
+.pr-modal-close,
+.pr-modal-secondary {
+  border: 0;
+  cursor: pointer;
+  font-weight: 900;
+  transition: transform .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+
+.pr-clear-btn {
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid rgba(36, 107, 254, .18);
+  border-radius: 16px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  white-space: nowrap;
+}
+
+.pr-filter-btn {
+  min-height: 48px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: var(--text);
+  background: var(--panel);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.pr-filter-btn .pr-filter-icon {
+  width: 19px;
+  height: 19px;
+  color: var(--blue);
+}
+
+.pr-filter-btn > span:not(.pr-filter-icon) {
+  color: var(--text);
+  font-size: .8rem;
+  line-height: 1.1;
+}
+
+.pr-filter-btn small {
+  display: none;
+}
+
+.pr-filter-btn.has-active-date {
+  border-color: rgba(36, 107, 254, .26);
+  background: var(--panel);
+}
+
+.pr-clear-btn:hover,
+.pr-filter-btn:hover,
+.pr-action-btn:hover,
+.pr-modal-secondary:hover,
+.pr-modal-close:hover {
+  transform: translateY(-1px);
+}
+
+.pr-folder-tabs {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  padding: 0;
+  margin-bottom: -1px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.pr-folder-tabs::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.pr-folder-tab {
+  position: relative;
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 18px 12px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+  color: var(--muted);
+  background: transparent;
+  font-size: .82rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+  white-space: nowrap;
+  cursor: pointer;
+  isolation: isolate;
+  transition: color .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease), transform .22s var(--ease);
+}
+
+.pr-folder-tab:not(.active):hover {
+  color: var(--blue);
+  background: color-mix(in srgb, var(--blue-soft) 65%, transparent);
+}
+
+.pr-folder-tab.active {
+  z-index: 3;
+  color: var(--text);
+  background: var(--panel-solid);
+  border-color: var(--line);
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+html[data-theme="dark"] .pr-folder-tab.active {
+  box-shadow: none;
+}
+
+.pr-folder-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--panel-solid);
+  z-index: 4;
+}
+
+.pr-tab-badge {
+  min-width: 25px;
+  height: 25px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: currentColor;
+  background: color-mix(in srgb, currentColor 13%, transparent);
+  font-size: .75rem;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.pr-folder-tab[data-pr-tab="pending"] { color: var(--blue); }
+.pr-folder-tab[data-pr-tab="ongoing"] { color: var(--green); }
+.pr-folder-tab[data-pr-tab="hold"] { color: #f97316; }
+.pr-folder-tab.active { color: var(--text); }
+.pr-folder-tab.active[data-pr-tab="pending"] .pr-tab-badge { color: var(--blue); }
+.pr-folder-tab.active[data-pr-tab="ongoing"] .pr-tab-badge { color: var(--green); }
+.pr-folder-tab.active[data-pr-tab="hold"] .pr-tab-badge { color: #f97316; }
+
+.pr-folder-body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 16px;
+  padding: clamp(16px, 2vw, 22px);
+  border: 1px solid var(--line);
+  border-radius: 0 24px 24px 24px;
+  background: var(--panel-solid);
+  box-shadow: var(--shadow);
+}
+
+.pr-list-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pr-list-meta h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.12rem, 1.8vw, 1.42rem);
+  letter-spacing: -.04em;
+}
+
+.pr-list-meta span {
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.pr-record-list {
+  display: grid;
+  gap: 14px;
+}
+
+.pr-record-card {
+  display: grid;
+  gap: 15px;
+  padding: clamp(15px, 1.8vw, 18px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .42), transparent 55%),
+    rgba(255, 255, 255, .56);
+  transition: transform .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease);
+}
+
+html[data-theme="dark"] .pr-record-card {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .045), transparent 55%),
+    rgba(15, 23, 42, .42);
+}
+
+.pr-record-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(36, 107, 254, .24);
+}
+
+.pr-production-status-card {
+  cursor: pointer;
+}
+
+.pr-production-status-card:focus-visible {
+  outline: 3px solid rgba(36, 107, 254, .24);
+  outline-offset: 3px;
+}
+
+.pr-record-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.pr-record-title {
+  display: grid;
+  gap: 8px;
+}
+
+.pr-status-pill {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: .74rem;
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .045em;
+  white-space: nowrap;
+}
+
+.pr-status-pending {
+  color: var(--blue);
+  background: rgba(36, 107, 254, .12);
+}
+
+.pr-status-ongoing {
+  color: var(--green);
+  background: rgba(22, 184, 106, .12);
+}
+
+.pr-status-hold {
+  color: #f97316;
+  background: rgba(249, 115, 22, .14);
+}
+
+.pr-record-title strong {
+  color: var(--text);
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.pr-record-title small {
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.pr-due-date {
+  min-width: 118px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  display: grid;
+  gap: 4px;
+  text-align: right;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+}
+
+.pr-due-date span {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-due-date strong {
+  color: var(--text);
+  font-size: .86rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.pr-record-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+  gap: 10px;
+}
+
+.pr-field {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--panel) 74%, transparent);
+}
+
+.pr-field span {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-field strong {
+  color: var(--text);
+  font-size: .88rem;
+  font-weight: 650;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.pr-field.wide {
+  grid-column: span 2;
+}
+
+.pr-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pr-action-btn {
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 14px;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.pr-action-btn.primary {
+  color: #fff;
+  background: var(--blue);
+  border-color: rgba(36, 107, 254, .28);
+}
+
+.pr-action-btn.success {
+  color: #fff;
+  background: var(--green);
+  border-color: rgba(22, 184, 106, .28);
+}
+
+.pr-action-btn.warning {
+  color: #fff;
+  background: #f97316;
+  border-color: rgba(249, 115, 22, .28);
+}
+
+.pr-empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: 26px;
+  border: 1px dashed var(--line);
+  border-radius: 22px;
+  color: var(--muted);
+  text-align: center;
+  background: color-mix(in srgb, var(--panel) 74%, transparent);
+}
+
+.pr-empty-state strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.pr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 155;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, .42);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .24s var(--ease);
+}
+
+.pr-modal-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pr-modal {
+  width: min(820px, 100%);
+  max-height: min(84vh, 760px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .055), transparent 38%),
+    var(--panel-solid);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, .24);
+  overflow: hidden;
+  transform: translateY(18px) scale(.98);
+  transition: transform .24s var(--ease);
+}
+
+html[data-theme="dark"] .pr-modal {
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .46);
+}
+
+.pr-modal-backdrop.show .pr-modal {
+  transform: translateY(0) scale(1);
+}
+
+.pr-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 22px 24px 17px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pr-modal-head h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  letter-spacing: -.045em;
+}
+
+.pr-modal-head p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.pr-modal-close {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  background: var(--panel);
+  flex: 0 0 auto;
+}
+
+.pr-modal-close span {
+  font-size: 1.55rem;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+.pr-modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pr-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+  gap: 12px;
+}
+
+.pr-modal-field {
+  display: grid;
+  gap: 6px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: color-mix(in srgb, var(--panel) 78%, transparent);
+}
+
+.pr-modal-field span {
+  color: var(--muted);
+  font-size: .7rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-modal-field strong {
+  color: var(--text);
+  font-size: .9rem;
+  font-weight: 650;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+
+.pr-modal-field.wide {
+  grid-column: 1 / -1;
+}
+
+.pr-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px 24px 22px;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.pr-modal-secondary {
+  min-height: 43px;
+  padding: 0 17px;
+  border: 1px solid rgba(36, 107, 254, .20);
+  border-radius: 14px;
+  color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.pr-date-modal {
+  width: min(560px, 100%);
+}
+
+.pr-date-modal .pr-modal-body {
+  padding-bottom: 6px;
+}
+
+.pr-date-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pr-date-modal .pr-date-filter {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .045), transparent 58%),
+    color-mix(in srgb, var(--panel) 78%, transparent);
+}
+
+.pr-date-modal .pr-date-filter span {
+  color: var(--text);
+}
+
+.pr-date-modal .pr-date-filter input {
+  background: var(--panel-solid);
+}
+
+body.pr-modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .pr-page-head,
+  .pr-title-wrap,
+  .pr-record-top,
+  .pr-list-meta {
+    align-items: flex-start;
+  }
+
+  .pr-page-head {
+    flex-direction: column;
+  }
+
+  .pr-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .pr-shell {
+    gap: 14px;
+  }
+
+  .pr-page-head {
+    padding: 0 2px;
+  }
+
+  .pr-title-wrap {
+    gap: 12px;
+  }
+
+  .pr-title-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+  }
+
+  .pr-title-icon span {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pr-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .pr-clear-btn,
+  .pr-filter-btn {
+    width: 100%;
+  }
+
+  .pr-folder-tabs {
+    padding: 0;
+  }
+
+  .pr-folder-tab {
+    min-height: 46px;
+    padding: 12px 14px 11px;
+    font-size: .76rem;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .pr-tab-badge {
+    min-width: 23px;
+    height: 23px;
+    padding: 0 7px;
+  }
+
+  .pr-folder-body {
+    padding: 14px;
+    border-radius: 0 20px 20px 20px;
+  }
+
+  .pr-list-meta {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .pr-record-card {
+    border-radius: 18px;
+  }
+
+  .pr-record-top {
+    flex-direction: column;
+  }
+
+  .pr-due-date {
+    width: 100%;
+    text-align: left;
+  }
+
+  .pr-field.wide {
+    grid-column: auto;
+  }
+
+  .pr-card-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .pr-action-btn {
+    width: 100%;
+  }
+
+  .pr-modal-backdrop {
+    align-items: stretch;
+    justify-items: stretch;
+    padding: 0;
+  }
+
+  .pr-modal {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .pr-modal-head {
+    padding: 17px 14px 13px;
+  }
+
+  .pr-modal-close {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+
+  .pr-modal-body {
+    padding: 14px;
+  }
+
+  .pr-modal-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 12px 14px 14px;
+  }
+
+  .pr-date-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pr-modal-secondary,
+  .pr-modal-footer .pr-action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .pr-title-wrap {
+    flex-direction: column;
+  }
+
+  .pr-folder-tab {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+
+/* ===== Production Receiving tab shadow cleanup ===== */
+.production-receiving-view .pr-folder-tab.active {
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-folder-tab.active {
+  box-shadow: none !important;
+}
+
+
+/* ===== Folder body rounded edge state =====
+   Kapag hindi Pending ang active tab, rounded ang upper-left edge ng folder body. */
+.production-receiving-view .pr-board.active-tab-first .pr-folder-body {
+  border-top-left-radius: 0;
+}
+
+.production-receiving-view .pr-board.active-tab-middle .pr-folder-body,
+.production-receiving-view .pr-board.active-tab-last .pr-folder-body {
+  border-top-left-radius: 24px;
+}
+
+@media (max-width: 768px) {
+  .production-receiving-view .pr-board.active-tab-middle .pr-folder-body,
+  .production-receiving-view .pr-board.active-tab-last .pr-folder-body {
+    border-top-left-radius: 20px;
+  }
+}
+
+/* ===== PRODUCTION SIDEBAR SUB MENU ===== */
+.production-nav-group {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.production-nav-parent {
+  width: 100%;
+  border: 0;
+  text-align: left;
+  background: transparent;
+}
+
+.production-nav-parent::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  opacity: .58;
+  transition: transform .22s var(--ease), opacity .22s var(--ease);
+}
+
+.production-nav-group.is-open .production-nav-parent::after {
+  transform: rotate(45deg) translateY(-2px);
+  opacity: .9;
+}
+
+.production-sub-nav {
+  display: grid;
+  gap: 6px;
+  padding-left: 38px;
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: max-height .26s var(--ease), opacity .2s var(--ease), transform .22s var(--ease), visibility .2s var(--ease);
+}
+
+.production-nav-group.is-open .production-sub-nav {
+  max-height: 270px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  margin-top: -2px;
+}
+
+.production-sub-item {
+  min-height: 38px;
+  padding: 0 10px 0 12px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 500;
+  transition: background .22s var(--ease), color .22s var(--ease), transform .22s var(--ease);
+}
+
+.production-sub-item:hover,
+.production-sub-item.active {
+  color: var(--blue);
+  background: color-mix(in srgb, var(--blue-soft) 78%, transparent);
+}
+
+.production-sub-item:hover {
+  transform: translateX(4px);
+}
+
+.production-sub-short {
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  display: none;
+  place-items: center;
+  color: currentColor;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.production-sub-label {
+  flex: 1 1 auto;
+  font-weight: 500;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.production-sub-count {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  font-size: .68rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ===== PRODUCTION STAGE FLOW INSIDE CARDS / MODALS ===== */
+.pr-stage-flow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 0 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.pr-stage-flow::-webkit-scrollbar {
+  display: none;
+}
+
+.pr-stage-step {
+  position: relative;
+  flex: 0 0 auto;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--panel) 76%, transparent);
+  font-size: .7rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.pr-stage-step.done {
+  color: var(--green);
+  border-color: rgba(22, 184, 106, .22);
+  background: rgba(22, 184, 106, .10);
+}
+
+.pr-stage-step.current {
+  color: var(--blue);
+  border-color: rgba(36, 107, 254, .28);
+  background: var(--blue-soft);
+}
+
+.pr-modal-stage-wrap {
+  min-width: 0;
+}
+
+.pr-modal-stage-wrap .pr-stage-flow {
+  padding-top: 3px;
+}
+
+/* ===== RESPONSIVE SIDEBAR SUB MENU ===== */
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-nav-group {
+    justify-items: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .production-nav-parent {
+    width: 52px;
+    min-height: 52px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .production-nav-parent::after {
+    display: none;
+  }
+
+  .production-sub-nav {
+    padding-left: 0;
+    width: 100%;
+    justify-items: center;
+    gap: 6px;
+  }
+
+  .production-sub-item {
+    width: 38px;
+    min-height: 38px;
+    justify-content: center;
+    padding: 0;
+    border-radius: 13px;
+  }
+
+  .production-sub-short {
+    display: grid;
+  }
+
+  .production-sub-label,
+  .production-sub-count {
+    display: none;
+  }
+
+  .production-sub-item:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .production-nav-group {
+    gap: 8px;
+  }
+
+  .production-nav-parent::after {
+    display: block;
+  }
+
+  .production-sub-nav {
+    padding-left: 16px;
+  }
+
+  .production-sub-item {
+    min-height: 44px;
+    border-radius: 14px;
+    font-size: .84rem;
+  }
+
+  .production-sub-short {
+    display: grid;
+  }
+
+  .pr-stage-step {
+    min-height: 28px;
+    padding: 0 9px;
+    font-size: .66rem;
+  }
+}
+
+/* ===== Production sidebar cursor fix ===== */
+.production-nav-parent,
+.production-nav-parent:hover,
+.production-sub-item,
+.production-sub-item:hover {
+  cursor: pointer;
+}
+
+/* ===== Production sidebar smooth dropdown open/close ===== */
+.production-nav-group {
+  gap: 7px;
+}
+
+.production-sub-nav {
+  display: grid;
+  gap: 6px;
+  padding-left: 38px;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(-10px);
+  margin-top: -10px;
+  will-change: max-height, opacity, transform, margin-top;
+  transition:
+    max-height .42s var(--ease),
+    opacity .24s var(--ease),
+    transform .36s var(--ease),
+    margin-top .36s var(--ease),
+    visibility 0s linear .42s;
+}
+
+.production-nav-group.is-open .production-sub-nav {
+  max-height: 320px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  margin-top: -2px;
+  transition:
+    max-height .46s var(--ease),
+    opacity .26s var(--ease),
+    transform .38s var(--ease),
+    margin-top .38s var(--ease),
+    visibility 0s linear 0s;
+}
+
+.production-sub-item {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    background .22s var(--ease),
+    color .22s var(--ease),
+    transform .28s var(--ease),
+    opacity .22s var(--ease);
+}
+
+.production-nav-group.is-open .production-sub-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.production-nav-group.is-open .production-sub-item:hover {
+  transform: translateX(4px);
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-sub-nav {
+    padding-left: 0;
+    width: 100%;
+    justify-items: center;
+    margin-top: -8px;
+  }
+
+  .production-nav-group.is-open .production-sub-nav {
+    margin-top: 0;
+    max-height: 250px;
+  }
+
+  .production-sub-item {
+    transform: translateY(-6px);
+  }
+
+  .production-nav-group.is-open .production-sub-item {
+    transform: translateY(0);
+  }
+
+  .production-nav-group.is-open .production-sub-item:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .production-sub-nav {
+    padding-left: 16px;
+    margin-top: -8px;
+  }
+
+  .production-nav-group.is-open .production-sub-nav {
+    max-height: 320px;
+    margin-top: 0;
+  }
+}
+
+
+/* Remove folder tab animation so active tab switches instantly */
+.pr-folder-tab,
+.pr-folder-tab.active,
+.pr-folder-tab:hover,
+.pr-folder-body,
+.pr-stage-panel {
+  transition: none !important;
+  animation: none !important;
+}
+
+.pr-folder-tab {
+  transform: none !important;
+}
+
+.pr-folder-tab.active {
+  transform: none !important;
+}
+
+/* ===== PRODUCTION STATUS ALERT COLORS + TAKE ORDER BUTTON ===== */
+.pr-record-card.pr-alert-due {
+  border-color: rgba(248, 113, 113, .78);
+  background:
+    linear-gradient(135deg, rgba(248, 113, 113, .16), transparent 62%),
+    rgba(255, 255, 255, .62);
+}
+
+.pr-record-card.pr-alert-critical {
+  border-color: rgba(245, 158, 11, .72);
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, .16), transparent 62%),
+    rgba(255, 255, 255, .62);
+}
+
+html[data-theme="dark"] .pr-record-card.pr-alert-due {
+  border-color: rgba(248, 113, 113, .64);
+  background:
+    linear-gradient(135deg, rgba(248, 113, 113, .17), transparent 62%),
+    rgba(127, 29, 29, .18),
+    rgba(15, 23, 42, .44);
+}
+
+html[data-theme="dark"] .pr-record-card.pr-alert-critical {
+  border-color: rgba(251, 191, 36, .60);
+  background:
+    linear-gradient(135deg, rgba(251, 191, 36, .16), transparent 62%),
+    rgba(120, 53, 15, .18),
+    rgba(15, 23, 42, .44);
+}
+
+.pr-due-date.pr-due-alert {
+  border-color: rgba(248, 113, 113, .38);
+  background: rgba(254, 226, 226, .68);
+}
+
+.pr-due-date.pr-critical-alert {
+  border-color: rgba(245, 158, 11, .38);
+  background: rgba(254, 243, 199, .66);
+}
+
+html[data-theme="dark"] .pr-due-date.pr-due-alert {
+  background: rgba(127, 29, 29, .24);
+}
+
+html[data-theme="dark"] .pr-due-date.pr-critical-alert {
+  background: rgba(120, 53, 15, .25);
+}
+
+.pr-delivery-alert-pill {
+  width: fit-content;
+  margin-left: auto;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: .66rem;
+  font-style: normal;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pr-delivery-alert-pill.due {
+  color: #b91c1c;
+  background: rgba(248, 113, 113, .18);
+}
+
+.pr-delivery-alert-pill.critical {
+  color: #b45309;
+  background: rgba(245, 158, 11, .18);
+}
+
+html[data-theme="dark"] .pr-delivery-alert-pill.due {
+  color: #fecaca;
+  background: rgba(248, 113, 113, .20);
+}
+
+html[data-theme="dark"] .pr-delivery-alert-pill.critical {
+  color: #fde68a;
+  background: rgba(245, 158, 11, .20);
+}
+
+.pr-action-btn.take-order {
+  min-width: 112px;
+}
+
+@media (max-width: 768px) {
+  .pr-delivery-alert-pill {
+    margin-left: 0;
+  }
+}
+
+
+
+/* ===== PRODUCTION STATUS ALERT COLORS - STRONG PATCH ===== */
+/* Stronger selector para siguradong visible ang color sa Production Status cards. */
+.pr-record-card.pr-alert-due,
+.pr-record-card[data-pr-alert="overdue"],
+.pr-record-card[data-pr-alert="due-today"] {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(239, 68, 68, .82) !important;
+  background:
+    linear-gradient(135deg, rgba(248, 113, 113, .22), rgba(248, 113, 113, .08) 48%, transparent 78%),
+    rgba(255, 245, 245, .86) !important;
+  box-shadow: 0 18px 42px rgba(239, 68, 68, .14) !important;
+}
+
+.pr-record-card.pr-alert-critical,
+.pr-record-card[data-pr-alert="critical"] {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(245, 158, 11, .82) !important;
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, .24), rgba(245, 158, 11, .08) 48%, transparent 78%),
+    rgba(255, 251, 235, .90) !important;
+  box-shadow: 0 18px 42px rgba(245, 158, 11, .13) !important;
+}
+
+.pr-record-card.pr-alert-due::before,
+.pr-record-card[data-pr-alert="overdue"]::before,
+.pr-record-card[data-pr-alert="due-today"]::before,
+.pr-record-card.pr-alert-critical::before,
+.pr-record-card[data-pr-alert="critical"]::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  pointer-events: none;
+}
+
+.pr-record-card.pr-alert-due::before,
+.pr-record-card[data-pr-alert="overdue"]::before,
+.pr-record-card[data-pr-alert="due-today"]::before {
+  background: #ef4444;
+}
+
+.pr-record-card.pr-alert-critical::before,
+.pr-record-card[data-pr-alert="critical"]::before {
+  background: #f59e0b;
+}
+
+.pr-record-card.pr-alert-due:hover,
+.pr-record-card[data-pr-alert="overdue"]:hover,
+.pr-record-card[data-pr-alert="due-today"]:hover {
+  border-color: rgba(239, 68, 68, .95) !important;
+  box-shadow: 0 22px 48px rgba(239, 68, 68, .18) !important;
+}
+
+.pr-record-card.pr-alert-critical:hover,
+.pr-record-card[data-pr-alert="critical"]:hover {
+  border-color: rgba(245, 158, 11, .95) !important;
+  box-shadow: 0 22px 48px rgba(245, 158, 11, .18) !important;
+}
+
+html[data-theme="dark"] .pr-record-card.pr-alert-due,
+html[data-theme="dark"] .pr-record-card[data-pr-alert="overdue"],
+html[data-theme="dark"] .pr-record-card[data-pr-alert="due-today"] {
+  background:
+    linear-gradient(135deg, rgba(248, 113, 113, .22), rgba(127, 29, 29, .24) 52%, rgba(15, 23, 42, .52) 100%) !important;
+  box-shadow: 0 18px 42px rgba(248, 113, 113, .12) !important;
+}
+
+html[data-theme="dark"] .pr-record-card.pr-alert-critical,
+html[data-theme="dark"] .pr-record-card[data-pr-alert="critical"] {
+  background:
+    linear-gradient(135deg, rgba(251, 191, 36, .22), rgba(120, 53, 15, .24) 52%, rgba(15, 23, 42, .52) 100%) !important;
+  box-shadow: 0 18px 42px rgba(251, 191, 36, .12) !important;
+}
+
+.pr-due-date.pr-due-alert,
+.pr-record-card[data-pr-alert="overdue"] .pr-due-date,
+.pr-record-card[data-pr-alert="due-today"] .pr-due-date {
+  border-color: rgba(239, 68, 68, .45) !important;
+  background: rgba(254, 226, 226, .86) !important;
+}
+
+.pr-due-date.pr-critical-alert,
+.pr-record-card[data-pr-alert="critical"] .pr-due-date {
+  border-color: rgba(245, 158, 11, .45) !important;
+  background: rgba(254, 243, 199, .88) !important;
+}
+
+html[data-theme="dark"] .pr-due-date.pr-due-alert,
+html[data-theme="dark"] .pr-record-card[data-pr-alert="overdue"] .pr-due-date,
+html[data-theme="dark"] .pr-record-card[data-pr-alert="due-today"] .pr-due-date {
+  background: rgba(127, 29, 29, .36) !important;
+}
+
+html[data-theme="dark"] .pr-due-date.pr-critical-alert,
+html[data-theme="dark"] .pr-record-card[data-pr-alert="critical"] .pr-due-date {
+  background: rgba(120, 53, 15, .36) !important;
+}
+
+
+/* ===== PRODUCTION STATUS CARD CLEANUP PATCH ===== */
+/* Remove makapal na left-side alert stripe; retain card background color only. */
+.pr-record-card.pr-alert-due::before,
+.pr-record-card[data-pr-alert="overdue"]::before,
+.pr-record-card[data-pr-alert="due-today"]::before,
+.pr-record-card.pr-alert-critical::before,
+.pr-record-card[data-pr-alert="critical"]::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Item na lang ang nasa top; details are moved into cards below. */
+.pr-record-title {
+  gap: 0;
+}
+
+/* ===== DELIVERY DATE CARD ROW PATCH ===== */
+/* Make Delivery Date, date value, and alert badge display in one row. */
+.pr-due-date {
+  width: auto;
+  min-width: max-content;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.pr-due-date span,
+.pr-due-date strong,
+.pr-delivery-alert-pill {
+  flex: 0 0 auto;
+}
+
+.pr-delivery-alert-pill {
+  margin-left: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .pr-due-date {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ===== PRODUCTION STATUS ITEM ALIGNMENT PATCH ===== */
+/* Pantayin vertically yung item title sa delivery date row sa right side. */
+.pr-record-top {
+  align-items: center !important;
+}
+
+.pr-record-title {
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .pr-record-top {
+    align-items: flex-start !important;
+  }
+
+  .pr-record-title {
+    align-self: stretch;
+  }
+}
+
+/* ===== PRODUCTION STATUS TOOLBAR ALIGNMENT PATCH ===== */
+/* Align Search, Date Range, and Clear with the Pending / On-going / Hold tab row. */
+@media (min-width: 901px) {
+  .production-receiving-view .pr-board {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: end;
+    column-gap: 12px;
+    row-gap: 0;
+  }
+
+  .production-receiving-view .pr-folder-tabs {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    margin-bottom: -1px;
+  }
+
+  .production-receiving-view .pr-toolbar {
+    grid-column: 2;
+    grid-row: 1;
+    width: min(100%, 680px);
+    margin: 0 0 0 auto;
+    align-self: end;
+    grid-template-columns: minmax(170px, 1fr) auto auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .production-receiving-view .pr-search,
+  .production-receiving-view .pr-filter-btn,
+  .production-receiving-view .pr-clear-btn {
+    min-height: 48px;
+  }
+
+  .production-receiving-view .pr-folder-body {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .production-receiving-view .pr-board {
+    column-gap: 10px;
+  }
+
+  .production-receiving-view .pr-toolbar {
+    width: min(100%, 560px);
+    grid-template-columns: minmax(130px, 1fr) auto auto;
+    gap: 8px;
+  }
+
+  .production-receiving-view .pr-search {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .production-receiving-view .pr-filter-btn,
+  .production-receiving-view .pr-clear-btn {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+
+/* ===== PRODUCTION STATUS TOOLBAR/TABS GAP PATCH ===== */
+/* Taasan nang konti yung toolbar/tab row para hindi dikit sa tab body. */
+@media (min-width: 901px) {
+  .production-receiving-view .pr-folder-tabs {
+    margin-bottom: 10px !important;
+  }
+
+  .production-receiving-view .pr-toolbar {
+    margin: 0 0 10px auto !important;
+  }
+
+  .production-receiving-view .pr-folder-body {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+  .production-receiving-view .pr-toolbar {
+    margin-bottom: 12px;
+  }
+
+  .production-receiving-view .pr-folder-tabs {
+    margin-bottom: 10px;
+  }
+}
+
+/* ===== PRODUCTION STATUS TAB EXTEND + SHORTER SEARCH PATCH ===== */
+/* Extend the active tab downward so the raised toolbar/tab gap does not visually cut the tab. */
+@media (min-width: 901px) {
+  .production-receiving-view .pr-folder-tab.active::after {
+    left: -1px !important;
+    right: -1px !important;
+    bottom: -11px !important;
+    height: 12px !important;
+    background: var(--panel-solid) !important;
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+
+  .production-receiving-view .pr-toolbar {
+    width: min(100%, 600px) !important;
+    grid-template-columns: minmax(120px, 1fr) auto auto !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .production-receiving-view .pr-toolbar {
+    width: min(100%, 500px) !important;
+    grid-template-columns: minmax(95px, 1fr) auto auto !important;
+  }
+}
+
+/* ===== PRODUCTION STATUS ACTIVE TAB CONNECT PATCH ===== */
+/* Fix: previous extension was clipped by tab container overflow, kaya mukhang putol pa rin. */
+@media (min-width: 901px) {
+  .production-receiving-view .pr-board,
+  .production-receiving-view .pr-folder-tabs {
+    overflow: visible !important;
+  }
+
+  .production-receiving-view .pr-folder-tabs {
+    margin-bottom: 10px !important;
+  }
+
+  .production-receiving-view .pr-folder-tab.active {
+    position: relative;
+    z-index: 5;
+  }
+
+  .production-receiving-view .pr-folder-tab.active::after {
+    content: "";
+    position: absolute;
+    left: -1px !important;
+    right: -1px !important;
+    bottom: -12px !important;
+    height: 13px !important;
+    display: block !important;
+    background: var(--panel-solid) !important;
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .production-receiving-view .pr-folder-body {
+    position: relative;
+    z-index: 1;
+  }
+
+  .production-receiving-view .pr-toolbar {
+    width: min(100%, 560px) !important;
+    grid-template-columns: minmax(100px, 1fr) auto auto !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .production-receiving-view .pr-toolbar {
+    width: min(100%, 460px) !important;
+    grid-template-columns: minmax(80px, 1fr) auto auto !important;
+  }
+}
+
+/* ===== PRODUCTION STATUS TAB HOVER TEXT COLOR PATCH ===== */
+/* Keep each tab text color the same on hover; only the hover background can change. */
+.production-receiving-view .pr-folder-tab:not(.active):hover {
+  color: inherit;
+}
+
+.production-receiving-view .pr-folder-tab:not(.active)[data-pr-tab="pending"]:hover {
+  color: var(--blue) !important;
+}
+
+.production-receiving-view .pr-folder-tab:not(.active)[data-pr-tab="ongoing"]:hover {
+  color: var(--green) !important;
+}
+
+.production-receiving-view .pr-folder-tab:not(.active)[data-pr-tab="hold"]:hover {
+  color: #f97316 !important;
+}
+
+
+/* ===== PRODUCTION STATUS NOTIFICATION PATCH ===== */
+/* Sidebar Production badge + Production Status tab badges. */
+.production-nav-parent {
+  position: relative;
+}
+
+.production-status-sidebar-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #ef4444;
+  font-size: .68rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+  box-shadow: 0 8px 18px rgba(239, 68, 68, .22);
+  position: absolute;
+  top: 50%;
+  right: 38px;
+  transform: translateY(-50%);
+  margin-left: 0;
+}
+
+.production-status-sidebar-badge[hidden],
+.production-sub-count[hidden],
+.production-receiving-view .pr-tab-badge[hidden] {
+  display: none !important;
+}
+
+.production-receiving-view .pr-folder-tab.has-notification .pr-tab-badge {
+  color: #fff;
+  box-shadow: 0 8px 16px color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="pending"] .pr-tab-badge {
+  background: var(--blue);
+}
+
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="ongoing"] .pr-tab-badge {
+  background: var(--green);
+}
+
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="hold"] .pr-tab-badge {
+  background: #f97316;
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-status-sidebar-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    font-size: .62rem;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .production-status-sidebar-badge {
+    top: 50%;
+    right: 42px;
+    transform: translateY(-50%);
+    margin-left: 0;
+  }
+}
+
+/* ===== PRODUCTION STATUS PENDING NOTIFICATION + NEW BADGE PATCH ===== */
+/* Pending notification count should be red, same as normal notification badges. */
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="pending"] .pr-tab-badge {
+  color: #fff !important;
+  background: #ef4444 !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .22) !important;
+}
+
+/* Keep the active Pending count red too. */
+.production-receiving-view .pr-folder-tab.active.has-notification[data-pr-tab="pending"] .pr-tab-badge {
+  color: #fff !important;
+  background: #ef4444 !important;
+}
+
+.production-receiving-view .pr-record-title-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.production-receiving-view .pr-record-title-line strong {
+  min-width: 0;
+}
+
+.production-receiving-view .pr-card-new-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #fff;
+  background: #ef4444;
+  font-size: .66rem;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .20);
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-card-new-badge {
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .16);
+}
+
+@media (max-width: 768px) {
+  .production-receiving-view .pr-record-title-line {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+/* ===== PRODUCTION STATUS ORDER-LIST NEW BADGE + READ NOTIFICATION PATCH ===== */
+/* Uses the same .notification-card-badge.new style from the Orders list for a uniform look. */
+.production-receiving-view .pr-record-title .notification-card-badge.new {
+  margin-bottom: 8px;
+}
+
+.production-receiving-view .pr-record-card.pr-has-unread {
+  border-color: rgba(36, 107, 254, .42);
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-record-card.pr-has-unread {
+  border-color: rgba(96, 165, 250, .42);
+}
+
+/* Old red Production-specific NEW badge is no longer used; keep hidden as safety if cached markup appears. */
+.production-receiving-view .pr-card-new-badge {
+  display: none !important;
+}
+
+
+
+/* ===== PRODUCTION DETAILS MODAL CLEANUP PATCH ===== */
+/* Remove Current Stage card in JS, then keep materials equal-width in one row. */
+.pr-modal-material-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+.pr-modal-material-row .pr-modal-field {
+  min-width: 0;
+}
+
+.pr-modal-delivery-date strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pr-modal-delivery-date strong b {
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+}
+
+.pr-modal-delivery-date .pr-delivery-alert-pill {
+  margin-left: 0 !important;
+}
+
+.pr-modal-field.pr-modal-delivery-date.pr-due-alert,
+.pr-modal-field.pr-modal-delivery-date[data-pr-alert="overdue"],
+.pr-modal-field.pr-modal-delivery-date[data-pr-alert="due-today"] {
+  border-color: rgba(239, 68, 68, .45) !important;
+  background: rgba(254, 226, 226, .86) !important;
+}
+
+.pr-modal-field.pr-modal-delivery-date.pr-critical-alert,
+.pr-modal-field.pr-modal-delivery-date[data-pr-alert="critical"] {
+  border-color: rgba(245, 158, 11, .45) !important;
+  background: rgba(254, 243, 199, .88) !important;
+}
+
+html[data-theme="dark"] .pr-modal-field.pr-modal-delivery-date.pr-due-alert,
+html[data-theme="dark"] .pr-modal-field.pr-modal-delivery-date[data-pr-alert="overdue"],
+html[data-theme="dark"] .pr-modal-field.pr-modal-delivery-date[data-pr-alert="due-today"] {
+  background: rgba(127, 29, 29, .36) !important;
+}
+
+html[data-theme="dark"] .pr-modal-field.pr-modal-delivery-date.pr-critical-alert,
+html[data-theme="dark"] .pr-modal-field.pr-modal-delivery-date[data-pr-alert="critical"] {
+  background: rgba(120, 53, 15, .36) !important;
+}
+
+@media (max-width: 768px) {
+  .pr-modal-material-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Production details modal header cleanup:
+   - hide the X close button for the main production details modal only
+   - keep date range modal close button visible
+*/
+#productionReceivingModal .pr-modal-close {
+  display: none !important;
+}
+
+#productionReceivingModal .pr-modal-head {
+  align-items: center;
+}
+
+#productionReceivingModal .pr-modal-head > div {
+  min-width: 0;
+}
+
+#productionReceivingModal .pr-modal-head h3 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* ===== TAKE ORDER MODAL + DATABASE INPUT PATCH ===== */
+.pr-take-order-modal {
+  width: min(760px, 100%);
+}
+
+.pr-take-order-summary {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 15px 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .05), transparent 50%),
+    rgba(255, 255, 255, .58);
+}
+
+html[data-theme="dark"] .pr-take-order-summary {
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .10), transparent 50%),
+    rgba(15, 23, 42, .42);
+}
+
+.pr-take-order-summary strong {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.pr-take-order-summary span {
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.pr-take-order-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pr-take-order-form .pr-form-field:first-child {
+  grid-column: 1 / -1;
+}
+
+/* Take Order layout: Operator/s should stay on its own row.
+   Printing Material and Lamination Material stay together in the next row. */
+.pr-take-order-form > .pr-form-field-full {
+  grid-column: 1 / -1;
+}
+
+.pr-form-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pr-form-field span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-form-field-required span::after {
+  content: " *";
+  color: #ef4444;
+}
+
+.pr-form-field input {
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 0 14px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .76);
+  outline: none;
+  font-weight: 400;
+  transition: border-color .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease);
+}
+
+html[data-theme="dark"] .pr-form-field input {
+  background: rgba(15, 23, 42, .58);
+}
+
+.pr-form-field input:focus {
+  border-color: rgba(36, 107, 254, .36);
+  box-shadow: 0 0 0 4px rgba(36, 107, 254, .10);
+}
+
+.pr-form-feedback {
+  margin-top: 14px;
+  padding: 11px 13px;
+  border: 1px solid rgba(239, 68, 68, .28);
+  border-radius: 14px;
+  color: #b91c1c;
+  background: rgba(254, 226, 226, .78);
+  font-size: .84rem;
+  font-weight: 850;
+}
+
+html[data-theme="dark"] .pr-form-feedback {
+  color: #fecaca;
+  background: rgba(127, 29, 29, .34);
+}
+
+.pr-action-btn:disabled {
+  cursor: not-allowed;
+  opacity: .62;
+  transform: none !important;
+}
+
+@media (max-width: 768px) {
+  .pr-take-order-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== PRODUCTION FLOW PATCH - MOVE TO NEXT STAGE MODAL ===== */
+.pr-move-stage-modal {
+  width: min(760px, 100%);
+}
+
+.pr-move-stage-current {
+  margin-bottom: 14px;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(36, 107, 254, .06);
+}
+
+html[data-theme="dark"] .pr-move-stage-current {
+  background: rgba(36, 107, 254, .12);
+}
+
+.pr-move-stage-current span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-move-stage-current strong {
+  color: var(--text);
+  font-size: .95rem;
+  font-weight: 850;
+}
+
+.pr-move-stage-options {
+  display: grid;
+  gap: 10px;
+}
+
+.pr-move-stage-option {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .62);
+  cursor: pointer;
+  transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+
+html[data-theme="dark"] .pr-move-stage-option {
+  background: rgba(15, 23, 42, .42);
+}
+
+.pr-move-stage-option:hover {
+  border-color: rgba(36, 107, 254, .28);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, .08);
+  transform: translateY(-1px);
+}
+
+.pr-move-stage-option:has(input:checked) {
+  border-color: rgba(36, 107, 254, .48);
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .10), transparent 56%),
+    rgba(255, 255, 255, .78);
+}
+
+html[data-theme="dark"] .pr-move-stage-option:has(input:checked) {
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .18), transparent 56%),
+    rgba(15, 23, 42, .56);
+}
+
+.pr-move-stage-option input {
+  width: 17px;
+  height: 17px;
+  margin: 2px 0 0;
+  accent-color: var(--blue);
+}
+
+.pr-move-stage-option span {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.pr-move-stage-option strong {
+  color: var(--text);
+  font-size: .94rem;
+  font-weight: 850;
+  line-height: 1.3;
+}
+
+.pr-move-stage-option small {
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+@media (max-width: 768px) {
+  .pr-move-stage-current {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pr-move-stage-option {
+    padding: 13px;
+  }
+}
+
+/* ===== PRODUCTION TAB NOTIFICATION ONLY PATCH ===== */
+/* Reverted tab counters. Keep tabs in the pre-counter layout, while unread/new notifications still show on every status tab. */
+.production-receiving-view .pr-folder-tab {
+  min-width: auto !important;
+  min-height: 50px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  padding: 13px 18px 12px !important;
+  overflow: visible !important;
+}
+
+.production-receiving-view .pr-tab-label {
+  display: inline !important;
+  color: currentColor !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: inherit !important;
+  line-height: inherit !important;
+  white-space: nowrap !important;
+}
+
+.production-receiving-view .pr-tab-content,
+.production-receiving-view .pr-tab-count {
+  display: none !important;
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-badge {
+  position: static !important;
+  min-width: 21px !important;
+  height: 21px !important;
+  padding: 0 6px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  background: #ef4444 !important;
+  font-size: .66rem !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .22) !important;
+  transform: none !important;
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-badge[hidden] {
+  display: none !important;
+}
+
+.production-receiving-view .pr-folder-tab.has-notification .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="pending"] .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="ongoing"] .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="hold"] .pr-tab-badge {
+  color: #fff !important;
+  background: #ef4444 !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .22) !important;
+}
+
+.production-sub-item.has-notification .production-sub-count,
+.production-sub-count.has-notification {
+  color: #fff !important;
+  background: #ef4444 !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .22) !important;
+}
+
+@media (max-width: 768px) {
+  .production-receiving-view .pr-folder-tab {
+    min-height: 46px !important;
+    padding: 11px 14px 10px !important;
+    gap: 7px !important;
+  }
+
+  .production-receiving-view .pr-folder-tab .pr-tab-badge {
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 5px !important;
+    font-size: .58rem !important;
+  }
+}
+
+
+/* ===== PRODUCTION FLOW STATUS + HISTORY PATCH ===== */
+/* Keep Next Stage cards removed in JS, add current status and history styles. */
+
+.production-receiving-view .pr-current-status-field strong {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.production-receiving-view .pr-current-status-field .pr-status-pill {
+  width: fit-content;
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.pr-production-history {
+  grid-column: 1 / -1;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(36, 107, 254, .055), transparent 44%),
+    rgba(255, 255, 255, .58);
+  padding: 16px;
+  min-width: 0;
+}
+
+html[data-theme="dark"] .pr-production-history {
+  background:
+    linear-gradient(135deg, rgba(96, 165, 250, .10), transparent 44%),
+    rgba(15, 23, 42, .38);
+}
+
+.pr-history-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pr-history-head > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.pr-history-head span {
+  color: var(--text);
+  font-size: .86rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .045em;
+}
+
+.pr-history-head small {
+  color: var(--muted);
+  font-size: .74rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.pr-history-head strong {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-size: .74rem;
+  font-weight: 950;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.pr-history-list {
+  display: grid;
+  gap: 12px;
+  position: relative;
+}
+
+.pr-history-item {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 11px;
+  align-items: center;
+  min-width: 0;
+  position: relative;
+}
+
+.pr-history-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: calc(50% + 12px);
+  bottom: calc(-50% - 12px);
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--blue) 18%, transparent);
+}
+
+.pr-history-item i {
+  width: 11px;
+  height: 11px;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: var(--blue);
+  box-shadow: 0 0 0 5px rgba(36, 107, 254, .12);
+  position: relative;
+  z-index: 1;
+}
+
+.pr-history-card {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, .50);
+}
+
+html[data-theme="dark"] .pr-history-card {
+  background: rgba(15, 23, 42, .30);
+}
+
+.pr-history-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pr-history-title-row strong {
+  color: var(--text);
+  font-size: .9rem;
+  font-weight: 900;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.pr-history-title-row em,
+.pr-history-stage-pill {
+  border-radius: 999px;
+  padding: 5px 8px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-style: normal;
+  font-size: .65rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.pr-history-stage-pill.pr-stage-status-printing {
+  color: #2563eb;
+  background: rgba(37, 99, 235, .13);
+}
+
+.pr-history-stage-pill.pr-stage-status-rewinding {
+  color: #7c3aed;
+  background: rgba(124, 58, 237, .13);
+}
+
+.pr-history-stage-pill.pr-stage-status-lamination {
+  color: #ea580c;
+  background: rgba(234, 88, 12, .14);
+}
+
+.pr-history-stage-pill.pr-stage-status-slitting {
+  color: #0891b2;
+  background: rgba(8, 145, 178, .13);
+}
+
+html[data-theme="dark"] .pr-history-stage-pill.pr-stage-status-printing {
+  color: #93c5fd;
+  background: rgba(37, 99, 235, .22);
+}
+
+html[data-theme="dark"] .pr-history-stage-pill.pr-stage-status-rewinding {
+  color: #c4b5fd;
+  background: rgba(124, 58, 237, .24);
+}
+
+html[data-theme="dark"] .pr-history-stage-pill.pr-stage-status-lamination {
+  color: #fdba74;
+  background: rgba(234, 88, 12, .24);
+}
+
+html[data-theme="dark"] .pr-history-stage-pill.pr-stage-status-slitting {
+  color: #67e8f9;
+  background: rgba(8, 145, 178, .23);
+}
+
+.pr-history-card > span {
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 560;
+  line-height: 1.48;
+  overflow-wrap: anywhere;
+}
+
+.pr-history-combined-batches {
+  display: grid;
+  gap: 7px;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--blue) 18%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--blue-soft) 58%, transparent);
+}
+
+.pr-history-combined-batches > small {
+  color: var(--blue);
+  font-size: .66rem;
+  font-weight: 950;
+  letter-spacing: .04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.pr-history-combined-batches > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pr-history-combined-batches span {
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .68);
+  border: 1px solid color-mix(in srgb, var(--blue) 14%, transparent);
+  font-size: .68rem;
+  font-weight: 850;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+html[data-theme="dark"] .pr-history-combined-batches {
+  background: rgba(37, 99, 235, .12);
+  border-color: rgba(96, 165, 250, .20);
+}
+
+html[data-theme="dark"] .pr-history-combined-batches span {
+  background: rgba(15, 23, 42, .54);
+  border-color: rgba(96, 165, 250, .18);
+}
+
+.pr-history-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pr-history-tags small {
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(148, 163, 184, .12);
+  font-size: .68rem;
+  font-weight: 850;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.pr-history-tags .operator-tag {
+  color: var(--green);
+  background: rgba(22, 184, 106, .12);
+}
+
+.pr-history-tags .waste-tag {
+  color: #dc2626;
+  background: rgba(239, 68, 68, .12);
+}
+
+.pr-history-card time {
+  color: color-mix(in srgb, var(--muted) 82%, transparent);
+  font-size: .72rem;
+  font-weight: 820;
+  line-height: 1.25;
+}
+
+@media (max-width: 768px) {
+  .pr-production-history {
+    padding: 12px;
+  }
+
+  .pr-history-item {
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .pr-history-item:not(:last-child)::before {
+    left: 7px;
+  }
+
+  .pr-history-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+
+/* ===== PRODUCTION STATUS SEPARATE SIDEBAR MENU PATCH ===== */
+.nav-item[data-production-status-link] {
+  position: relative;
+}
+
+.nav-item[data-production-status-link] .production-status-sidebar-badge {
+  right: 12px;
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .nav-item[data-production-status-link] .production-status-sidebar-badge {
+    top: 4px;
+    right: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-item[data-production-status-link] .production-status-sidebar-badge {
+    right: 12px;
+  }
+}
+
+/* ===== PRODUCTION SIDEBAR ARROW BEFORE NOTIFICATION PATCH ===== */
+/* Production parent menu should show: Production > notification badge. */
+.production-nav-parent {
+  display: flex;
+  align-items: center;
+}
+
+.production-nav-parent::after {
+  order: 3;
+  margin-left: auto;
+  margin-right: 8px;
+  flex: 0 0 auto;
+}
+
+.production-nav-parent .production-status-sidebar-badge {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  transform: none !important;
+  order: 4;
+  flex: 0 0 auto;
+  margin-left: 0 !important;
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-nav-parent .production-status-sidebar-badge {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    transform: none !important;
+    order: initial;
+  }
+}
+
+@media (max-width: 768px) {
+  .production-nav-parent::after {
+    margin-right: 8px;
+  }
+
+  .production-nav-parent .production-status-sidebar-badge {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    transform: none !important;
+  }
+}
+
+
+/* ===== PRODUCTION NOTIFICATIONS + STAY-CURRENT-TAB PATCH ===== */
+/* Stage sidebar badges now behave like notification badges: show unread only, same red badge style as existing nav notifications. */
+.production-sub-item {
+  position: relative;
+}
+
+.production-sub-item .production-sub-count.has-notification,
+.production-sub-count.has-notification,
+.production-sub-count.notification-nav-badge {
+  min-width: 20px !important;
+  height: 20px !important;
+  padding: 0 6px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  background: #ef4444 !important;
+  font-size: .68rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  box-shadow: 0 8px 18px rgba(239, 68, 68, .22) !important;
+}
+
+.production-sub-count[hidden] {
+  display: none !important;
+}
+
+/* All Production tab notifications use the same red notification badge for consistency. */
+.production-receiving-view .pr-folder-tab.has-notification .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="pending"] .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="ongoing"] .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="hold"] .pr-tab-badge {
+  color: #fff !important;
+  background: #ef4444 !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .22) !important;
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-sub-item .production-sub-count.has-notification,
+  .production-sub-count.has-notification,
+  .production-sub-count.notification-nav-badge {
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 5px !important;
+    font-size: .62rem !important;
+  }
+}
+
+/* ===== PROD.STATUS TAB VISIBILITY FIX ===== */
+/* Hide Pending and Hold tabs only when the separate Prod.Status menu is active.
+   This is placed at the end because earlier tab layout patches use display: inline-flex !important. */
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="pending"],
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="hold"],
+.production-receiving-view .pr-folder-tab[hidden] {
+  display: none !important;
+}
+
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="ongoing"] {
+  display: inline-flex !important;
+}
+
+/* ===== PRODUCTION SIDEBAR ACTIVE + STAGE STATUS COLOR PATCH ===== */
+/* Stage status pills use different colors so Production Status is easier to scan. */
+.pr-status-pill.pr-stage-status-printing {
+  color: #2563eb;
+  background: rgba(37, 99, 235, .13);
+}
+
+.pr-status-pill.pr-stage-status-rewinding {
+  color: #7c3aed;
+  background: rgba(124, 58, 237, .13);
+}
+
+.pr-status-pill.pr-stage-status-lamination {
+  color: #ea580c;
+  background: rgba(234, 88, 12, .14);
+}
+
+.pr-status-pill.pr-stage-status-slitting {
+  color: #0891b2;
+  background: rgba(8, 145, 178, .13);
+}
+
+html[data-theme="dark"] .pr-status-pill.pr-stage-status-printing {
+  color: #93c5fd;
+  background: rgba(37, 99, 235, .22);
+}
+
+html[data-theme="dark"] .pr-status-pill.pr-stage-status-rewinding {
+  color: #c4b5fd;
+  background: rgba(124, 58, 237, .24);
+}
+
+html[data-theme="dark"] .pr-status-pill.pr-stage-status-lamination {
+  color: #fdba74;
+  background: rgba(234, 88, 12, .24);
+}
+
+html[data-theme="dark"] .pr-status-pill.pr-stage-status-slitting {
+  color: #67e8f9;
+  background: rgba(8, 145, 178, .23);
+}
+
+
+/* ===== PRODUCTION VALIDATION STYLE - MATCH ORDERS ===== */
+.production-receiving-view .pr-form-field {
+  position: relative;
+}
+
+.production-receiving-view .pr-form-field.has-field-error {
+  margin-bottom: 42px;
+}
+
+.production-receiving-view .pr-form-field.has-field-error input {
+  border-color: rgba(239, 68, 68, .62) !important;
+  background: rgba(239, 68, 68, .055) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, .10) !important;
+}
+
+.production-receiving-view .pr-form-field.has-field-error > span {
+  color: #ef4444;
+}
+
+.pr-field-error {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 45;
+  width: fit-content;
+  max-width: min(100%, 360px);
+  padding: 9px 11px 9px 10px;
+  border: 1px solid rgba(239, 68, 68, .22);
+  border-radius: 13px;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #dc2626;
+  background: var(--panel-solid);
+  box-shadow: 0 12px 26px rgba(239, 68, 68, .12);
+  font-size: .78rem;
+  font-weight: 400;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.pr-field-error::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid rgba(239, 68, 68, .22);
+  border-left: 1px solid rgba(239, 68, 68, .22);
+  background: var(--panel-solid);
+  transform: rotate(45deg);
+}
+
+.pr-field-error-icon {
+  width: 18px;
+  height: 18px;
+  margin-top: -1px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: #ef4444;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.pr-field-error span:last-child {
+  font-weight: 400;
+}
+
+html[data-theme="dark"] .pr-field-error {
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, .26);
+  background: var(--panel-solid);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, .22);
+}
+
+html[data-theme="dark"] .pr-field-error::before {
+  border-color: rgba(248, 113, 113, .26);
+  background: var(--panel-solid);
+}
+
+@media (max-width: 768px) {
+  .pr-field-error {
+    width: min(100%, 360px);
+    font-size: .76rem;
+  }
+}
+
+/* ===== LATEST PATCH: START REWINDING MODAL LAYOUT - SINGLE ROW FIELDS ===== */
+/* Paste this at the VERY BOTTOM of production-receiving.css. */
+
+.pr-start-stage-modal {
+  width: min(820px, calc(100vw - 40px));
+  max-height: min(84vh, 760px);
+}
+
+.pr-start-stage-modal .pr-modal-head {
+  align-items: center;
+  padding: 24px 24px 22px;
+}
+
+.pr-start-stage-modal .pr-modal-body {
+  padding: 20px 24px;
+}
+
+.pr-start-stage-modal .pr-take-order-summary {
+  margin-bottom: 18px;
+  padding: 16px 17px;
+  border-radius: 18px;
+}
+
+.pr-start-stage-modal .pr-take-order-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.pr-start-stage-modal .pr-take-order-form > .pr-form-field,
+.pr-start-stage-modal .pr-take-order-form > .pr-form-field-full,
+.pr-start-stage-modal .pr-take-order-form > .pr-start-stage-required-meters {
+  grid-column: 1 / -1;
+}
+
+.pr-start-stage-modal .pr-form-field {
+  position: relative;
+  gap: 10px;
+}
+
+.pr-start-stage-modal .pr-form-field span,
+.pr-start-stage-modal .pr-start-stage-required-meters span {
+  line-height: 1.15;
+}
+
+.pr-start-stage-modal .pr-form-field input {
+  min-height: 50px;
+  border-radius: 15px;
+}
+
+.pr-start-stage-modal .pr-form-field input[type="number"] {
+  padding-right: 34px;
+}
+
+.pr-start-stage-modal .pr-start-stage-required-meters {
+  min-height: 50px;
+  margin: 0;
+  padding: 13px 15px;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.pr-start-stage-modal .pr-start-stage-required-meters strong {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pr-start-stage-modal .pr-form-feedback {
+  margin-top: 12px;
+}
+
+.pr-start-stage-modal .pr-modal-footer {
+  padding: 15px 24px 22px;
+}
+
+/* Error style also applies because this modal is appended outside .production-receiving-view.
+   Keep the alert floating like Add Order validation, without moving modal fields. */
+.pr-start-stage-modal .pr-form-field.has-field-error {
+  margin-bottom: 0 !important;
+  z-index: 30;
+}
+
+.pr-start-stage-modal .pr-form-field.has-field-error input {
+  border-color: rgba(239, 68, 68, .62) !important;
+  background: rgba(239, 68, 68, .055) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, .10) !important;
+}
+
+.pr-start-stage-modal .pr-form-field.has-field-error > span {
+  color: #ef4444;
+}
+
+.pr-start-stage-modal .pr-field-error {
+  top: calc(100% + 9px);
+  left: 0;
+  z-index: 80;
+  margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .pr-start-stage-modal {
+    width: 100%;
+    max-height: none;
+  }
+
+  .pr-start-stage-modal .pr-modal-head {
+    padding: 17px 14px 13px;
+  }
+
+  .pr-start-stage-modal .pr-modal-body {
+    padding: 14px;
+  }
+
+  .pr-start-stage-modal .pr-take-order-summary {
+    margin-bottom: 14px;
+  }
+
+  .pr-start-stage-modal .pr-take-order-form {
+    gap: 14px;
+  }
+
+  .pr-start-stage-modal .pr-start-stage-required-meters {
+    min-height: 50px;
+    height: auto;
+    padding: 13px 15px;
+  }
+
+  .pr-start-stage-modal .pr-modal-footer {
+    padding: 12px 14px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pr-start-stage-modal .pr-start-stage-required-meters {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 6px;
+  }
+
+  .pr-start-stage-modal .pr-start-stage-required-meters strong {
+    text-align: left;
+  }
+}
+
+/* ===== LATEST PATCH: FINISH / MOVE METERS VALIDATION + FLOATING ERROR ===== */
+/* Applies to Finish / Move modal only. Error floats, so the modal layout does not jump. */
+.pr-move-stage-modal .pr-form-field {
+  position: relative;
+}
+
+.pr-move-stage-modal .pr-form-field.has-field-error {
+  margin-bottom: 0 !important;
+  z-index: 30;
+}
+
+.pr-move-stage-modal .pr-form-field.has-field-error input {
+  border-color: rgba(239, 68, 68, .62) !important;
+  background: rgba(239, 68, 68, .055) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, .10) !important;
+}
+
+.pr-move-stage-modal .pr-form-field.has-field-error > span {
+  color: #ef4444;
+}
+
+.pr-move-stage-modal .pr-field-error {
+  top: calc(100% + 9px);
+  left: 0;
+  z-index: 80;
+  margin: 0 !important;
+}
+
+
+/* ===== LATEST PATCH: LAMINATION + SLITTING STAGE METER LOGIC ===== */
+/* Keeps the same Rewinding logic for the next stages without changing other tab layouts. */
+.pr-stage-input-grid .pr-field span,
+.pr-ongoing-record-grid .pr-field span {
+  white-space: normal;
+}
+
+.pr-move-stage-modal .pr-move-stage-production-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.pr-move-stage-modal .pr-move-stage-production-form > .pr-form-field,
+.pr-move-stage-modal .pr-move-stage-production-form > .pr-form-field-full {
+  grid-column: 1 / -1;
+}
+
+.pr-move-stage-modal .pr-move-stage-entered-meters {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .pr-move-stage-modal .pr-move-stage-production-form {
+    gap: 14px;
+  }
+}
+
+/* ===== PRINTING FINISH/MOVE METERS INPUT LAYOUT PATCH ===== */
+/* Printing Finish Stage only: entered quantity stays on the left of the textbox. */
+.pr-move-stage-modal .pr-move-stage-production-form.pr-printing-finish-meter-layout {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.pr-move-stage-modal .pr-printing-finish-meters-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(150px, .78fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: end;
+}
+
+.pr-move-stage-modal .pr-printing-finish-entered-side {
+  min-height: 50px;
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pr-move-stage-modal .pr-printing-finish-entered-side span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-move-stage-modal .pr-printing-finish-entered-side strong {
+  min-height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .58);
+  font-size: .92rem;
+  font-weight: 850;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+html[data-theme="dark"] .pr-move-stage-modal .pr-printing-finish-entered-side strong {
+  background: rgba(15, 23, 42, .44);
+}
+
+.pr-move-stage-modal .pr-printing-finish-meter-layout > .pr-form-field-full:not(.pr-form-field-required),
+.pr-move-stage-modal .pr-printing-finish-meter-layout > .pr-printing-finish-meters-row {
+  grid-column: 1 / -1;
+}
+
+.pr-move-stage-modal .pr-printing-finish-produced-field {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .pr-move-stage-modal .pr-printing-finish-meters-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== LATEST PATCH: FINISH STAGE METERS ROW FOR REWINDING / LAMINATION / SLITTING ===== */
+/* Same visual treatment as Printing Finish Stage, but kept on separate classes so Printing stays untouched. */
+.pr-move-stage-modal .pr-move-stage-production-form.pr-finish-stage-meter-layout {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.pr-move-stage-modal .pr-finish-stage-meters-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(150px, .78fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: end;
+}
+
+.pr-move-stage-modal .pr-finish-stage-entered-side {
+  min-height: 50px;
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pr-move-stage-modal .pr-finish-stage-entered-side span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-move-stage-modal .pr-finish-stage-entered-side strong {
+  min-height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .58);
+  font-size: .92rem;
+  font-weight: 850;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+html[data-theme="dark"] .pr-move-stage-modal .pr-finish-stage-entered-side strong {
+  background: rgba(15, 23, 42, .44);
+}
+
+.pr-move-stage-modal .pr-finish-stage-meter-layout > .pr-form-field-full:not(.pr-form-field-required),
+.pr-move-stage-modal .pr-finish-stage-meter-layout > .pr-finish-stage-meters-row {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .pr-move-stage-modal .pr-finish-stage-meters-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== LATEST PATCH: START STAGE METERS ROW FOR PENDING MODALS ===== */
+/* Applies the same meter-side layout to Start Rewinding / Start Lamination / Start Slitting only. */
+.pr-start-stage-modal .pr-take-order-form.pr-start-stage-meter-layout {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.pr-start-stage-modal .pr-start-stage-meters-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(150px, .78fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: end;
+}
+
+.pr-start-stage-modal .pr-start-stage-entered-side {
+  min-height: 50px;
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pr-start-stage-modal .pr-start-stage-entered-side span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.pr-start-stage-modal .pr-start-stage-entered-side strong {
+  min-height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .58);
+  font-size: .92rem;
+  font-weight: 850;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+html[data-theme="dark"] .pr-start-stage-modal .pr-start-stage-entered-side strong {
+  background: rgba(15, 23, 42, .44);
+}
+
+.pr-start-stage-modal .pr-start-stage-meter-layout > .pr-form-field-full,
+.pr-start-stage-modal .pr-start-stage-meter-layout > .pr-start-stage-meters-row {
+  grid-column: 1 / -1;
+}
+
+.pr-start-stage-modal .pr-start-stage-meters-input-field {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .pr-start-stage-modal .pr-start-stage-meters-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== LATEST PATCH: PARTIAL START BALANCE VISIBILITY ===== */
+.pr-balance-badge {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: 7px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  background: rgba(255, 139, 26, .12);
+  font-style: normal;
+  font-size: .66rem;
+  font-weight: 950;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+html[data-theme="dark"] .pr-balance-badge {
+  background: rgba(255, 139, 26, .18);
+}
+
+
+
+/* ===== LATEST PATCH: PARTIAL BATCH LABELS ===== */
+.pr-batch-badge {
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+  background: rgba(36, 107, 254, .11);
+  font-style: normal;
+  font-size: .66rem;
+  font-weight: 950;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+html[data-theme="dark"] .pr-batch-badge {
+  background: rgba(36, 107, 254, .20);
+}
+
+
+/* ===== PARTIAL BATCH TITLE BADGE PATCH ===== */
+/* Batch/Balance badge now sits under the item name so the card field grid keeps the same layout. */
+.production-receiving-view .pr-record-title {
+  min-width: 0;
+}
+
+.production-receiving-view .pr-record-title-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 20px;
+  margin-top: -2px;
+}
+
+.production-receiving-view .pr-card-batch-badge {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  border: 1px solid rgba(36, 107, 254, .18);
+  font-size: .68rem;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-card-batch-badge {
+  color: #93c5fd;
+  background: rgba(37, 99, 235, .18);
+  border-color: rgba(96, 165, 250, .26);
+}
+
+@media (max-width: 768px) {
+  .production-receiving-view .pr-record-title-meta {
+    min-height: 18px;
+  }
+
+  .production-receiving-view .pr-card-batch-badge {
+    padding: 5px 8px;
+    font-size: .64rem;
+    white-space: normal;
+    line-height: 1.15;
+  }
+}
+
+/* ===== LATEST PATCH: LAMINATION GROUPED SOURCE CONTAINER ===== */
+.production-receiving-view .pr-record-source-meta {
+  min-height: 0;
+  margin-top: 3px;
+}
+
+.production-receiving-view .pr-card-source-badge {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: var(--purple);
+  background: rgba(124, 77, 255, .10);
+  border: 1px solid rgba(124, 77, 255, .18);
+  font-size: .66rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .01em;
+  white-space: normal;
+}
+
+.production-receiving-view .pr-source-batches-field strong {
+  line-height: 1.45;
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-card-source-badge {
+  color: #c4b5fd;
+  background: rgba(124, 77, 255, .18);
+  border-color: rgba(167, 139, 250, .24);
+}
+
+@media (max-width: 768px) {
+  .production-receiving-view .pr-card-source-badge {
+    font-size: .63rem;
+  }
+}
+
+/* ===== PROD.STATUS SHOW ALL TABS FINAL OVERRIDE ===== */
+/* The previous visibility patch hid Pending/Hold inside the separate Prod.Status view.
+   Prod.Status now needs the same Pending / On-going / Hold tabs so the list and tab badges match. */
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="pending"],
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="ongoing"],
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="hold"] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* ===== PROD.STATUS MERGED LIST FINAL OVERRIDE ===== */
+/* Production Status uses one merged list only.
+   Pending/Hold tabs are hidden here, and the remaining tab shows all Pending/On-going/Hold records. */
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="pending"],
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="hold"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.production-receiving-view.is-production-status-view .pr-folder-tab[data-pr-tab="ongoing"] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+
+/* ===== PATCH: PARTIAL PRINTING MATERIALS IN ONE ROW ===== */
+.pr-start-stage-modal .pr-partial-materials-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.pr-start-stage-modal .pr-partial-materials-row > .pr-form-field {
+  grid-column: auto;
+}
+
+@media (max-width: 768px) {
+  .pr-start-stage-modal .pr-partial-materials-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== HISTORY COMBINED LINE POLISH ===== */
+.pr-history-item.is-combined-history {
+  align-items: center;
+}
+
+.pr-history-item.is-combined-history i {
+  width: 15px;
+  height: 15px;
+}
+
+.pr-history-item.is-combined-history:not(:last-child)::before {
+  left: 7px;
+}
+
+.pr-history-tags .combined-tag {
+  color: #ea580c;
+  background: rgba(255, 139, 26, .14);
+  border: 1px solid rgba(255, 139, 26, .20);
+}
+
+html[data-theme="dark"] .pr-history-tags .combined-tag {
+  color: #fdba74;
+  background: rgba(251, 146, 60, .18);
+  border-color: rgba(251, 146, 60, .25);
+}
+
+@media (max-width: 768px) {
+  .pr-history-item.is-combined-history:not(:last-child)::before {
+    left: 7px;
+  }
+
+  .pr-history-item.is-combined-history i {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+
+/* ===== HISTORY BATCH TAG POLISH ===== */
+.pr-history-tags .batch-tag {
+  color: var(--blue);
+  background: var(--blue-soft);
+  border: 1px solid rgba(36, 107, 254, .16);
+}
+
+html[data-theme="dark"] .pr-history-tags .batch-tag {
+  color: #93c5fd;
+  background: rgba(37, 99, 235, .18);
+  border-color: rgba(96, 165, 250, .22);
+}
+
+/* ===== PHASE 3 - HISTORY UI POLISH ONLY ===== */
+.pr-production-history {
+  border-radius: 24px;
+}
+
+.pr-history-head {
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.pr-history-head span {
+  letter-spacing: .055em;
+}
+
+.pr-history-head strong {
+  min-width: 30px;
+  height: 30px;
+  box-shadow: 0 8px 18px rgba(36, 107, 254, .10);
+}
+
+.pr-history-list {
+  gap: 11px;
+}
+
+.pr-history-item {
+  align-items: center;
+}
+
+.pr-history-item i {
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 0 5px rgba(36, 107, 254, .11);
+}
+
+.pr-history-card {
+  gap: 8px;
+  padding: 13px 14px;
+  border-radius: 18px;
+}
+
+.pr-history-title-row strong {
+  font-size: .92rem;
+  letter-spacing: -.01em;
+}
+
+.pr-history-card > span {
+  font-size: .79rem;
+  line-height: 1.5;
+}
+
+.pr-history-tags {
+  gap: 7px;
+}
+
+.pr-history-tags small {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  font-size: .68rem;
+  font-weight: 880;
+}
+
+.pr-history-tags .operator-tag {
+  color: var(--green);
+  background: rgba(22, 184, 106, .11);
+  border-color: rgba(22, 184, 106, .16);
+}
+
+.pr-history-tags .meters-tag {
+  color: var(--blue);
+  background: var(--blue-soft);
+  border-color: rgba(36, 107, 254, .14);
+}
+
+.pr-history-tags .combined-tag {
+  color: #c2410c;
+  background: rgba(249, 115, 22, .12);
+  border-color: rgba(249, 115, 22, .18);
+}
+
+.pr-history-tags .batch-tag {
+  color: #7c3aed;
+  background: rgba(124, 58, 237, .11);
+  border-color: rgba(124, 58, 237, .16);
+}
+
+.pr-history-tags .waste-tag {
+  color: #dc2626;
+  background: rgba(239, 68, 68, .11);
+  border-color: rgba(239, 68, 68, .18);
+}
+
+.pr-history-card time {
+  margin-top: 1px;
+}
+
+html[data-theme="dark"] .pr-history-tags .operator-tag {
+  color: #86efac;
+  background: rgba(22, 184, 106, .14);
+  border-color: rgba(134, 239, 172, .16);
+}
+
+html[data-theme="dark"] .pr-history-tags .meters-tag {
+  color: #93c5fd;
+  background: rgba(37, 99, 235, .18);
+  border-color: rgba(147, 197, 253, .16);
+}
+
+html[data-theme="dark"] .pr-history-tags .combined-tag {
+  color: #fdba74;
+  background: rgba(249, 115, 22, .16);
+  border-color: rgba(253, 186, 116, .18);
+}
+
+html[data-theme="dark"] .pr-history-tags .batch-tag {
+  color: #c4b5fd;
+  background: rgba(124, 58, 237, .18);
+  border-color: rgba(196, 181, 253, .18);
+}
+
+html[data-theme="dark"] .pr-history-tags .waste-tag {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, .16);
+  border-color: rgba(252, 165, 165, .18);
+}
+
+
+/* ===== PHASE: Production tab item count + separate notification badge ===== */
+.production-receiving-view .pr-folder-tab {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding-right: 34px !important;
+  overflow: visible !important;
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-label {
+  display: inline-block !important;
+  white-space: nowrap !important;
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-count {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  padding: 0 8px !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  border-radius: 11px !important;
+  background: rgba(226, 232, 240, 0.68) !important;
+  color: var(--text) !important;
+  font-size: 0.78rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-folder-tab .pr-tab-count {
+  background: rgba(51, 65, 85, 0.75) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: #f8fafc !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-badge {
+  position: absolute !important;
+  top: 6px !important;
+  right: 8px !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  padding: 0 6px !important;
+  border: 2px solid var(--panel-solid) !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  background: #ef4444 !important;
+  font-size: 0.66rem !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  box-shadow: 0 10px 18px rgba(239, 68, 68, .24) !important;
+  transform: none !important;
+  z-index: 2 !important;
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-folder-tab .pr-tab-badge {
+  border-color: rgba(17, 24, 39, 0.96) !important;
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-badge[hidden] {
+  display: none !important;
+}
+
+.production-receiving-view .pr-folder-tab.has-notification .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="pending"] .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="ongoing"] .pr-tab-badge,
+.production-receiving-view .pr-folder-tab.has-notification[data-pr-tab="hold"] .pr-tab-badge {
+  color: #fff !important;
+  background: #ef4444 !important;
+  box-shadow: 0 10px 18px rgba(239, 68, 68, .24) !important;
+}
+
+.production-receiving-view .pr-folder-tab.active .pr-tab-count {
+  background: color-mix(in srgb, var(--blue-soft) 88%, #ffffff) !important;
+  border-color: rgba(36, 107, 254, 0.18) !important;
+}
+
+.production-receiving-view .pr-folder-tab[data-pr-tab="ongoing"].active .pr-tab-count {
+  background: color-mix(in srgb, rgba(22, 184, 106, .14) 88%, #ffffff) !important;
+  border-color: rgba(22, 184, 106, .18) !important;
+}
+
+.production-receiving-view .pr-folder-tab[data-pr-tab="hold"].active .pr-tab-count {
+  background: color-mix(in srgb, rgba(249, 115, 22, .14) 88%, #ffffff) !important;
+  border-color: rgba(249, 115, 22, .18) !important;
+}
+
+@media (max-width: 768px) {
+  .production-receiving-view .pr-folder-tab {
+    gap: 8px !important;
+    padding-right: 28px !important;
+  }
+
+  .production-receiving-view .pr-folder-tab .pr-tab-count {
+    min-width: 24px !important;
+    height: 24px !important;
+    padding: 0 6px !important;
+    border-radius: 10px !important;
+    font-size: 0.72rem !important;
+  }
+
+  .production-receiving-view .pr-folder-tab .pr-tab-badge {
+    top: 4px !important;
+    right: 5px !important;
+    min-width: 20px !important;
+    height: 20px !important;
+    font-size: 0.62rem !important;
+  }
+}
+
+
+/* ===== Hover polish: tabs and list cards use outer shadow only ===== */
+.pr-folder-tab {
+  transition: color .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease) !important;
+}
+
+.pr-folder-tab:not(.active):hover {
+  transform: none !important;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, .08) !important;
+}
+
+html[data-theme="dark"] .pr-folder-tab:not(.active):hover {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .24) !important;
+}
+
+.pr-record-card {
+  transition: box-shadow .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease) !important;
+}
+
+.pr-record-card:hover {
+  transform: none !important;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, .10) !important;
+}
+
+html[data-theme="dark"] .pr-record-card:hover {
+  box-shadow: 0 18px 38px rgba(0, 0, 0, .28) !important;
+}
+
+
+/* ===== Production tab item count as text: PENDING (7) ===== */
+.production-receiving-view .pr-folder-tab .pr-tab-count {
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  color: currentColor !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-count::before {
+  content: "(";
+}
+
+.production-receiving-view .pr-folder-tab .pr-tab-count::after {
+  content: ")";
+}
+
+html[data-theme="dark"] .production-receiving-view .pr-folder-tab .pr-tab-count,
+.production-receiving-view .pr-folder-tab.active .pr-tab-count,
+.production-receiving-view .pr-folder-tab[data-pr-tab="ongoing"].active .pr-tab-count,
+.production-receiving-view .pr-folder-tab[data-pr-tab="hold"].active .pr-tab-count {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: currentColor !important;
+  box-shadow: none !important;
+}
+
+
+/* ===== Production sidebar stage item count as text: Printing (2) ===== */
+.production-sub-item {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.production-sub-item .production-sub-label {
+  flex: 0 1 auto !important;
+}
+
+.production-sub-item .production-sub-count {
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: currentColor !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+}
+
+.production-sub-item .production-sub-count::before {
+  content: "(";
+}
+
+.production-sub-item .production-sub-count::after {
+  content: ")";
+}
+
+.production-sub-item.has-notification .production-sub-count,
+.production-sub-item.has-notification .production-sub-count.has-notification,
+.production-sub-count.has-notification,
+.production-sub-count.notification-nav-badge {
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: currentColor !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.production-sub-unread {
+  position: absolute !important;
+  top: 3px !important;
+  right: 5px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  padding: 0 5px !important;
+  border: 2px solid var(--panel-solid) !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  background: #ef4444 !important;
+  font-size: .58rem !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .24) !important;
+  z-index: 3 !important;
+}
+
+.production-sub-unread[hidden] {
+  display: none !important;
+}
+
+html[data-theme="dark"] .production-sub-unread {
+  border-color: rgba(17, 24, 39, 0.96) !important;
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-sub-item .production-sub-count {
+    display: none !important;
+  }
+
+  .production-sub-unread {
+    top: -4px !important;
+    right: -4px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .production-sub-item .production-sub-label {
+    flex: 0 1 auto !important;
+  }
+
+  .production-sub-unread {
+    top: 6px !important;
+    right: 8px !important;
+  }
+}
+
+
+/* ===== Side menu stage count spacing + smaller unread badge ===== */
+.production-sub-item {
+  gap: 4px !important;
+  padding-right: 22px !important;
+}
+
+.production-sub-item .production-sub-label {
+  margin-right: -1px !important;
+}
+
+.production-sub-item .production-sub-count {
+  margin-left: -1px !important;
+}
+
+.production-sub-unread {
+  top: 5px !important;
+  right: 6px !important;
+  min-width: 14px !important;
+  height: 14px !important;
+  padding: 0 3px !important;
+  border-width: 1.5px !important;
+  font-size: .48rem !important;
+  box-shadow: 0 6px 12px rgba(239, 68, 68, .22) !important;
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-sub-item {
+    padding-right: 0 !important;
+  }
+
+  .production-sub-unread {
+    top: -3px !important;
+    right: -3px !important;
+    min-width: 13px !important;
+    height: 13px !important;
+    padding: 0 3px !important;
+    font-size: .46rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .production-sub-item {
+    gap: 4px !important;
+    padding-right: 24px !important;
+  }
+
+  .production-sub-unread {
+    top: 8px !important;
+    right: 10px !important;
+    min-width: 14px !important;
+    height: 14px !important;
+    padding: 0 3px !important;
+    font-size: .48rem !important;
+  }
+}
+
+
+/* ===== Fix: keep side menu unread notification badge at normal sidebar size ===== */
+.production-sub-unread {
+  top: 3px !important;
+  right: 5px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  padding: 0 5px !important;
+  border-width: 2px !important;
+  font-size: .58rem !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .24) !important;
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  .production-sub-unread {
+    top: -4px !important;
+    right: -4px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 5px !important;
+    font-size: .58rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .production-sub-unread {
+    top: 6px !important;
+    right: 8px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 5px !important;
+    font-size: .58rem !important;
+  }
+}
+
+
+/* ===== LATEST FIX: Tablet compact sidebar label leak ===== */
+/* Fixes text like Orders / Prod.Status / Production showing beside icons
+   when notification badges are appended after the label span. */
+@media (min-width: 769px) and (max-width: 1300px) {
+  html:not(.tablet-sidebar-expanded) .sidebar {
+    width: 88px !important;
+    overflow-x: hidden !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .side-nav,
+  html:not(.tablet-sidebar-expanded) .nav,
+  html:not(.tablet-sidebar-expanded) .production-nav-group,
+  html:not(.tablet-sidebar-expanded) .production-sub-nav {
+    width: 100% !important;
+    align-items: center !important;
+    justify-items: center !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .brand > span,
+  html:not(.tablet-sidebar-expanded) .nav-item > span:not(.nav-icon):not(.notification-nav-badge):not(.production-status-sidebar-badge),
+  html:not(.tablet-sidebar-expanded) .production-nav-parent > span:not(.nav-icon):not(.notification-nav-badge):not(.production-status-sidebar-badge),
+  html:not(.tablet-sidebar-expanded) .production-sub-label,
+  html:not(.tablet-sidebar-expanded) .production-sub-count,
+  html:not(.tablet-sidebar-expanded) .theme-label,
+  html:not(.tablet-sidebar-expanded) .sidebar-logout-btn > span:not([data-icon]) {
+    display: none !important;
+    width: 0 !important;
+    max-width: 0 !important;
+    min-width: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .nav-item,
+  html:not(.tablet-sidebar-expanded) .production-nav-parent,
+  html:not(.tablet-sidebar-expanded) .sidebar-logout-btn {
+    position: relative !important;
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+    min-height: 52px !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .production-sub-item {
+    position: relative !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    min-height: 38px !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: visible !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .nav-icon,
+  html:not(.tablet-sidebar-expanded) .production-sub-short,
+  html:not(.tablet-sidebar-expanded) .sidebar-logout-btn [data-icon] {
+    display: grid !important;
+    place-items: center !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .notification-nav-badge,
+  html:not(.tablet-sidebar-expanded) .production-status-sidebar-badge {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    margin-left: 0 !important;
+    transform: scale(.82) !important;
+    transform-origin: top right !important;
+    z-index: 4 !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .production-sub-unread {
+    top: -3px !important;
+    right: -3px !important;
+    z-index: 4 !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1300px) {
+  html.tablet-sidebar-expanded .brand > span,
+  html.tablet-sidebar-expanded .nav-item > span:not(.nav-icon):not(.notification-nav-badge):not(.production-status-sidebar-badge),
+  html.tablet-sidebar-expanded .production-nav-parent > span:not(.nav-icon):not(.notification-nav-badge):not(.production-status-sidebar-badge),
+  html.tablet-sidebar-expanded .production-sub-label,
+  html.tablet-sidebar-expanded .theme-label,
+  html.tablet-sidebar-expanded .sidebar-logout-btn > span:not([data-icon]) {
+    display: inline-flex !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    pointer-events: auto !important;
+  }
+}
+
+
+/* ===== LATEST FIX: Tablet compact sidebar notification badges visible ===== */
+/* Compact sidebar only:
+   - keep text labels hidden
+   - keep notification badges/counters visible beside the icons */
+@media (min-width: 769px) and (max-width: 1300px) {
+  html:not(.tablet-sidebar-expanded) .sidebar,
+  html:not(.tablet-sidebar-expanded) .side-nav,
+  html:not(.tablet-sidebar-expanded) .production-nav-group,
+  html:not(.tablet-sidebar-expanded) .production-sub-nav {
+    overflow-x: visible !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .nav-item,
+  html:not(.tablet-sidebar-expanded) .production-nav-parent,
+  html:not(.tablet-sidebar-expanded) .sidebar-logout-btn {
+    overflow: visible !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .production-sub-item {
+    overflow: visible !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .notification-nav-badge,
+  html:not(.tablet-sidebar-expanded) .production-status-sidebar-badge {
+    position: absolute !important;
+    top: -5px !important;
+    right: -5px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 5px !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 2px solid var(--panel-solid) !important;
+    border-radius: 999px !important;
+    font-size: .62rem !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transform: none !important;
+    z-index: 20 !important;
+    pointer-events: none !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .notification-nav-badge[hidden],
+  html:not(.tablet-sidebar-expanded) .production-status-sidebar-badge[hidden] {
+    display: none !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .production-sub-unread {
+    position: absolute !important;
+    top: -5px !important;
+    right: -5px !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    padding: 0 4px !important;
+    border: 2px solid var(--panel-solid) !important;
+    border-radius: 999px !important;
+    font-size: .58rem !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    z-index: 20 !important;
+    pointer-events: none !important;
+  }
+
+  html:not(.tablet-sidebar-expanded) .production-sub-unread[hidden] {
+    display: none !important;
+  }
+}
+
+
+/* ===== HOLD MODAL REASON / REMARKS ===== */
+.pr-form-field textarea {
+  width: 100%;
+  min-height: 104px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 13px 14px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .76);
+  outline: none;
+  font: inherit;
+  font-weight: 400;
+  line-height: 1.45;
+  resize: vertical;
+  transition: border-color .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease);
+}
+
+html[data-theme="dark"] .pr-form-field textarea {
+  background: rgba(15, 23, 42, .58);
+}
+
+.pr-form-field textarea:focus {
+  border-color: rgba(36, 107, 254, .36);
+  box-shadow: 0 0 0 4px rgba(36, 107, 254, .10);
+}
+
+.pr-hold-stage-modal .pr-modal-body {
+  padding: 20px 24px;
+}
+
+.pr-hold-stage-modal .pr-take-order-summary {
+  margin-bottom: 18px;
+  padding: 16px 17px;
+  border-radius: 18px;
+}
+
+.pr-hold-stage-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.pr-hold-stage-form .pr-form-field {
+  grid-column: 1 / -1;
+  gap: 10px;
+}
+
+.pr-hold-stage-modal .pr-modal-footer {
+  padding: 15px 24px 22px;
+}
+
+.pr-hold-stage-modal .pr-action-btn.warning {
+  background: #f97316;
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(249, 115, 22, .20);
+}
+
+
+/* ===== COMBINED BATCH HISTORY - NESTED INSIDE BATCHES COMBINED ===== */
+.pr-combined-batch-history {
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.pr-combined-batch-group {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .48);
+}
+
+html[data-theme="dark"] .pr-combined-batch-group {
+  background: rgba(15, 23, 42, .34);
+}
+
+.pr-combined-batch-group > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pr-combined-batch-group > header strong {
+  color: var(--text);
+  font-size: .86rem;
+  font-weight: 950;
+  line-height: 1.2;
+}
+
+.pr-combined-batch-group > header span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.pr-combined-batch-group-list {
+  display: grid;
+  gap: 8px;
+  position: relative;
+  min-width: 0;
+  padding-left: 18px;
+}
+
+.pr-combined-batch-group-list::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 9px;
+  bottom: 9px;
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--blue) 20%, transparent);
+}
+
+.pr-combined-batch-nested-item {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .54);
+}
+
+html[data-theme="dark"] .pr-combined-batch-nested-item {
+  background: rgba(15, 23, 42, .38);
+}
+
+.pr-combined-batch-nested-item::before {
+  content: "";
+  position: absolute;
+  left: -17px;
+  top: 17px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--blue);
+  box-shadow: 0 0 0 4px rgba(36, 107, 254, .10);
+}
+
+.pr-combined-batch-nested-item strong {
+  color: var(--text);
+  font-size: .82rem;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.pr-combined-batch-nested-item span {
+  color: var(--muted);
+  font-size: .74rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.pr-combined-batch-nested-item time {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 850;
+}
+
+.pr-combined-batch-final-item {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 13px;
+  border: 1px solid rgba(36, 107, 254, .22);
+  border-radius: 15px;
+  background: var(--blue-soft);
+}
+
+html[data-theme="dark"] .pr-combined-batch-final-item {
+  background: rgba(37, 99, 235, .14);
+  border-color: rgba(96, 165, 250, .22);
+}
+
+.pr-combined-batch-final-item strong {
+  color: var(--blue);
+  font-size: .84rem;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.pr-combined-batch-final-item span {
+  color: var(--muted);
+  font-size: .74rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.pr-combined-batch-final-item time {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 850;
+}
+
+@media (max-width: 768px) {
+  .pr-combined-batch-group > header {
+    display: grid;
+    gap: 3px;
+  }
+
+  .pr-combined-batch-group > header span {
+    white-space: normal;
+  }
+}
+
+/* ===== FINAL CLEANUP: HISTORY TIMELINE LINE + CIRCLE ALIGNMENT ===== */
+/* Keeps the main timeline dot near the top of each card, so tall merged-batch
+   history cards no longer make the line/circle look broken or off-center. */
+.pr-history-list {
+  gap: 12px;
+}
+
+.pr-history-item,
+.pr-history-item.is-combined-history {
+  align-items: start !important;
+}
+
+.pr-history-item i,
+.pr-history-item.is-combined-history i {
+  width: 11px;
+  height: 11px;
+  margin: 16px auto 0;
+  border: 2px solid var(--panel-solid);
+  background: var(--blue);
+  box-shadow: 0 0 0 5px rgba(36, 107, 254, .11);
+}
+
+.pr-history-item:not(:last-child)::before,
+.pr-history-item.is-combined-history:not(:last-child)::before {
+  left: 8px !important;
+  top: 31px !important;
+  bottom: -17px !important;
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--blue) 20%, transparent);
+}
+
+/* Nested batch timeline inside each Batch 1 / Batch 2 group. */
+.pr-combined-batch-group-list {
+  gap: 9px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.pr-combined-batch-group-list::before {
+  left: 9px;
+  top: 19px;
+  bottom: 19px;
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--blue) 22%, transparent);
+}
+
+.pr-combined-batch-group-list:has(.pr-combined-batch-nested-item:only-child)::before {
+  display: none;
+}
+
+.pr-combined-batch-nested-item {
+  position: relative;
+}
+
+.pr-combined-batch-nested-item::before {
+  left: -20px;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--panel-solid);
+  background: var(--blue);
+  box-shadow: 0 0 0 5px rgba(36, 107, 254, .10);
+}
+
+/* The final Batches Combined card should read as the end of the split group. */
+.pr-combined-batch-final-item {
+  position: relative;
+  margin-left: 24px;
+}
+
+.pr-combined-batch-final-item::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--panel-solid);
+  border-radius: 999px;
+  background: #f97316;
+  box-shadow: 0 0 0 5px rgba(249, 115, 22, .12);
+}
+
+html[data-theme="dark"] .pr-history-item i,
+html[data-theme="dark"] .pr-history-item.is-combined-history i,
+html[data-theme="dark"] .pr-combined-batch-nested-item::before,
+html[data-theme="dark"] .pr-combined-batch-final-item::before {
+  border-color: var(--panel-solid);
+}
+
+@media (max-width: 768px) {
+  .pr-history-item i,
+  .pr-history-item.is-combined-history i {
+    margin-top: 15px;
+  }
+
+  .pr-history-item:not(:last-child)::before,
+  .pr-history-item.is-combined-history:not(:last-child)::before {
+    top: 30px !important;
+    bottom: -16px !important;
+  }
+
+  .pr-combined-batch-group-list {
+    padding-left: 22px;
+  }
+
+  .pr-combined-batch-group-list::before {
+    left: 8px;
+  }
+
+  .pr-combined-batch-nested-item::before,
+  .pr-combined-batch-final-item::before {
+    left: -19px;
+  }
+}
+
+
+/* ===== LATEST CLEANUP: REMOVE REDUNDANT BOXES INSIDE BATCH HISTORY MESSAGES ===== */
+/* Batch 1 / Batch 2 messages now read like a clean text timeline instead of
+   separate cards inside the merged/split history card. */
+.pr-combined-batch-nested-item {
+  padding: 2px 0 10px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .pr-combined-batch-nested-item {
+  background: transparent !important;
+}
+
+.pr-combined-batch-nested-item strong {
+  font-size: .84rem;
+  font-weight: 900;
+}
+
+.pr-combined-batch-nested-item span {
+  margin-top: 1px;
+}
+
+.pr-combined-batch-nested-item time {
+  margin-top: 1px;
+}
+
+.pr-combined-batch-group-list {
+  gap: 7px;
+}
+
+.pr-combined-batch-group-list::before {
+  top: 12px;
+  bottom: 17px;
+}
+
+.pr-combined-batch-nested-item::before {
+  top: 4px !important;
+}
+
+/* Keep the final combined marker as the ending action, but make it lighter too. */
+.pr-combined-batch-final-item {
+  padding: 10px 0 2px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .pr-combined-batch-final-item {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.pr-combined-batch-final-item::before {
+  top: 11px !important;
+}
+
+
+
+/* ===== LATEST CLEANUP: OUTER BOX ONLY FOR SPLIT DURING HISTORY ===== */
+/* The combined/split history card keeps the outer .pr-history-card box.
+   Batch 1 / Batch 2 sections inside it should no longer look like separate boxes. */
+.pr-history-item.is-combined-history .pr-history-card {
+  overflow: hidden;
+}
+
+.pr-combined-batch-history {
+  margin-top: 12px;
+  gap: 14px;
+}
+
+.pr-combined-batch-group {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .pr-combined-batch-group {
+  background: transparent !important;
+}
+
+.pr-combined-batch-group > header {
+  padding: 0 0 7px !important;
+  border-bottom: 0 !important;
+}
+
+.pr-combined-batch-group > header strong {
+  font-size: .84rem;
+}
+
+.pr-combined-batch-group > header span {
+  font-size: .7rem;
+}
+
+.pr-combined-batch-group-list {
+  padding-left: 23px !important;
+  gap: 7px !important;
+}
+
+.pr-combined-batch-group-list::before {
+  left: 8px !important;
+  top: 12px !important;
+  bottom: 16px !important;
+}
+
+.pr-combined-batch-nested-item {
+  padding: 2px 0 10px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .pr-combined-batch-nested-item {
+  background: transparent !important;
+}
+
+.pr-combined-batch-nested-item::before {
+  left: -20px !important;
+  top: 4px !important;
+}
+
+.pr-combined-batch-final-item {
+  margin-left: 23px !important;
+  padding: 10px 0 2px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .pr-combined-batch-final-item {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.pr-combined-batch-final-item::before {
+  left: -20px !important;
+  top: 11px !important;
+}
+
+@media (max-width: 768px) {
+  .pr-combined-batch-group-list {
+    padding-left: 22px !important;
+  }
+
+  .pr-combined-batch-nested-item::before,
+  .pr-combined-batch-final-item::before {
+    left: -19px !important;
+  }
+}
+
+/* ===== DELIVERIES VIEW - ISOLATED ===== */
+.deliveries-view {
+  animation: prFadeIn .25s var(--ease);
+}
+
+.deliveries-view,
+.deliveries-view * {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.delivery-toolbar {
+  grid-template-columns: minmax(220px, 1fr) auto;
+}
+
+.delivery-refresh-btn {
+  flex: 0 0 auto;
+}
+
+.delivery-record-card .pr-record-title-line {
+  align-items: center;
+  gap: 10px;
+}
+
+.delivery-status-pill {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-style: normal;
+  font-size: .75rem;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.delivery-status-pill.for-delivery {
+  color: #f97316;
+  background: rgba(249, 115, 22, .13);
+}
+
+.delivery-status-pill.delivered {
+  color: var(--green);
+  background: rgba(22, 184, 106, .13);
+}
+
+.delivery-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.delivery-detail-card {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .52);
+}
+
+html[data-theme="dark"] .delivery-detail-card {
+  background: rgba(15, 23, 42, .34);
+}
+
+.delivery-detail-card span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .045em;
+}
+
+.delivery-detail-card strong {
+  color: var(--text);
+  font-size: .92rem;
+  font-weight: 650;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.delivery-detail-card.wide {
+  grid-column: 1 / -1;
+}
+
+.delivery-details-modal .pr-modal-body {
+  display: grid;
+  gap: 14px;
+}
+
+.pr-finishing-delivery-modal .pr-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pr-finishing-delivery-modal .pr-form-field-full {
+  grid-column: 1 / -1;
+}
+
+.pr-finishing-delivery-modal .pr-take-order-summary small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 750;
+}
+
+@media (max-width: 768px) {
+  .delivery-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .delivery-refresh-btn {
+    width: 100%;
+  }
+
+  .pr-finishing-delivery-modal .pr-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===== LATEST UPDATE: DELIVERIES CLEAN HEADER + TAB-ALIGNED SEARCH ===== */
+/* The Deliveries page no longer uses a large title/header. Keep the search
+   aligned with the folder tabs so it matches the production tab layout. */
+.deliveries-view .delivery-shell {
+  gap: 0;
+}
+
+.deliveries-view .delivery-board {
+  width: 100%;
+  display: grid;
+  gap: 0;
+}
+
+.deliveries-view .delivery-page-head,
+.deliveries-view .delivery-refresh-btn {
+  display: none !important;
+}
+
+.deliveries-view .delivery-toolbar {
+  width: 100%;
+  max-width: 100%;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  align-items: end;
+  margin: 0 0 clamp(14px, 1.8vw, 18px);
+}
+
+.deliveries-view .delivery-folder-tabs {
+  margin-top: 0;
+}
+
+.deliveries-view .delivery-folder-tab {
+  overflow: visible;
+}
+
+.deliveries-view .delivery-folder-tab .notification-tab-badge {
+  margin-left: 2px;
+  flex: 0 0 auto;
+}
+
+.deliveries-view .delivery-record-card {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .deliveries-view .delivery-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: 100%;
+  }
+}
+
+/* ===== LATEST FIX: DELIVERIES TABS + SEARCH SAME ROW ===== */
+/* Match the Production list header layout: folder tabs on the left,
+   search/Clear controls on the right, then the list body below. */
+@media (min-width: 901px) {
+  .deliveries-view .delivery-board {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: end !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+    margin: 0 0 10px 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-toolbar {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: min(100%, 560px) !important;
+    max-width: 560px !important;
+    margin: 0 0 10px auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(180px, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .deliveries-view .delivery-search,
+  .deliveries-view #deliverySearchInput,
+  .deliveries-view .delivery-toolbar .pr-search,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    min-height: 48px !important;
+  }
+
+  .deliveries-view .delivery-folder-body {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    margin-top: 0 !important;
+  }
+
+  .deliveries-view .delivery-folder-tab.active {
+    position: relative !important;
+    z-index: 5 !important;
+  }
+
+  .deliveries-view .delivery-folder-tab.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: -1px !important;
+    right: -1px !important;
+    bottom: -12px !important;
+    height: 13px !important;
+    display: block !important;
+    background: var(--panel-solid) !important;
+    border-left: 1px solid var(--line) !important;
+    border-right: 1px solid var(--line) !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .deliveries-view .delivery-board {
+    column-gap: 10px !important;
+  }
+
+  .deliveries-view .delivery-toolbar {
+    width: min(100%, 460px) !important;
+    max-width: 460px !important;
+    grid-template-columns: minmax(120px, 1fr) auto !important;
+    gap: 8px !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+  .deliveries-view .delivery-toolbar {
+    margin-bottom: 12px !important;
+  }
+
+  .deliveries-view .delivery-folder-tabs {
+    margin-bottom: 10px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .deliveries-view .delivery-toolbar {
+    margin-bottom: 12px !important;
+  }
+}
+
+/* Delivery tab count text: For Delivery (0), Delivered (0). */
+.deliveries-view .delivery-folder-tab {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-folder-tab .pr-tab-label,
+.deliveries-view .delivery-folder-tab .pr-tab-count {
+  display: inline-flex !important;
+  align-items: center !important;
+  color: currentColor !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  line-height: inherit !important;
+  text-transform: inherit !important;
+  white-space: nowrap !important;
+}
+
+.deliveries-view .delivery-folder-tab .pr-tab-count::before {
+  content: "(";
+}
+
+.deliveries-view .delivery-folder-tab .pr-tab-count::after {
+  content: ")";
+}
+
+.deliveries-view .delivery-folder-tab[data-delivery-tab="delivery"] {
+  color: #f97316 !important;
+}
+
+.deliveries-view .delivery-folder-tab[data-delivery-tab="delivered"] {
+  color: var(--green) !important;
+}
+
+.deliveries-view .delivery-folder-tab.active {
+  color: var(--text) !important;
+}
+
+.deliveries-view .delivery-folder-tab.active[data-delivery-tab="delivery"] .pr-tab-count {
+  color: #f97316 !important;
+}
+
+.deliveries-view .delivery-folder-tab.active[data-delivery-tab="delivered"] .pr-tab-count {
+  color: var(--green) !important;
+}
+
+.deliveries-view .delivery-folder-tab .notification-tab-badge {
+  margin-left: 2px !important;
+  flex: 0 0 auto !important;
+}
+
+
+/* ===== FINAL FIX: DELIVERIES TAB ROW + SEARCH BAR ALIGNMENT ===== */
+/* Direct HTML row + fallback for older DOM order. This matches Production pages:
+   tabs on the left, search/Clear on the right, list body below. */
+.deliveries-view .delivery-shell {
+  width: 100% !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  gap: 0 !important;
+}
+
+.deliveries-view .delivery-page-head,
+.deliveries-view .delivery-refresh-btn {
+  display: none !important;
+}
+
+.deliveries-view .delivery-board {
+  width: 100% !important;
+  display: grid !important;
+  gap: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(280px, 1fr) !important;
+  align-items: end !important;
+  column-gap: 12px !important;
+  row-gap: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs,
+.deliveries-view .delivery-board > .delivery-folder-tabs {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  margin: 0 0 10px 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-toolbar,
+.deliveries-view .delivery-board > .delivery-toolbar {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  width: min(100%, 560px) !important;
+  max-width: 560px !important;
+  margin: 0 0 10px auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(170px, 1fr) auto !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-search,
+.deliveries-view .delivery-toolbar .pr-clear-btn {
+  min-height: 48px !important;
+}
+
+.deliveries-view .delivery-folder-body {
+  width: 100% !important;
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  margin-top: 0 !important;
+}
+
+.deliveries-view .delivery-folder-tab.active {
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+.deliveries-view .delivery-folder-tab.active::after {
+  content: "" !important;
+  position: absolute !important;
+  left: -1px !important;
+  right: -1px !important;
+  bottom: -12px !important;
+  height: 13px !important;
+  display: block !important;
+  background: var(--panel-solid) !important;
+  border-left: 1px solid var(--line) !important;
+  border-right: 1px solid var(--line) !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+
+.deliveries-view .delivery-folder-tab {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-folder-tab .pr-tab-label,
+.deliveries-view .delivery-folder-tab .pr-tab-count {
+  display: inline-flex !important;
+  align-items: center !important;
+  color: currentColor !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  line-height: inherit !important;
+  text-transform: inherit !important;
+  white-space: nowrap !important;
+}
+
+.deliveries-view .delivery-folder-tab .pr-tab-count::before { content: "("; }
+.deliveries-view .delivery-folder-tab .pr-tab-count::after { content: ")"; }
+
+.deliveries-view .delivery-folder-tab[data-delivery-tab="delivery"] { color: #f97316 !important; }
+.deliveries-view .delivery-folder-tab[data-delivery-tab="delivered"] { color: var(--green) !important; }
+.deliveries-view .delivery-folder-tab.active { color: var(--text) !important; }
+.deliveries-view .delivery-folder-tab.active[data-delivery-tab="delivery"] .pr-tab-count { color: #f97316 !important; }
+.deliveries-view .delivery-folder-tab.active[data-delivery-tab="delivered"] .pr-tab-count { color: var(--green) !important; }
+
+@media (min-width: 769px) and (max-width: 1180px) {
+  .deliveries-view .delivery-tab-toolbar-row {
+    grid-template-columns: auto minmax(220px, 1fr) !important;
+    column-gap: 10px !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar,
+  .deliveries-view .delivery-board > .delivery-toolbar {
+    width: min(100%, 460px) !important;
+    max-width: 460px !important;
+    grid-template-columns: minmax(120px, 1fr) auto !important;
+    gap: 8px !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .deliveries-view .delivery-tab-toolbar-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar,
+  .deliveries-view .delivery-board > .delivery-toolbar {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs,
+  .deliveries-view .delivery-board > .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: 100% !important;
+  }
+}
+
+/* Unread delivered items should show NEW instead of the normal Delivered status pill. */
+.deliveries-view .delivery-status-pill.new {
+  color: #fff !important;
+  background: #ef4444 !important;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, .20) !important;
+}
+
+
+/* ===== DELIVERY UPDATE V4 FINAL GUARD: RIGHT CONTROLS + DATE RANGE ===== */
+/* Tabs stay on the left. Search, Date Range, and Clear stay together on the right. */
+.deliveries-view .delivery-tab-toolbar-row {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  align-items: end !important;
+  column-gap: 12px !important;
+  row-gap: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  justify-self: start !important;
+  margin: 0 0 10px 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  width: min(100%, 760px) !important;
+  max-width: 760px !important;
+  margin: 0 0 10px auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 1fr) auto auto !important;
+  align-items: center !important;
+  justify-content: end !important;
+  gap: 10px !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-search,
+.deliveries-view .delivery-toolbar .pr-filter-btn,
+.deliveries-view .delivery-toolbar .pr-clear-btn {
+  min-height: 48px !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-filter-btn,
+.deliveries-view .delivery-toolbar .pr-clear-btn {
+  width: auto !important;
+  flex: 0 0 auto !important;
+}
+
+.deliveries-view .delivery-folder-body {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  margin-top: 0 !important;
+}
+
+/* Keep the normal Delivered/For Delivery side status pill. Only the blue card badge should say NEW. */
+.deliveries-view .delivery-status-pill.delivered {
+  color: var(--green) !important;
+  background: rgba(22, 184, 106, .13) !important;
+  box-shadow: none !important;
+}
+
+.deliveries-view .delivery-status-pill.for-delivery {
+  color: #f97316 !important;
+  background: rgba(249, 115, 22, .13) !important;
+  box-shadow: none !important;
+}
+
+@media (min-width: 769px) and (max-width: 1180px) {
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    width: min(100%, 620px) !important;
+    max-width: 620px !important;
+    grid-template-columns: minmax(180px, 1fr) auto auto !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .deliveries-view .delivery-tab-toolbar-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: 100% !important;
+  }
+}
+
+/* ===== DELIVERY UPDATE V5 FINAL OVERRIDE: SEARCH + BUTTONS ON FAR RIGHT ===== */
+/* This is intentionally last so it wins over older V3/V4 delivery toolbar rules. */
+.deliveries-view .delivery-shell,
+.deliveries-view .delivery-board {
+  width: 100% !important;
+  max-width: 1320px !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: calc(100% - 820px) !important;
+  margin: 0 0 10px 0 !important;
+  justify-self: unset !important;
+  align-self: flex-end !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+  flex: 0 1 760px !important;
+  width: min(760px, calc(100% - 320px)) !important;
+  max-width: 760px !important;
+  margin: 0 0 10px auto !important;
+  margin-left: auto !important;
+  justify-self: flex-end !important;
+  align-self: flex-end !important;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 1fr) auto auto !important;
+  align-items: center !important;
+  justify-content: end !important;
+  gap: 10px !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-search {
+  width: 100% !important;
+  min-width: 260px !important;
+  max-width: none !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-filter-btn,
+.deliveries-view .delivery-toolbar .pr-clear-btn {
+  width: auto !important;
+  min-width: 0 !important;
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+/* Keep delivered side pill as Delivered. The NEW text belongs only to the blue badge. */
+.deliveries-view .delivery-status-pill.new,
+.deliveries-view .delivery-status-pill.delivered.new {
+  color: var(--green) !important;
+  background: rgba(22, 184, 106, .13) !important;
+  box-shadow: none !important;
+}
+
+.deliveries-view .delivery-status-pill.delivered,
+.deliveries-view .delivery-record-card .delivery-status-pill.delivered {
+  color: var(--green) !important;
+  background: rgba(22, 184, 106, .13) !important;
+  box-shadow: none !important;
+}
+
+.deliveries-view .delivery-record-card .notification-card-badge.new {
+  color: #fff !important;
+  background: var(--blue) !important;
+}
+
+@media (min-width: 769px) and (max-width: 1180px) {
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    max-width: calc(100% - 650px) !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    flex-basis: 620px !important;
+    width: min(620px, calc(100% - 260px)) !important;
+    max-width: 620px !important;
+    grid-template-columns: minmax(200px, 1fr) auto auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .deliveries-view .delivery-tab-toolbar-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    min-width: 0 !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: 100% !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 10px 0 !important;
+    overflow-x: auto !important;
+  }
+}
+
+/* ===== DELIVERY UPDATE V6 FINAL OVERRIDE: SAFE RIGHT-SIDE CONTROLS, NO OVERLAP ===== */
+/*
+  Fixes the V5 overlap: tabs keep natural width on the left, while Search,
+  Date Range, and Clear stay grouped on the far right.
+*/
+.deliveries-view .delivery-tab-toolbar-row {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  align-items: end !important;
+  column-gap: 16px !important;
+  row-gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  justify-self: start !important;
+  display: flex !important;
+  flex: none !important;
+  flex-wrap: nowrap !important;
+  width: auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-folder-tabs .delivery-folder-tab,
+.deliveries-view .delivery-folder-tabs .pr-folder-tab {
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  justify-self: end !important;
+  display: flex !important;
+  flex: none !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 0 10px auto !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-search {
+  flex: 0 1 360px !important;
+  width: clamp(280px, 30vw, 420px) !important;
+  min-width: 280px !important;
+  max-width: 420px !important;
+  min-height: 48px !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-filter-btn,
+.deliveries-view .delivery-toolbar .pr-clear-btn {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 48px !important;
+  white-space: nowrap !important;
+}
+
+.deliveries-view .delivery-folder-body {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+
+/* Keep status pill normal. Only the blue card badge uses NEW. */
+.deliveries-view .delivery-status-pill.delivered,
+.deliveries-view .delivery-status-pill.delivered.new,
+.deliveries-view .delivery-record-card .delivery-status-pill.delivered,
+.deliveries-view .delivery-record-card .delivery-status-pill.delivered.new {
+  color: var(--green) !important;
+  background: rgba(22, 184, 106, .13) !important;
+  box-shadow: none !important;
+}
+
+.deliveries-view .delivery-record-card .notification-card-badge,
+.deliveries-view .delivery-record-card .notification-card-badge.new {
+  color: #fff !important;
+  background: var(--blue) !important;
+}
+
+@media (max-width: 1180px) and (min-width: 769px) {
+  .deliveries-view .delivery-tab-toolbar-row {
+    grid-template-columns: 1fr !important;
+    row-gap: 12px !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    margin: 0 0 10px auto !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    width: clamp(240px, 44vw, 380px) !important;
+    min-width: 240px !important;
+    max-width: 380px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .deliveries-view .delivery-tab-toolbar-row {
+    grid-template-columns: 1fr !important;
+    row-gap: 12px !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    margin: 0 0 8px 0 !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: 100% !important;
+  }
+}
+
+
+
+/* ===== DELIVERY UPDATE V7 FINAL FIX: MATCH PRODUCTION LAYOUT, CONTROLS ON RIGHT ===== */
+/* Desktop/tablet: tabs stay on the left, Search + Date Range + Clear stay on the far right. */
+.deliveries-view .delivery-tab-toolbar-row {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex-wrap: nowrap !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+  margin-left: auto !important;
+  flex: 0 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  padding: 0 !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-search {
+  width: 340px !important;
+  min-width: 340px !important;
+  max-width: 340px !important;
+  flex: 0 0 340px !important;
+}
+
+.deliveries-view .delivery-toolbar .pr-filter-btn,
+.deliveries-view .delivery-toolbar .pr-clear-btn {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+/* Keep the record area directly below, same feel as Production pages. */
+.deliveries-view .delivery-folder-body {
+  margin-top: 12px !important;
+}
+
+/* Medium screens: still keep controls on the right, but allow the search to shrink. */
+@media (min-width: 881px) and (max-width: 1180px) {
+  .deliveries-view .delivery-toolbar .pr-search {
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    flex-basis: 280px !important;
+  }
+}
+
+/* Smaller tablet/mobile: stack naturally to avoid overlap. */
+@media (max-width: 880px) {
+  .deliveries-view .delivery-tab-toolbar-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    row-gap: 12px !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto auto !important;
+    gap: 10px !important;
+    margin-left: 0 !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: none !important;
+  }
+}
+
+
+/* ===== DELIVERY UPDATE V8 REAL-STRUCTURE FIX: RIGHT SEARCHBAR FOR BOTH OLD + NEW HTML ===== */
+/*
+  Why this exists:
+  Some copies still have the old Deliveries HTML where .delivery-toolbar and
+  .delivery-folder-tabs are separate direct children of .delivery-board.
+  Newer copies have them wrapped inside .delivery-tab-toolbar-row.
+  This patch supports BOTH structures so the right-side controls update applies.
+*/
+.deliveries-view .delivery-page-head,
+.deliveries-view .delivery-refresh-btn {
+  display: none !important;
+}
+
+@media (min-width: 901px) {
+  /* OLD HTML STRUCTURE: .delivery-toolbar + .delivery-folder-tabs are direct children */
+  .deliveries-view .delivery-board {
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    align-items: end !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-board > .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+    justify-self: start !important;
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    margin: 0 0 -1px 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-board > .delivery-toolbar {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+    justify-self: end !important;
+    margin: 0 0 10px auto !important;
+  }
+
+  .deliveries-view .delivery-board > .delivery-folder-body {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+  }
+
+  /* NEW HTML STRUCTURE: tabs + toolbar are inside one row wrapper */
+  .deliveries-view .delivery-tab-toolbar-row {
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    align-items: end !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+    justify-self: start !important;
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    margin: 0 0 -1px 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+    justify-self: end !important;
+    margin: 0 0 10px auto !important;
+  }
+
+  /* Shared toolbar look: Search + Date Range + Clear on the right */
+  .deliveries-view .delivery-toolbar,
+  .deliveries-view .pr-toolbar.delivery-toolbar {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    width: min(100%, 560px) !important;
+    min-width: 0 !important;
+    max-width: 560px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    flex: 0 1 340px !important;
+    width: 340px !important;
+    min-width: 240px !important;
+    max-width: 340px !important;
+    min-height: 48px !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content !important;
+    min-height: 48px !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .deliveries-view .delivery-toolbar,
+  .deliveries-view .pr-toolbar.delivery-toolbar {
+    width: min(100%, 500px) !important;
+    max-width: 500px !important;
+    gap: 8px !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    flex-basis: 280px !important;
+    width: 280px !important;
+    min-width: 190px !important;
+    max-width: 280px !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .deliveries-view .delivery-board,
+  .deliveries-view .delivery-tab-toolbar-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    row-gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .deliveries-view .delivery-board > .delivery-folder-tabs,
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 0 -1px 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .deliveries-view .delivery-board > .delivery-toolbar,
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .deliveries-view .delivery-toolbar,
+  .deliveries-view .pr-toolbar.delivery-toolbar {
+    display: grid !important;
+    grid-template-columns: 1fr auto auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .deliveries-view .delivery-board > .delivery-folder-body {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .deliveries-view .delivery-toolbar,
+  .deliveries-view .pr-toolbar.delivery-toolbar {
+    grid-template-columns: 1fr !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: 100% !important;
+  }
+}
+
+
+/* ===== DELIVERY UPDATE V9 FINAL OVERRIDE: EXACT PRODUCTION-LIKE DELIVERY TOOLBAR ===== */
+/* This targets the current/old HTML and the new wrapper HTML. Tabs stay left, controls stay far right. */
+.deliveries-view .delivery-page-head,
+.deliveries-view .delivery-refresh-btn {
+  display: none !important;
+}
+
+@media (min-width: 901px) {
+  .deliveries-view .delivery-board,
+  .deliveries-view .pr-board.delivery-board {
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    align-items: end !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* New/wrapped structure created by index.html v9 or JS v9 */
+  .deliveries-view .delivery-tab-toolbar-row {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    align-items: end !important;
+    column-gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-folder-tabs,
+  .deliveries-view .delivery-board > .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    align-self: end !important;
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar,
+  .deliveries-view .delivery-board > .delivery-toolbar {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    align-self: end !important;
+    display: grid !important;
+    grid-template-columns: minmax(260px, 340px) auto auto !important;
+    align-items: center !important;
+    justify-content: end !important;
+    gap: 10px !important;
+    width: min(100%, 560px) !important;
+    min-width: 0 !important;
+    max-width: 560px !important;
+    margin: 0 0 10px auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: auto !important;
+    min-width: max-content !important;
+    min-height: 48px !important;
+    white-space: nowrap !important;
+  }
+
+  .deliveries-view .delivery-folder-body,
+  .deliveries-view .delivery-board > .pr-folder-body {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    margin-top: 0 !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .deliveries-view .delivery-tab-toolbar-row .delivery-toolbar,
+  .deliveries-view .delivery-board > .delivery-toolbar {
+    width: min(100%, 500px) !important;
+    max-width: 500px !important;
+    grid-template-columns: minmax(200px, 280px) auto auto !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .deliveries-view .delivery-board,
+  .deliveries-view .delivery-tab-toolbar-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    row-gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .deliveries-view .delivery-folder-tabs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 0 8px 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .deliveries-view .delivery-toolbar {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .deliveries-view .delivery-folder-body {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .deliveries-view .delivery-toolbar {
+    grid-template-columns: 1fr !important;
+  }
+
+  .deliveries-view .delivery-toolbar .pr-filter-btn,
+  .deliveries-view .delivery-toolbar .pr-clear-btn {
+    width: 100% !important;
+  }
+}

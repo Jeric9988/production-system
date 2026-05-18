@@ -1,0 +1,12 @@
+DELETE FROM notification_reads;
+DELETE FROM notification_events;
+DELETE FROM production_records;
+DELETE FROM orders;
+
+DELETE FROM sqlite_sequence
+WHERE name IN (
+  'notification_reads',
+  'notification_events',
+  'production_records',
+  'orders'
+);

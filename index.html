@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<!-- ===== DELIVERY UPDATE V9: deliveries tabs left + search/date/clear far right; paste this whole content to index.html ===== -->
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SwiftDash Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="base.css?v=20260506-scalingo-tint-v1">
+  <link rel="stylesheet" href="desktop.css?v=20260506-scalingo-tint-v1" media="(min-width: 1301px)">
+  <link rel="stylesheet" href="tablet.css?v=20260506-scalingo-tint-v1" media="(min-width: 769px) and (max-width: 1300px)">
+  <link rel="stylesheet" href="mobile.css?v=20260506-scalingo-tint-v1" media="(max-width: 768px)">
+  <link rel="stylesheet" href="orders.css?v=20260506-scalingo-tint-v1">
+  <link rel="stylesheet" href="overview.css?v=20260514-delivery-ui-v3">
+  <link rel="stylesheet" href="production-receiving.css?v=20260515-delivery-layout-v9">
+  <link rel="stylesheet" href="notifications.css?v=20260506-scalingo-tint-v1">
+  <link rel="stylesheet" href="reports.css?v=20260506-scalingo-tint-v1">
+  <link rel="stylesheet" href="settings.css?v=20260506-scalingo-tint-v1">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2a10 10 0 1 0 10 10h-9.8V2H12Z"></path>
+            <path d="M14 2.2V10h7.8A10 10 0 0 0 14 2.2Z" opacity=".55"></path>
+          </svg>
+        </div>
+        <span>Dashboard</span>
+      </div>
+
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-item active" href="#" data-view-target="overview"><span class="nav-icon" data-icon="home"></span><span>Overview</span></a>
+        <a class="nav-item" href="#" data-view-target="orders"><span class="nav-icon" data-icon="bag"></span><span>Orders</span></a>
+        <a class="nav-item" href="#" data-production-status-link><span class="nav-icon" data-icon="clipboard"></span><span>Prod.Status</span></a>
+        <div class="production-nav-group" data-production-nav-group>
+          <button class="nav-item production-nav-parent" id="productionNavParent" type="button" data-production-nav-toggle aria-expanded="false" aria-controls="productionSubNav">
+            <span class="nav-icon" data-icon="box"></span><span>Production</span>
+          </button>
+
+          <div class="production-sub-nav" id="productionSubNav" aria-label="Production stages" aria-hidden="true">
+            <a class="production-sub-item" href="#" data-production-stage-link="printing" aria-current="false">
+              <span class="production-sub-short">P</span><span class="production-sub-label">Printing</span><span class="production-sub-count" data-production-stage-count="printing">0</span>
+            </a>
+            <a class="production-sub-item" href="#" data-production-stage-link="rewinding" aria-current="false">
+              <span class="production-sub-short">R</span><span class="production-sub-label">Rewinding</span><span class="production-sub-count" data-production-stage-count="rewinding">0</span>
+            </a>
+            <a class="production-sub-item" href="#" data-production-stage-link="lamination" aria-current="false">
+              <span class="production-sub-short">L</span><span class="production-sub-label">Lamination</span><span class="production-sub-count" data-production-stage-count="lamination">0</span>
+            </a>
+            <a class="production-sub-item" href="#" data-production-stage-link="slitting" aria-current="false">
+              <span class="production-sub-short">S</span><span class="production-sub-label">Slitting</span><span class="production-sub-count" data-production-stage-count="slitting">0</span>
+            </a>
+            <a class="production-sub-item" href="#" data-production-stage-link="finishing" aria-current="false">
+              <span class="production-sub-short">F</span><span class="production-sub-label">Finishing</span><span class="production-sub-count" data-production-stage-count="finishing">0</span>
+            </a>
+          </div>
+        </div>
+        <a class="nav-item" href="#" data-view-target="deliveries"><span class="nav-icon" data-icon="truck"></span><span>Deliveries</span></a>
+        <a class="nav-item" href="#" data-view-target="reports"><span class="nav-icon" data-icon="chart"></span><span>Reports</span></a>
+        <a class="nav-item" href="#" data-view-target="settings"><span class="nav-icon" data-icon="settings"></span><span>Settings</span></a>
+      </nav>
+
+      <div class="theme-card">
+        <span class="theme-label">Theme</span>
+        <div class="theme-control">
+          <span class="sun">☼</span>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark theme">
+            <span></span>
+          </button>
+          <span class="moon">☾</span>
+        </div>
+      </div>
+
+      <button class="sidebar-logout-btn" type="button">
+        <span data-icon="logout"></span>
+        <span>Logout</span>
+      </button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <h1>Overview</h1>
+
+        <div class="topbar-actions">
+          <span class="topbar-date-trigger" id="mobileInfoToggle" role="button" tabindex="0" aria-label="Open date, time, user, and logout menu" aria-expanded="false" aria-controls="mobileInfoPanel"><i data-icon="calendar"></i> Loading date...</span>
+          <span><i data-icon="clock"></i> Loading time...</span>
+          <span><i data-icon="user"></i> User</span>
+          <button class="logout-btn" type="button"><i data-icon="logout"></i> Logout</button>
+        </div>
+
+        <div class="mobile-info-panel" id="mobileInfoPanel" aria-hidden="true">
+          <div class="mobile-info-row">
+            <span class="mobile-info-icon"><i data-icon="user"></i></span>
+            <div>
+              <small>User</small>
+              <strong id="mobilePanelUser">User</strong>
+            </div>
+          </div>
+
+          <div class="mobile-info-row">
+            <span class="mobile-info-icon"><i data-icon="clock"></i></span>
+            <div>
+              <small>Time</small>
+              <strong id="mobilePanelTime">Loading time...</strong>
+            </div>
+          </div>
+
+          <div class="mobile-info-row">
+            <span class="mobile-info-icon"><i data-icon="calendar"></i></span>
+            <div>
+              <small>Date</small>
+              <strong id="mobilePanelDate">Loading date...</strong>
+            </div>
+          </div>
+
+          <button class="mobile-info-logout-btn" id="mobilePanelLogoutBtn" type="button">
+            <span class="mobile-info-icon logout-icon"><i data-icon="logout"></i></span>
+            <div>
+              <small>Account</small>
+              <strong>Logout</strong>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <section class="view-section overview-view active-view" data-view="overview">
+        <section class="dashboard-grid">
+        <section class="stats-grid">
+          <article class="stat-card interactive-card">
+            <div class="stat-icon blue"><span data-icon="clipboard"></span></div>
+            <div>
+              <p>Pending Orders</p>
+              <strong class="blue-text">0</strong>
+              <a href="#" class="overview-modal-trigger" data-overview-modal="pendingOrdersModal">View details ›</a>
+            </div>
+          </article>
+
+          <article class="stat-card interactive-card">
+            <div class="stat-icon green"><span data-icon="trend"></span></div>
+            <div>
+              <p>Active Orders</p>
+              <strong class="green-text">0</strong>
+              <a href="#" class="overview-modal-trigger" data-overview-modal="activeOrdersModal">View details ›</a>
+            </div>
+          </article>
+
+          <article class="stat-card interactive-card">
+            <div class="stat-icon orange"><span data-icon="delivery"></span></div>
+            <div>
+              <p>For Delivery</p>
+              <strong class="orange-text">0</strong>
+              <a href="#" class="overview-modal-trigger" data-overview-modal="forDeliveryModal">View details ›</a>
+            </div>
+          </article>
+
+          <article class="stat-card interactive-card">
+            <div class="stat-icon purple"><span data-icon="check"></span></div>
+            <div>
+              <p>Delivered Orders</p>
+              <strong class="purple-text">0</strong>
+              <a href="#" class="overview-modal-trigger" data-overview-modal="deliveredOrdersModal">View details ›</a>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel monthly-panel">
+          <div class="panel-head">
+            <h2>Monthly Chart</h2>
+          </div>
+
+          <div class="monthly-content">
+            <div class="radial-chart" id="radialChart" aria-label="Monthly order chart">
+              <div class="overview-monthly-center">
+                <strong>Loading</strong>
+                <span>real data</span>
+              </div>
+              <div class="chart-tooltip overview-monthly-tooltip" id="pieTooltip"></div>
+            </div>
+
+            <ul class="chart-legend"></ul>
+          </div>
+        </section>
+
+        <section class="panel calendar-panel">
+          <div class="panel-head">
+            <h2><span data-icon="calendar"></span> Calendar</h2>
+            <div class="panel-actions">
+              <button type="button">‹</button>
+              <button type="button">›</button>
+            </div>
+          </div>
+
+          <div class="calendar">
+            <h3>Loading...</h3>
+            <div class="weekdays">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div class="dates">
+            </div>
+          </div>
+        </section>
+
+        <section class="panel notice-panel">
+          <div class="panel-head">
+            <h2><span data-icon="bell"></span> Notice Board</h2>
+            <button class="ghost-btn" type="button" data-overview-modal="noticeBoardViewAllModal">View All</button>
+          </div>
+          <div class="notice-list delivery-alert-list" id="deliveryAlertList" aria-label="Delivery date alerts">
+            <article class="delivery-alert-item alert-overdue">
+              <div class="delivery-alert-content">
+                <p class="delivery-alert-title">Loading delivery alerts...</p>
+                <div class="delivery-alert-meta">
+                  <span>Please wait</span>
+                </div>
+              </div>
+              <span class="delivery-alert-badge alert-overdue">Loading</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel yearly-panel">
+          <div class="panel-head yearly-graph-head">
+            <div>
+              <h2><span data-icon="line"></span> Yearly Graph</h2>
+              <p class="yearly-graph-subtitle">Track yearly order movement by status.</p>
+            </div>
+
+            <select id="yearlyGraphYear" aria-label="Select graph year"><option value="2026" selected>2026</option></select>
+          </div>
+
+          <div class="yearly-metric-tabs" aria-label="Yearly graph metrics">
+            <button class="yearly-metric-btn active" type="button" data-yearly-metric="total">Total</button>
+            <button class="yearly-metric-btn" type="button" data-yearly-metric="pending">Pending</button>
+            <button class="yearly-metric-btn" type="button" data-yearly-metric="active">Active</button>
+            <button class="yearly-metric-btn" type="button" data-yearly-metric="delivery">For Delivery</button>
+            <button class="yearly-metric-btn" type="button" data-yearly-metric="delivered">Delivered</button>
+          </div>
+
+          <div class="yearly-graph-wrap">
+            <div class="line-chart enhanced-line-chart" id="lineChart">
+              <svg viewBox="0 0 720 260" role="img" aria-label="Yearly graph line chart">
+                <defs>
+                  <linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="currentColor" stop-opacity=".25"></stop>
+                    <stop offset="100%" stop-color="currentColor" stop-opacity="0"></stop>
+                  </linearGradient>
+                </defs>
+
+                <g class="grid-lines">
+                  <line x1="0" x2="720" y1="40" y2="40"></line>
+                  <line x1="0" x2="720" y1="95" y2="95"></line>
+                  <line x1="0" x2="720" y1="150" y2="150"></line>
+                  <line x1="0" x2="720" y1="205" y2="205"></line>
+                </g>
+
+                <path class="area" id="yearlyGraphArea" d=""></path>
+                <path class="chart-line" id="yearlyGraphLine" d=""></path>
+                <g class="points" id="yearlyGraphPoints"></g>
+              </svg>
+
+              <div class="y-labels" id="yearlyGraphYLabels">
+                <span>100</span>
+                <span>75</span>
+                <span>50</span>
+                <span>25</span>
+              </div>
+
+              <div class="x-labels">
+                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+                <span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+              </div>
+
+              <div class="line-tooltip" id="lineTooltip"></div>
+            </div>
+          </div>
+
+          <div class="yearly-summary-grid" id="yearlySummaryGrid">
+            <article class="yearly-summary-card">
+              <span>Total</span>
+              <strong>0</strong>
+            </article>
+            <article class="yearly-summary-card">
+              <span>Highest Month</span>
+              <strong>—</strong>
+            </article>
+            <article class="yearly-summary-card">
+              <span>Lowest Month</span>
+              <strong>—</strong>
+            </article>
+            <article class="yearly-summary-card">
+              <span>Average/Month</span>
+              <strong>0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel orders-panel">
+          <div class="panel-head">
+            <h2><span data-icon="clipboard"></span> Total Orders</h2>
+            <button class="ghost-btn" type="button" data-overview-modal="totalOrdersViewAllModal">View All</button>
+          </div>
+
+          <div class="table-wrap total-orders-table-wrap">
+            <table class="total-orders-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Client</th>
+                  <th>Item</th>
+                  <th>Status</th>
+                  <th>Quantity</th>
+                  <th>Delivery Date</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td colspan="6">Loading real orders...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel activity-panel">
+          <div class="panel-head">
+            <h2><span data-icon="bolt"></span> Recent Activity</h2>
+            <button class="ghost-btn" type="button">View All</button>
+          </div>
+
+          <div class="activity-list">
+            <div>
+              <span class="activity-icon blue"><i data-icon="clipboard"></i></span>
+              <p>Loading real activity...</p>
+              <time>—</time>
+            </div>
+          </div>
+        </section>
+        </section>
+      </section>
+
+      <section class="view-section orders-view" data-view="orders">
+        <div class="orders-folder-shell active-tab-first">
+          <div class="orders-folder-tabs" role="tablist" aria-label="Orders sections">
+            <button class="orders-folder-tab active" type="button" role="tab" aria-selected="true" data-orders-tab="add">
+              <span>Add Order</span>
+            </button>
+            <button class="orders-folder-tab" type="button" role="tab" aria-selected="false" data-orders-tab="list">
+              <span>Order List</span>
+            </button>
+          </div>
+
+          <div class="orders-folder-body">
+        <form class="add-order-form orders-tab-panel active" id="addOrderForm" data-orders-panel="add" novalidate>
+          <div class="orders-form-title">
+            <h2>Add Order</h2>
+          </div>
+          <section class="order-form-card order-main-card">
+            <div class="orders-card-title">
+              <span data-icon="clipboard"></span>
+              <div>
+                <h3>Order Details</h3>
+                <p>Basic information from the customer order.</p>
+              </div>
+            </div>
+
+            <div class="order-form-grid">
+              <label class="form-field">
+                <span>P.O. Number</span>
+                <input type="text" name="poNumber" placeholder="Enter P.O. number" required>
+              </label>
+
+              <label class="form-field">
+                <span>J.O. Number</span>
+                <input type="text" name="joNumber" placeholder="Enter J.O. number" required>
+              </label>
+
+              <label class="form-field full-field">
+                <span>Client</span>
+                <input type="text" name="client" placeholder="Enter client name" required>
+              </label>
+
+              <label class="form-field full-field">
+                <span>Item</span>
+                <input type="text" name="item" placeholder="Enter item name or description" required>
+              </label>
+
+              <label class="form-field">
+                <span>Quantity</span>
+                <input type="number" name="quantity" min="1" placeholder="0" required>
+              </label>
+
+              <label class="form-field">
+                <span>Unit</span>
+                <select name="unit" required>
+                  <option value="">Select unit</option>
+                  <option value="pcs">pcs</option>
+                  <option value="kgs">kgs</option>
+                  <option value="mts">mts</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="order-form-card materials-card">
+            <div class="orders-card-title">
+              <span data-icon="box"></span>
+              <div>
+                <h3>Materials & Assignment</h3>
+                <p>Production materials and person assigned.</p>
+              </div>
+            </div>
+
+            <div class="order-form-grid materials-grid">
+              <label class="form-field">
+                <span>Printing Material</span>
+                <input type="text" name="printingMaterial" placeholder="Enter printing material">
+              </label>
+
+              <label class="form-field">
+                <span>Lamination Material</span>
+                <input type="text" name="laminationMaterial" placeholder="Enter lamination material">
+              </label>
+
+              <label class="form-field">
+                <span>Assigned To</span>
+                <select name="assignTo" required>
+                  <option value="">Select person</option>
+                  <option value="operator-1">Operator 1</option>
+                  <option value="operator-2">Operator 2</option>
+                  <option value="operator-3">Operator 3</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <aside class="order-form-card delivery-date-card">
+            <div class="orders-card-title">
+              <span data-icon="calendar"></span>
+              <div>
+                <h3>Delivery Date</h3>
+                <p>Select requested delivery schedule.</p>
+              </div>
+            </div>
+
+            <input type="hidden" name="deliveryDate" id="selectedDeliveryDate" value="" required>
+
+            <div class="mini-calendar" aria-label="Select delivery date">
+              <div class="mini-calendar-head">
+                <button type="button">‹</button>
+                <strong>Select date</strong>
+                <button type="button">›</button>
+              </div>
+              <div class="mini-weekdays">
+                <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+              </div>
+              <div class="mini-dates" aria-live="polite"></div>
+            </div>
+          </aside>
+
+          <div class="orders-mobile-actions">
+            <button class="ghost-btn orders-clear-btn" type="button">Cancel</button>
+            <button class="orders-primary-btn" type="submit">Save Order</button>
+          </div>
+        </form>
+
+        <section class="orders-list-panel orders-tab-panel" data-orders-panel="list" aria-label="Saved orders">
+          <div class="orders-list-head">
+            <div>
+              <h2>Order List</h2>
+            </div>
+
+            <div class="orders-list-actions">
+              <input id="ordersSearchInput" class="orders-search-input" type="search" placeholder="Search JO, PO, client, item...">
+              <button id="ordersRefreshBtn" class="orders-refresh-btn" type="button">Refresh</button>
+            </div>
+          </div>
+          <div id="ordersList" class="orders-list"></div>
+        </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-section production-receiving-view" data-view="production-receiving">
+        <div class="pr-shell">
+          <section class="pr-board" aria-label="Production receiving records">
+            <div class="pr-toolbar">
+              <input class="pr-search" id="productionReceivingSearch" type="search" placeholder="Search PO, JO, client, item...">
+
+              <button class="pr-filter-btn" id="productionReceivingDateRangeBtn" type="button">
+                <span class="pr-filter-icon" data-icon="calendar"></span>
+                <span>Date Range</span>
+              </button>
+
+              <button class="pr-clear-btn" id="productionReceivingClear" type="button">Clear</button>
+            </div>
+
+            <div class="pr-folder-tabs" role="tablist" aria-label="Production receiving status folders">
+              <button class="pr-folder-tab active" type="button" data-pr-tab="pending" role="tab" aria-selected="true">
+                Pending <span class="pr-tab-badge">0</span>
+              </button>
+              <button class="pr-folder-tab" type="button" data-pr-tab="ongoing" role="tab" aria-selected="false">
+                On-going <span class="pr-tab-badge">0</span>
+              </button>
+              <button class="pr-folder-tab" type="button" data-pr-tab="hold" role="tab" aria-selected="false">
+                Hold <span class="pr-tab-badge">0</span>
+              </button>
+            </div>
+
+            <div class="pr-folder-body">
+              <div class="pr-record-list" id="productionReceivingList"></div>
+            </div>
+          </section>
+
+          <div class="pr-modal-backdrop pr-date-modal-backdrop" id="productionReceivingDateModal" aria-hidden="true">
+            <section class="pr-modal pr-date-modal" role="dialog" aria-modal="true" aria-labelledby="productionReceivingDateModalTitle">
+              <header class="pr-modal-head">
+                <div>
+                  <h3 id="productionReceivingDateModalTitle">Date Range</h3>
+                  <p>Filter the production list by delivery date.</p>
+                </div>
+
+                <button class="pr-modal-close pr-date-modal-close" type="button" aria-label="Close date range modal">
+                  <span>×</span>
+                </button>
+              </header>
+
+              <div class="pr-modal-body">
+                <div class="pr-date-modal-grid">
+                  <label class="pr-date-filter">
+                    <span>From</span>
+                    <input id="productionReceivingDateFrom" type="date" aria-label="Filter from delivery date">
+                  </label>
+
+                  <label class="pr-date-filter">
+                    <span>To</span>
+                    <input id="productionReceivingDateTo" type="date" aria-label="Filter to delivery date">
+                  </label>
+                </div>
+              </div>
+
+              <footer class="pr-modal-footer">
+                <button class="pr-modal-secondary" id="productionReceivingDateClear" type="button">Clear Dates</button>
+                <button class="pr-action-btn primary" id="productionReceivingDateApply" type="button">Apply Date Range</button>
+              </footer>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-section deliveries-view" data-view="deliveries">
+        <div class="delivery-shell pr-shell">
+          <section class="delivery-board pr-board">
+            <div class="delivery-tab-toolbar-row">
+              <div class="delivery-folder-tabs pr-folder-tabs" role="tablist" aria-label="Delivery status folders">
+                <button class="delivery-folder-tab pr-folder-tab active" type="button" data-delivery-tab="delivery" role="tab" aria-selected="true">
+                  <span class="pr-tab-label">For Delivery</span>
+                  <span class="pr-tab-count" aria-label="For delivery count">0</span>
+                </button>
+                <button class="delivery-folder-tab pr-folder-tab" type="button" data-delivery-tab="delivered" role="tab" aria-selected="false">
+                  <span class="pr-tab-label">Delivered</span>
+                  <span class="pr-tab-count" aria-label="Delivered count">0</span>
+                </button>
+              </div>
+
+              <div class="delivery-toolbar pr-toolbar" aria-label="Delivery search and filters">
+                <input class="pr-search" id="deliverySearchInput" type="search" placeholder="Search P.O., J.O., client, or item">
+
+                <button class="pr-filter-btn" id="deliveryDateRangeBtn" type="button">
+                  <span class="pr-filter-icon" data-icon="calendar"></span>
+                  <span>Date Range</span>
+                </button>
+
+                <button class="pr-clear-btn" id="deliveryClearBtn" type="button">Clear</button>
+              </div>
+            </div>
+
+            <div class="pr-folder-body delivery-folder-body">
+              <div class="delivery-list pr-record-list" id="deliveryList">
+                <div class="pr-empty-state">
+                  <div>
+                    <strong>Open Deliveries to load records.</strong>
+                    <span>Items moved from Finishing will appear here.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <div class="pr-modal-backdrop pr-date-modal-backdrop delivery-date-modal-backdrop" id="deliveryDateModal" aria-hidden="true">
+        <section class="pr-modal pr-date-modal delivery-date-modal" role="dialog" aria-modal="true" aria-labelledby="deliveryDateModalTitle">
+          <header class="pr-modal-head">
+            <div>
+              <h3 id="deliveryDateModalTitle">Date Range</h3>
+              <p>Filter delivery records by delivery date.</p>
+            </div>
+
+            <button class="pr-modal-close delivery-date-modal-close" type="button" aria-label="Close delivery date range modal">
+              <span>×</span>
+            </button>
+          </header>
+
+          <div class="pr-modal-body">
+            <div class="pr-date-modal-grid">
+              <label class="pr-date-filter">
+                <span>From</span>
+                <input id="deliveryDateFrom" type="date" aria-label="Filter deliveries from date">
+              </label>
+
+              <label class="pr-date-filter">
+                <span>To</span>
+                <input id="deliveryDateTo" type="date" aria-label="Filter deliveries to date">
+              </label>
+            </div>
+          </div>
+
+          <footer class="pr-modal-footer">
+            <button class="pr-modal-secondary" id="deliveryDateClear" type="button">Clear Dates</button>
+            <button class="pr-action-btn primary" id="deliveryDateApply" type="button">Apply Date Range</button>
+          </footer>
+        </section>
+      </div>
+
+      <section class="view-section reports-view" data-view="reports">
+        <div class="reports-shell">
+          <header class="reports-page-head">
+            <div>
+              <span class="reports-eyebrow">System Reports</span>
+              <h2>Activity Log</h2>
+              <p>Track user actions such as login, logout, user changes, orders, production updates, and database backup.</p>
+            </div>
+
+            <button class="reports-refresh-btn" id="reportsRefreshBtn" type="button">Refresh Logs</button>
+          </header>
+
+          <section class="reports-summary-grid" id="reportsSummaryGrid" aria-label="Activity summary">
+            <article class="reports-summary-card">
+              <span>Total Logs</span>
+              <strong id="reportsTotalCount">0</strong>
+            </article>
+            <article class="reports-summary-card">
+              <span>Scope</span>
+              <strong id="reportsScopeLabel">All</strong>
+            </article>
+          </section>
+
+          <section class="reports-panel">
+            <div class="reports-toolbar">
+              <label class="reports-search-field">
+                <span>Search</span>
+                <input id="reportsSearchInput" type="search" placeholder="Search username, action, J.O., P.O., or details">
+              </label>
+
+              <label class="reports-filter-field">
+                <span>Module</span>
+                <select id="reportsModuleFilter">
+                  <option value="all">All Modules</option>
+                  <option value="Auth">Auth</option>
+                  <option value="Settings">Settings</option>
+                  <option value="Orders">Orders</option>
+                  <option value="Production">Production</option>
+                </select>
+              </label>
+
+              <label class="reports-filter-field">
+                <span>From</span>
+                <input id="reportsDateFrom" type="date">
+              </label>
+
+              <label class="reports-filter-field">
+                <span>To</span>
+                <input id="reportsDateTo" type="date">
+              </label>
+
+              <button class="reports-clear-btn" id="reportsClearBtn" type="button">Clear</button>
+            </div>
+
+            <div class="reports-list-head">
+              <span>Date & Time</span>
+              <span>User</span>
+              <span>Module</span>
+              <span>Action</span>
+              <span>Details</span>
+            </div>
+
+            <div class="reports-log-list" id="reportsLogList">
+              <div class="reports-empty-state">
+                <strong>Open Reports to load activity logs.</strong>
+                <span>User activity from the database will appear here.</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view-section settings-view" data-view="settings">
+        <div class="settings-shell">
+          <header class="settings-page-head">
+            <div>
+              <span class="settings-eyebrow">System Settings</span>
+              <h2>User Management</h2>
+              <p>Add, edit, and delete system users. User access is controlled by role.</p>
+            </div>
+          </header>
+
+          <section class="settings-grid">
+            <article class="settings-panel user-management-panel">
+              <div class="settings-panel-head">
+                <div>
+                  <h3>Users</h3>
+                  <p>Create accounts for Admin, Manager, Supervisor, Logistic, Production Staff, and Viewer roles.</p>
+                </div>
+
+                <button class="settings-primary-btn" id="settingsNewUserBtn" type="button">Add User</button>
+              </div>
+
+              <form class="settings-user-form" id="settingsUserForm" hidden>
+                <input type="hidden" id="settingsUserId" value="">
+
+                <label class="settings-field">
+                  <span>Username</span>
+                  <input id="settingsUsername" type="text" autocomplete="off" placeholder="e.g. jeric" required>
+                </label>
+
+                <label class="settings-field settings-password-field">
+                  <span>Password</span>
+                  <div class="settings-password-wrap">
+                    <input id="settingsPassword" type="password" autocomplete="new-password" placeholder="Enter password">
+                    <button class="settings-password-toggle" id="settingsPasswordToggle" type="button" aria-label="Show password" aria-pressed="false"></button>
+                  </div>
+                  <small id="settingsPasswordHint">Required when creating a new user.</small>
+                </label>
+
+                <label class="settings-field">
+                  <span>Role</span>
+                  <select id="settingsRole" required>
+                    <option value="admin">Admin</option>
+                    <option value="manager">Manager</option>
+                    <option value="supervisor">Supervisor</option>
+                    <option value="logistics">Logistic</option>
+                    <option value="production_staff">Production Staff</option>
+                    <option value="lockkey_production">Lockkey Production</option>
+                    <option value="happy_production">Happy Production</option>
+                    <option value="viewer">Viewer</option>
+                  </select>
+                </label>
+
+                <div class="settings-form-actions">
+                  <button class="settings-secondary-btn" id="settingsCancelUserBtn" type="button">Cancel</button>
+                  <button class="settings-primary-btn" id="settingsSaveUserBtn" type="submit">Save User</button>
+                </div>
+              </form>
+
+              <div class="settings-feedback" id="settingsFeedback" role="status" hidden></div>
+
+              <div class="settings-user-list-wrap">
+                <div class="settings-user-list-head">
+                  <span>Username</span>
+                  <span>Role</span>
+                  <span>Status</span>
+                  <span>Actions</span>
+                </div>
+
+                <div class="settings-user-list" id="settingsUserList">
+                  <div class="settings-empty-state">
+                    <strong>Loading users...</strong>
+                    <span>Accounts from the database will appear here.</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="settings-panel backup-panel">
+              <div class="settings-panel-head vertical">
+                <div>
+                  <h3>Database Backup</h3>
+                  <p>Download a copy of the current SQLite database before major updates or testing.</p>
+                </div>
+              </div>
+
+              <div class="backup-card">
+                <strong>production_fresh.db</strong>
+                <span>Use this before editing users, resetting records, or deploying a new patch.</span>
+                <button class="settings-primary-btn" id="settingsBackupBtn" type="button">Download Backup</button>
+              </div>
+            </article>
+          </section>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+  <div class="pr-modal-backdrop" id="productionReceivingModal" aria-hidden="true">
+    <section class="pr-modal" role="dialog" aria-modal="true" aria-labelledby="productionReceivingModalTitle">
+      <header class="pr-modal-head">
+        <div>
+          <h3 id="productionReceivingModalTitle">Production Details</h3>
+          <p id="productionReceivingModalSubTitle">Order details</p>
+        </div>
+
+        <button class="pr-modal-close" type="button" aria-label="Close production receiving modal">
+          <span>×</span>
+        </button>
+      </header>
+
+      <div class="pr-modal-body" id="productionReceivingModalBody"></div>
+
+      <footer class="pr-modal-footer">
+        <button class="pr-modal-secondary" type="button">Close</button>
+        <button class="pr-action-btn primary" id="productionReceivingModalPrimaryAction" type="button">Receive to Production</button>
+      </footer>
+    </section>
+  </div>
+
+
+  <div class="overview-modal-backdrop" id="pendingOrdersModal" aria-hidden="true">
+    <section class="overview-modal" role="dialog" aria-modal="true" aria-labelledby="pendingOrdersModalTitle">
+      <header class="overview-modal-head">
+        <div class="overview-modal-title-wrap">
+          <h2 id="pendingOrdersModalTitle">Pending Orders</h2>
+        </div>
+
+        <div class="overview-modal-head-right">
+          <span class="overview-modal-counter">
+            <strong>0</strong>
+            <small>Pending</small>
+          </span>
+
+          <button class="overview-modal-close" type="button" aria-label="Close pending orders modal">
+            <span>×</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="overview-modal-body">
+        <div class="pending-orders-list" aria-label="Pending orders list">
+
+          <div class="overview-pending-empty">
+            <strong>Loading pending orders...</strong>
+            <span>Real orders from the database will appear here.</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="overview-modal-footer">
+        <button class="overview-modal-secondary" type="button">Close</button>
+      </footer>
+    </section>
+  </div>
+
+
+
+  <div class="overview-modal-backdrop" id="activeOrdersModal" aria-hidden="true">
+    <section class="overview-modal" role="dialog" aria-modal="true" aria-labelledby="activeOrdersModalTitle">
+      <header class="overview-modal-head">
+        <div class="overview-modal-title-wrap">
+          <h2 id="activeOrdersModalTitle">Active Orders</h2>
+        </div>
+
+        <div class="overview-modal-head-right">
+          <span class="overview-modal-counter active-counter">
+            <strong>0</strong>
+            <small>Active</small>
+          </span>
+
+          <button class="overview-modal-close" type="button" aria-label="Close active orders modal">
+            <span>×</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="overview-modal-body">
+        <div class="pending-orders-list active-orders-list" aria-label="Active orders list">
+
+          <div class="overview-pending-empty">
+            <strong>Loading active orders...</strong>
+            <span>Only ongoing/on-hold production items will appear here.</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="overview-modal-footer">
+        <button class="overview-modal-secondary" type="button">Close</button>
+      </footer>
+    </section>
+  </div>
+
+
+
+  <div class="overview-modal-backdrop" id="forDeliveryModal" aria-hidden="true">
+    <section class="overview-modal" role="dialog" aria-modal="true" aria-labelledby="forDeliveryModalTitle">
+      <header class="overview-modal-head">
+        <div class="overview-modal-title-wrap">
+          <h2 id="forDeliveryModalTitle">For Delivery</h2>
+        </div>
+
+        <div class="overview-modal-head-right">
+          <span class="overview-modal-counter delivery-counter">
+            <strong>0</strong>
+            <small>Delivery</small>
+          </span>
+
+          <button class="overview-modal-close" type="button" aria-label="Close for delivery modal">
+            <span>×</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="overview-modal-body">
+        <div class="pending-orders-list delivery-orders-list" aria-label="For delivery orders list">
+
+          <div class="overview-pending-empty">
+            <strong>Loading for delivery orders...</strong>
+            <span>Real orders from the database will appear here.</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="overview-modal-footer">
+        <button class="overview-modal-secondary" type="button">Close</button>
+      </footer>
+    </section>
+  </div>
+
+
+
+  <div class="overview-modal-backdrop" id="deliveredOrdersModal" aria-hidden="true">
+    <section class="overview-modal" role="dialog" aria-modal="true" aria-labelledby="deliveredOrdersModalTitle">
+      <header class="overview-modal-head">
+        <div class="overview-modal-title-wrap">
+          <h2 id="deliveredOrdersModalTitle">Delivered Orders</h2>
+        </div>
+
+        <div class="overview-modal-head-right">
+          <span class="overview-modal-counter delivered-counter">
+            <strong>0</strong>
+            <small>Delivered</small>
+          </span>
+
+          <button class="overview-modal-close" type="button" aria-label="Close delivered orders modal">
+            <span>×</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="overview-modal-body">
+        <div class="pending-orders-list delivered-orders-list" aria-label="Delivered orders list">
+
+          <div class="overview-pending-empty">
+            <strong>Loading delivered orders...</strong>
+            <span>Real delivered orders from the database will appear here.</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="overview-modal-footer">
+        <button class="overview-modal-secondary" type="button">Close</button>
+      </footer>
+    </section>
+  </div>
+
+
+
+  <div class="overview-modal-backdrop notice-view-all-modal" id="noticeBoardViewAllModal" aria-hidden="true">
+    <section class="overview-modal" role="dialog" aria-modal="true" aria-labelledby="noticeBoardViewAllModalTitle">
+      <header class="overview-modal-head">
+        <div class="overview-modal-title-wrap">
+          <h2 id="noticeBoardViewAllModalTitle">Notice Board Alerts</h2>
+        </div>
+
+        <div class="overview-modal-head-right">
+          <span class="overview-modal-counter notice-counter">
+            <strong>0</strong>
+            <small>Alerts</small>
+          </span>
+
+          <button class="overview-modal-close" type="button" aria-label="Close notice board alerts modal">
+            <span>×</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="overview-modal-body">
+        <div class="notice-alert-modal-list" aria-label="All notice board delivery alerts">
+
+          <div class="overview-pending-empty">
+            <strong>Loading notices...</strong>
+            <span>Real due, critical, or hold orders will appear here.</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="overview-modal-footer">
+        <button class="overview-modal-secondary" type="button">Close</button>
+      </footer>
+    </section>
+  </div>
+
+
+
+  <div class="overview-modal-backdrop total-orders-view-all-modal" id="totalOrdersViewAllModal" aria-hidden="true">
+    <section class="overview-modal" role="dialog" aria-modal="true" aria-labelledby="totalOrdersViewAllModalTitle">
+      <header class="overview-modal-head">
+        <div class="overview-modal-title-wrap">
+          <h2 id="totalOrdersViewAllModalTitle">Total Orders</h2>
+        </div>
+
+        <div class="overview-modal-head-right">
+          <span class="overview-modal-counter total-orders-counter">
+            <strong>0</strong>
+            <small>Orders</small>
+          </span>
+
+          <button class="overview-modal-close" type="button" aria-label="Close total orders modal">
+            <span>×</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="overview-modal-body">
+        <div class="total-orders-modal-list" aria-label="Total orders full details list">
+
+          <div class="overview-pending-empty">
+            <strong>Loading total orders...</strong>
+            <span>Real orders from the database will appear here.</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="overview-modal-footer">
+        <button class="overview-modal-secondary" type="button">Close</button>
+      </footer>
+    </section>
+  </div>
+
+
+  <div class="pr-modal-backdrop delivery-details-modal-backdrop" id="deliveryDetailsModal" aria-hidden="true">
+    <section class="pr-modal delivery-details-modal" role="dialog" aria-modal="true" aria-labelledby="deliveryDetailsModalTitle">
+      <header class="pr-modal-head">
+        <div>
+          <h3 id="deliveryDetailsModalTitle">Delivery Details</h3>
+          <p id="deliveryDetailsModalSubTitle">P.O. Number • J.O. Number</p>
+        </div>
+
+        <button class="pr-modal-close delivery-details-close" type="button" aria-label="Close delivery details modal">
+          <span>×</span>
+        </button>
+      </header>
+
+      <div class="pr-modal-body" id="deliveryDetailsModalBody"></div>
+
+      <footer class="pr-modal-footer">
+        <button class="pr-modal-secondary delivery-details-cancel" type="button">Close</button>
+        <button class="pr-action-btn success" id="deliveryDetailsPrimaryAction" type="button">Mark as Delivered</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <script src="script.js?v=20260514-delivery-flow-v3"></script>
+  <script src="orders.js?v=20260506-scalingo-tint-v1"></script>
+  <script src="production-receiving.js?v=20260514-delivery-flow-v3"></script>
+  <script src="overview.js?v=20260506-scalingo-tint-v1"></script>
+  <script src="reports.js?v=20260506-scalingo-tint-v1"></script>
+  <script src="settings.js?v=20260506-scalingo-tint-v1"></script>
+  <script src="notifications.js?v=20260506-scalingo-tint-v1"></script>
+</body>
+</html>

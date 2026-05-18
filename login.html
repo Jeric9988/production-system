@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Production Management System</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="login.css?v=20260506-scalingo-tint-v1">
+</head>
+<body>
+  <main class="login-page">
+    <section class="login-card" aria-labelledby="loginTitle">
+      <div class="login-brand">
+        <div class="login-logo" aria-hidden="true">
+          <span class="factory-mark">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span class="gear-mark"></span>
+        </div>
+
+        <h1 id="loginTitle">Production Management System</h1>
+        <p>Sign in to continue</p>
+      </div>
+
+      <form class="login-form" id="loginForm" novalidate>
+        <div class="login-alert" id="loginAlert" role="alert" hidden></div>
+
+        <label class="login-field">
+          <span>Username</span>
+          <div class="login-input-wrap">
+            <i class="login-input-icon user-icon" aria-hidden="true"></i>
+            <input id="username" name="username" type="text" placeholder="Enter your username" autocomplete="username" required>
+          </div>
+        </label>
+
+        <label class="login-field">
+          <span>Password</span>
+          <div class="login-input-wrap">
+            <i class="login-input-icon lock-icon" aria-hidden="true"></i>
+            <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button class="password-toggle" id="passwordToggle" type="button" aria-label="Show password">
+              <i class="eye-icon" aria-hidden="true"></i>
+            </button>
+          </div>
+        </label>
+
+        <label class="remember-row">
+          <input id="rememberMe" name="rememberMe" type="checkbox">
+          <span>Remember me</span>
+        </label>
+
+        <button class="login-button" type="submit">Log In</button>
+      </form>
+
+      <div class="login-footer">
+        <i class="shield-icon" aria-hidden="true"></i>
+        <span>Role-based access</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="login.js?v=20260506-scalingo-tint-v1"></script>
+</body>
+</html>

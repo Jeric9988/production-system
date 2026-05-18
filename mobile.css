@@ -1,0 +1,777 @@
+@media (max-width: 768px) {
+  :root {
+    --sidebar-w: min(280px, 86vw);
+    --radius: 18px;
+  }
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  html.mobile-menu-open,
+  body.mobile-menu-open {
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  body.mobile-menu-open {
+    position: relative;
+    width: 100%;
+    touch-action: none;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 10% 0%, rgba(47, 124, 255, .16), transparent 24rem),
+      var(--bg);
+  }
+
+  .app-shell {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w);
+    transform: translateX(-105%);
+    box-shadow: 28px 0 80px rgba(15, 23, 42, .22);
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 0;
+    z-index: 100;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 78px 12px 84px;
+    overflow-x: hidden;
+  }
+
+  body.mobile-menu-open .main {
+    overflow: hidden;
+  }
+
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0;
+    padding: 12px;
+    z-index: 80;
+    border-radius: 0;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, .08);
+    background: rgba(244, 247, 251, .86);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    overflow: visible;
+  }
+
+  html[data-theme="dark"] .topbar {
+    background: rgba(11, 16, 32, .86);
+  }
+
+  .mobile-menu-btn {
+    display: inline-grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 13px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+
+  .mobile-menu-btn span {
+    width: 18px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 999px;
+    display: block;
+    margin: 2px 0;
+  }
+
+  .topbar h1 {
+    font-size: 1.22rem;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .topbar-actions {
+    gap: 0;
+    min-width: 0;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    align-self: center;
+  }
+
+  .topbar-actions span:not(:first-child),
+  .topbar .logout-btn {
+    display: none;
+  }
+
+  .topbar-actions span:first-child {
+    font-size: 0;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    cursor: pointer;
+    transition: opacity .22s var(--ease);
+  }
+
+  .topbar-actions span:first-child:hover,
+  .topbar-actions span:first-child.is-open {
+    background: transparent;
+    border-color: transparent;
+    opacity: .88;
+  }
+
+  .topbar-actions span:first-child i {
+    width: 22px;
+    height: 22px;
+    display: block;
+    margin: 0;
+    color: var(--blue);
+  }
+
+  .mobile-info-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 12px;
+    width: min(270px, calc(100vw - 24px));
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--panel-solid);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, .16);
+    display: grid;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(-8px) scale(.98);
+    pointer-events: none;
+    z-index: 120;
+    transition: opacity .22s var(--ease), transform .22s var(--ease);
+  }
+
+  html[data-theme="dark"] .mobile-info-panel {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .34);
+  }
+
+  .mobile-info-panel.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .mobile-info-row {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 14px;
+    background: rgba(37, 99, 235, .045);
+  }
+
+  html[data-theme="dark"] .mobile-info-row {
+    background: rgba(37, 99, 235, .10);
+  }
+
+  .mobile-info-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: var(--blue);
+    background: var(--blue-soft);
+  }
+
+  .mobile-info-icon i {
+    width: 19px;
+    height: 19px;
+  }
+
+  .mobile-info-row small {
+    display: block;
+    color: var(--muted);
+    font-weight: 800;
+    font-size: .72rem;
+    margin-bottom: 3px;
+  }
+
+  .mobile-info-row strong {
+    display: block;
+    color: var(--text);
+    font-size: .9rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 50px;
+    margin-top: 12px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--panel);
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .sidebar-logout-btn span[data-icon] {
+    color: var(--blue);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
+  .stat-card {
+    min-height: 124px;
+    padding: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .stat-card p {
+    font-size: .76rem;
+    line-height: 1.2;
+  }
+
+  .stat-card strong {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+
+  .stat-card a {
+    font-size: .73rem;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 13px;
+  }
+
+  .stat-icon span {
+    width: 21px;
+    height: 21px;
+  }
+
+  .panel {
+    padding: 14px;
+    width: 100%;
+  }
+
+  .panel-head {
+    margin-bottom: 12px;
+    gap: 8px;
+  }
+
+  .panel-head h2 {
+    font-size: .98rem;
+    min-width: 0;
+  }
+
+  .ghost-btn,
+  .panel-head select {
+    padding: 8px 10px;
+    font-size: .78rem;
+    white-space: nowrap;
+  }
+
+  .monthly-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .radial-chart {
+    width: min(235px, 80vw);
+    height: min(235px, 80vw);
+    align-self: center;
+    transform: none;
+    margin: 0 auto;
+  }
+
+  .slice {
+    width: 48px;
+    height: 96px;
+  }
+
+  .slice-orange {
+    width: 104px;
+    height: 112px;
+  }
+
+  .chart-center {
+    inset: 33%;
+  }
+
+  .chart-center strong {
+    font-size: 1.55rem;
+  }
+
+  .chart-center span {
+    font-size: .72rem;
+  }
+
+  .chart-tooltip {
+    left: auto;
+    right: 4px;
+    top: 20px;
+    max-width: 120px;
+  }
+
+  .chart-legend {
+    gap: 10px;
+    font-size: .84rem;
+  }
+
+  .chart-legend li {
+    gap: 8px;
+  }
+
+  .calendar-panel,
+  .overview-view .calendar-panel {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .calendar-panel .calendar {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .calendar h3 {
+    margin-bottom: 12px;
+    font-size: .96rem;
+  }
+
+  .weekdays,
+  .dates {
+    gap: 7px 4px;
+    font-size: .72rem;
+  }
+
+  .weekdays {
+    margin-bottom: 8px;
+  }
+
+  .dates span,
+  .calendar .dates > span {
+    min-height: 34px;
+    padding: 4px 0;
+    border-radius: 10px;
+  }
+
+  .calendar .dates > span .calendar-date-number {
+    min-height: 18px;
+    font-size: .74rem;
+    line-height: 1;
+  }
+
+  .overview-calendar-markers,
+  .calendar-date-markers {
+    min-height: 6px;
+    margin-top: 3px;
+    gap: 3px;
+  }
+
+  .overview-calendar-markers i,
+  .calendar-marker {
+    width: 10px;
+    height: 3px;
+    border-radius: 999px;
+  }
+
+  .notice-list div {
+    grid-template-columns: 10px minmax(0, 1fr);
+    gap: 10px 12px;
+    padding: 8px 0;
+    min-height: auto;
+  }
+
+  .notice-list time {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: -5px;
+    font-size: .76rem;
+  }
+
+  .notice-list p,
+  .activity-list p {
+    font-size: .82rem;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  .line-chart {
+    min-height: 228px;
+    padding-left: 28px;
+    padding-bottom: 26px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .line-chart svg {
+    min-width: 560px;
+    height: 205px;
+  }
+
+  .y-labels {
+    height: 185px;
+    top: 12px;
+    font-size: .72rem;
+  }
+
+  .x-labels {
+    min-width: 560px;
+    left: 30px;
+    right: auto;
+    width: 560px;
+    font-size: .72rem;
+  }
+
+  .line-tooltip {
+    max-width: 110px;
+    font-size: .75rem;
+  }
+
+  .table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  table {
+    min-width: 610px;
+  }
+
+  th,
+  td {
+    padding: 11px 8px;
+    font-size: .78rem;
+  }
+
+  .status {
+    padding: 6px 9px;
+    font-size: .72rem;
+  }
+
+  .activity-list div {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 9px 10px;
+    padding: 8px 0;
+    min-height: auto;
+  }
+
+  .activity-list time {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: -5px;
+    font-size: .76rem;
+  }
+
+  .activity-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+
+  .activity-icon i {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+@media (max-width: 430px) {
+  .main {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 76px;
+  }
+
+  .topbar {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .stat-card {
+    padding: 12px;
+    min-height: 120px;
+  }
+
+  .stat-card p {
+    font-size: .72rem;
+  }
+
+  .stat-card strong {
+    font-size: 1.38rem;
+  }
+
+  .stat-card a {
+    font-size: .7rem;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+
+  .radial-chart {
+    width: min(215px, 78vw);
+    height: min(215px, 78vw);
+  }
+
+  .slice {
+    width: 43px;
+    height: 88px;
+  }
+
+  .slice-orange {
+    width: 96px;
+    height: 102px;
+  }
+
+  .chart-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    min-height: 108px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .radial-chart {
+    width: 198px;
+    height: 198px;
+  }
+
+  .slice {
+    width: 39px;
+    height: 80px;
+  }
+
+  .slice-orange {
+    width: 88px;
+    height: 94px;
+  }
+
+  .orders-mobile-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== MOBILE FLICKER / INVISIBLE CONTENT FIX =====
+   Safe mobile-only repaint fix.
+   Keeps the current layout and flow, but removes unstable blur/animation layers on small screens.
+*/
+@media (max-width: 768px) {
+  .topbar {
+    background: var(--bg) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    contain: layout paint !important;
+  }
+
+  html[data-theme="dark"] .topbar {
+    background: var(--bg) !important;
+  }
+
+  .view-section,
+  .orders-view,
+  .production-receiving-view {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .dashboard-grid,
+  .stats-grid,
+  .panel,
+  .stat-card,
+  .orders-view,
+  .production-receiving-view,
+  .pr-record-card {
+    backface-visibility: hidden !important;
+    will-change: auto !important;
+  }
+
+  .overview-modal-backdrop,
+  .pr-modal-backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* ===== LATEST UPDATE: Mobile info dropdown with user/date/time/logout ===== */
+  .topbar {
+    overflow: visible;
+  }
+
+  .topbar-actions {
+    position: relative;
+    z-index: 85;
+    pointer-events: auto;
+  }
+
+  .topbar-actions span:first-child {
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-info-panel {
+    z-index: 95;
+  }
+
+  .mobile-info-logout-btn {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid rgba(239, 68, 68, .16);
+    border-radius: 14px;
+    color: var(--text);
+    background: rgba(239, 68, 68, .055);
+    cursor: pointer;
+    text-align: left;
+    transition: background .22s var(--ease), border-color .22s var(--ease), transform .2s var(--ease);
+  }
+
+  html[data-theme="dark"] .mobile-info-logout-btn {
+    background: rgba(239, 68, 68, .10);
+  }
+
+  .mobile-info-logout-btn:hover,
+  .mobile-info-logout-btn:focus-visible {
+    background: rgba(239, 68, 68, .10);
+    border-color: rgba(239, 68, 68, .26);
+    outline: none;
+  }
+
+  .mobile-info-logout-btn:active {
+    transform: scale(.99);
+  }
+
+  .mobile-info-logout-btn .logout-icon {
+    color: #ef4444;
+    background: rgba(239, 68, 68, .12);
+  }
+
+  .mobile-info-logout-btn small {
+    display: block;
+    color: var(--muted);
+    font-weight: 800;
+    font-size: .72rem;
+    margin-bottom: 3px;
+  }
+
+  .mobile-info-logout-btn strong {
+    display: block;
+    color: #ef4444;
+    font-size: .9rem;
+    line-height: 1.2;
+    font-weight: 900;
+  }
+
+  /* Logout is now shown in the right-side mobile info panel only. */
+  .sidebar-logout-btn {
+    display: none !important;
+  }
+
+
+  /* ===== LATEST FIX: Allow mobile date/time dropdown to open outside topbar ===== */
+  /* The topbar must not use paint containment because the mobile info panel
+     is positioned outside the topbar. Paint containment can clip/hide it. */
+  .topbar {
+    contain: none !important;
+    overflow: visible !important;
+  }
+
+  .mobile-info-panel {
+    contain: none !important;
+    overflow: visible !important;
+    z-index: 120 !important;
+  }
+
+  .mobile-info-panel.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  .topbar-actions,
+  .topbar-actions span:first-child,
+  #mobileInfoToggle {
+    pointer-events: auto !important;
+  }
+
+}
